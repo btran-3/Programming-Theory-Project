@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
+    private int playerBaseHealth = 10;
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 1f;
@@ -26,18 +27,37 @@ public class PlayerBehavior : MonoBehaviour
 
 
     public List<GameObject> projectilePool;
+    [SerializeField] UIManager uiManager;
 
+    #region Dynamic variables
 
+    private int currentPlayerHealth;
+    public int pub_currentPlayerHealth
+    {
+        get { return currentPlayerHealth; }
+        set {
+            currentPlayerHealth = value;
+            uiManager.UpdateHealthText();
+        }
+    }
 
+    private bool doesPlayerHaveIFrames;
     Vector3 velocity, desiredVelocity;
 
-    Rigidbody playerRB;
-    //https://catlikecoding.com/unity/tutorials/movement/physics/
+    #endregion
 
+    Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
+    private Color defaultColor;
 
     void Awake()
     {
         playerRB = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        defaultColor = gameObject.GetComponent<Renderer>().material.color;
+        currentPlayerHealth = playerBaseHealth;
     }
 
 
@@ -63,6 +83,14 @@ public class PlayerBehavior : MonoBehaviour
         MovePlayerRigidbody();
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames)
+        {
+            PlayerTakeDamage(1);
+        }
+    }
+
     private void MovePlayerRigidbody()
     {
         velocity = playerRB.velocity;
@@ -72,7 +100,7 @@ public class PlayerBehavior : MonoBehaviour
         playerRB.velocity = velocity;
     }
 
-    void FireProjectiles()
+    private void FireProjectiles()
     {
         if (Input.GetAxis("Fire1") < 0)
         {
@@ -105,9 +133,34 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void PlayerTakeDamage(int damage)
+    {
+        doesPlayerHaveIFrames = true;
+        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        pub_currentPlayerHealth -= damage;
+
+        if (currentPlayerHealth <= 0)
+        {
+            this.gameObject.SetActive(false);
+            Debug.Log("GAME OVER");
+            return;
+        }
+
+        Invoke("PlayerRecoverFromDamage", 1f);
+    }
+
+    private void PlayerRecoverFromDamage()
+    {
+        if (doesPlayerHaveIFrames)
+        {
+            doesPlayerHaveIFrames = false;
+            gameObject.GetComponent<Renderer>().material.color = defaultColor;
+        }
+    }
+
     void UseBlank()
     {
-
+        
     }
 
 }
