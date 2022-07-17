@@ -13,6 +13,10 @@ public class PlayerBehavior : MonoBehaviour
     private float playerBaseRange;
     #endregion
 
+    private GameObject[] projectilePool = new GameObject[20];
+
+
+
     Vector3 velocity, desiredVelocity;
 
     Rigidbody playerRB;
