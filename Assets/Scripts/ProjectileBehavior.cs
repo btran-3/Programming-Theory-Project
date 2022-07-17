@@ -33,12 +33,12 @@ public class ProjectileBehavior : MonoBehaviour
         DisableProjectile(other);
     }
 
-    public void ShootProjectile()
+    public void ShootProjectile(Vector3 shootdirection)
     {
         transform.position = playerGO.transform.position;
         playerBehavior.projectilePool.Remove(this.gameObject);
         this.gameObject.SetActive(true);
-        rb.AddForce((Vector3.right * playerBehavior.pub_projectileSpeed) + (playerRB.velocity / 2), ForceMode.Impulse);
+        rb.AddForce((shootdirection * playerBehavior.pub_projectileSpeed) + (playerRB.velocity / 2), ForceMode.Impulse);
     }
 
     private void DisableProjectile(Collider other)

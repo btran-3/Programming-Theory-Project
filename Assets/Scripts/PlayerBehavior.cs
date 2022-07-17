@@ -74,13 +74,34 @@ public class PlayerBehavior : MonoBehaviour
 
     void FireProjectiles()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetAxis("Fire1") < 0)
         {
-            if (projectilePool.Count > 0)
-            {
-                int rand = Random.Range(0, projectilePool.Count);
-                projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile();
-            }
+            //left
+            ShootThisDirection(Vector3.left);
+        }
+        else if (Input.GetAxis("Fire1") > 0)
+        {
+            //right
+            ShootThisDirection(Vector3.right);
+        }
+        else if (Input.GetAxis("Fire2") < 0)
+        {
+            //down
+            ShootThisDirection(Vector3.back);
+        }
+        else if (Input.GetAxis("Fire2") > 0)
+        {
+            //up
+            ShootThisDirection(Vector3.forward);
+        }
+    }
+
+    private void ShootThisDirection(Vector3 shootDirection)
+    {
+        if (projectilePool.Count > 0)
+        {
+            int rand = Random.Range(0, projectilePool.Count);
+            projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile(shootDirection);
         }
     }
 
