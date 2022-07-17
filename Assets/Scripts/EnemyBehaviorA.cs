@@ -36,7 +36,6 @@ public class EnemyBehaviorA : MonoBehaviour
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
             pub_enemyHealth -= playerBehavior.pub_playerDamage;
-            //Destroy(this.gameObject);
         }
     }
 }

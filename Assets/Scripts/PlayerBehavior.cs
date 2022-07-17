@@ -9,12 +9,31 @@ public class PlayerBehavior : MonoBehaviour
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 1f;
-    private float playerBaseFireRate;
-    private float playerBaseProjectileSpeed = 15f;
+    private float playerBaseFireRate = 0.30f;
+    private float playerBaseProjectileSpeed = 12f;
     private float playerBaseRange;
     #endregion
 
+    #region Dynamic variables
+
+    private int currentPlayerHealth;
+    private bool doesPlayerHaveIFrames;
+    private float canPlayerFire;
+
+    Vector3 velocity, desiredVelocity;
+
+    #endregion
+
     #region Public Get Stats
+    public int pub_currentPlayerHealth
+    {
+        get { return currentPlayerHealth; }
+        set
+        {
+            currentPlayerHealth = value;
+            uiManager.UpdateHealthText();
+        }
+    }
     public float pub_projectileSpeed {
         get { return playerBaseProjectileSpeed; }
             //need to add with stat upgrades
@@ -29,22 +48,7 @@ public class PlayerBehavior : MonoBehaviour
     public List<GameObject> projectilePool;
     [SerializeField] UIManager uiManager;
 
-    #region Dynamic variables
 
-    private int currentPlayerHealth;
-    public int pub_currentPlayerHealth
-    {
-        get { return currentPlayerHealth; }
-        set {
-            currentPlayerHealth = value;
-            uiManager.UpdateHealthText();
-        }
-    }
-
-    private bool doesPlayerHaveIFrames;
-    Vector3 velocity, desiredVelocity;
-
-    #endregion
 
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     private Color defaultColor;
@@ -126,8 +130,9 @@ public class PlayerBehavior : MonoBehaviour
 
     private void ShootThisDirection(Vector3 shootDirection)
     {
-        if (projectilePool.Count > 0)
+        if (projectilePool.Count > 0 && Time.time > canPlayerFire)
         {
+            canPlayerFire = Time.time + playerBaseFireRate;
             int rand = Random.Range(0, projectilePool.Count);
             projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile(shootDirection);
         }
