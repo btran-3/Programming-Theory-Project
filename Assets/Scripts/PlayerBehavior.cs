@@ -9,11 +9,20 @@ public class PlayerBehavior : MonoBehaviour
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage;
     private float playerBaseFireRate;
-    private float playerBaseProjectileSpeed;
+    private float playerBaseProjectileSpeed = 10f;
     private float playerBaseRange;
     #endregion
 
-    private GameObject[] projectilePool = new GameObject[20];
+    #region Public Get Stats
+    public float pub_projectileSpeed {
+        get { return playerBaseProjectileSpeed;
+            //need to add with stat upgrades
+        }
+    }
+    #endregion
+
+
+    public List<GameObject> projectilePool;
 
 
 
@@ -32,6 +41,15 @@ public class PlayerBehavior : MonoBehaviour
     void Update()
     {
         GetPlayerInput();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (projectilePool.Count > 0)
+            {
+                int rand = Random.Range(0, projectilePool.Count);
+                projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile();
+            }
+        }
     }
 
     private void GetPlayerInput()
