@@ -6,7 +6,6 @@ public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
     private float playerBaseSpeed = 10f;
-    private float playerBaseMaxSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage;
     private float playerBaseFireRate;
@@ -15,7 +14,6 @@ public class PlayerBehavior : MonoBehaviour
     #endregion
 
     Vector3 velocity, desiredVelocity;
-    int intOne, intTwo, intThree;
 
     Rigidbody playerRB;
     //https://catlikecoding.com/unity/tutorials/movement/physics/
@@ -29,6 +27,11 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
+        GetPlayerInput();
+    }
+
+    private void GetPlayerInput()
+    {
         Vector2 playerInput;
         playerInput.x = Input.GetAxis("Horizontal");
         playerInput.y = Input.GetAxis("Vertical");
@@ -39,20 +42,16 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MovePlayerRigidbody();
+    }
 
+    private void MovePlayerRigidbody()
+    {
         velocity = playerRB.velocity;
         float maxSpeedChange = playerBaseMaxAcceleration * Time.fixedDeltaTime;
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
         playerRB.velocity = velocity;
-
-
-
-    }
-
-    void MovePlayer(Vector3 playerMovement)
-    {
-        playerRB.AddForce(playerMovement, ForceMode.Impulse);
     }
 
     void FireProjectiles()
