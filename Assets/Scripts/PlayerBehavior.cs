@@ -7,17 +7,20 @@ public class PlayerBehavior : MonoBehaviour
     #region PlayerBaseStats
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
-    private float playerBaseDamage;
+    private float playerBaseDamage = 1f;
     private float playerBaseFireRate;
-    private float playerBaseProjectileSpeed = 10f;
+    private float playerBaseProjectileSpeed = 15f;
     private float playerBaseRange;
     #endregion
 
     #region Public Get Stats
     public float pub_projectileSpeed {
-        get { return playerBaseProjectileSpeed;
+        get { return playerBaseProjectileSpeed; }
             //need to add with stat upgrades
-        }
+    }
+    public float pub_playerDamage {
+        get { return playerBaseDamage; }
+        //add with stat upgrades
     }
     #endregion
 
@@ -41,15 +44,8 @@ public class PlayerBehavior : MonoBehaviour
     void Update()
     {
         GetPlayerInput();
+        FireProjectiles();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (projectilePool.Count > 0)
-            {
-                int rand = Random.Range(0, projectilePool.Count);
-                projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile();
-            }
-        }
     }
 
     private void GetPlayerInput()
@@ -78,7 +74,14 @@ public class PlayerBehavior : MonoBehaviour
 
     void FireProjectiles()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (projectilePool.Count > 0)
+            {
+                int rand = Random.Range(0, projectilePool.Count);
+                projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile();
+            }
+        }
     }
 
     void UseBlank()
