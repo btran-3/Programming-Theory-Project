@@ -19,11 +19,12 @@ public class EnemyBehaviorA : MonoBehaviour
 
     [SerializeField] private GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
+    private Renderer enemyRenderer;
+    private Color defaultColor;
+
     private float playerBlankRadius;
     private bool isFollowingPlayer;
     private NavMeshAgent agent;
-
-    Vector3 knockbackDir;
 
     private void Awake()
     {
@@ -35,12 +36,17 @@ public class EnemyBehaviorA : MonoBehaviour
     {
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
         gameObject.SetActive(false);
+        enemyRenderer = GetComponent<Renderer>();
+        defaultColor = enemyRenderer.material.color;
     }
 
 
     void Update()
     {
-
+        if (isFollowingPlayer)
+        {
+            agent.SetDestination(playerGO.transform.position);
+        }
     }
 
     public void SpawnEnemy()
@@ -65,9 +71,12 @@ public class EnemyBehaviorA : MonoBehaviour
             knockbackDirection.x = transform.position.x - other.gameObject.transform.position.x;
             knockbackDirection.y = 0f;
             knockbackDirection.z = transform.position.z - other.gameObject.transform.position.z;
-            agent.velocity += knockbackDirection * 3; //vary based on enemy size per class
-
+            agent.velocity += knockbackDirection * 3; //should vary based on enemy size per class
             //agent.velocity = Vector3.zero;
+
+            LeanTween.cancel(gameObject);
+            enemyRenderer.material.color = Color.red;
+            LeanTween.color(this.gameObject, defaultColor, 0.25f).setDelay(0.05f).setEase(LeanTweenType.easeOutCubic);
         }
     }
 
@@ -78,19 +87,7 @@ public class EnemyBehaviorA : MonoBehaviour
 
         float distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
         float distanceDifference = playerBlankRadius - distanceFromPlayer;
-        agent.velocity = knockbackDirection * distanceDifference * 3;
+        agent.velocity = (knockbackDirection * distanceDifference * 3) + knockbackDirection;
     }
 
-    private void FixedUpdate()
-    {
-        if (isFollowingPlayer)
-        {
-            agent.SetDestination(playerGO.transform.position);
-        }
-    }
-
-    private void LateUpdate()
-    {
-        
-    }
 }

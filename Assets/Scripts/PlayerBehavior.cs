@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 20;
-    private int playerBaseBlanks = 15;
+    private int playerBaseHealth = 5;
+    private int playerBaseBlanks = 10;
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 1f;
     private float playerBaseFireRate = 0.30f;
     private float playerBaseProjectileSpeed = 12f;
-    private float playerBaseRange;
+    private float playerBaseProjectileRange;
     private float playerBlankRadius = 5f;
     #endregion
 
@@ -22,6 +22,7 @@ public class PlayerBehavior : MonoBehaviour
     private int currentPlayerBlanks;
     private bool doesPlayerHaveIFrames;
     private float canPlayerFire;
+    private bool canPlayerUseBlanks = true;
 
     Vector3 velocity, desiredVelocity;
 
@@ -66,8 +67,7 @@ public class PlayerBehavior : MonoBehaviour
     public List<GameObject> projectilePool;
     [SerializeField] UIManager uiManager;
 
-    [SerializeField] GameObject BlankRadiusMesh;
-    //[SerializeField] BlankExplosion blankExplosion;
+    [SerializeField] GameObject blankRadiusMesh;
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     private Color defaultColor;
 
@@ -81,6 +81,8 @@ public class PlayerBehavior : MonoBehaviour
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         currentPlayerHealth = playerBaseHealth;
         currentPlayerBlanks = playerBaseBlanks;
+
+        blankRadiusMesh.SetActive(false);
     }
 
 
@@ -161,9 +163,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerTakeDamage(int damage)
     {
-        doesPlayerHaveIFrames = true;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
         pub_currentPlayerHealth -= damage;
+        doesPlayerHaveIFrames = true; //give the player i-frames
 
         if (currentPlayerHealth <= 0)
         {
@@ -172,7 +173,16 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
 
-        Invoke("PlayerRecoverFromDamage", 1f);
+        //gameObject.GetComponent<Renderer>().material.color = Color.red;
+        LeanTween.color(this.gameObject, Color.red, 0f);
+        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.15f);
+        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.35f), 0f).setDelay(0.3f);
+        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.45f);
+        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.60f), 0f).setDelay(0.6f);
+        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.75f);
+        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.85f), 0f).setDelay(0.9f);
+        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(1.05f).setOnComplete(PlayerRecoverFromDamage);
+        //Invoke("PlayerRecoverFromDamage", 1.05f);
     }
 
     private void PlayerRecoverFromDamage()
@@ -180,16 +190,18 @@ public class PlayerBehavior : MonoBehaviour
         if (doesPlayerHaveIFrames)
         {
             doesPlayerHaveIFrames = false;
-            gameObject.GetComponent<Renderer>().material.color = defaultColor;
+            //gameObject.GetComponent<Renderer>().material.color = defaultColor;
         }
     }
 
     private void UseBlank()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks)
         {
-            //Debug.Log("Use blank");
             pub_currentPlayerBlanks--;
+            canPlayerUseBlanks = false;
+
+            ActivateBlankAnimation();
 
             Collider[] overlapSphere = Physics.OverlapSphere(gameObject.transform.position, playerBlankRadius);
             foreach (Collider col in overlapSphere)
@@ -200,6 +212,25 @@ public class PlayerBehavior : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ActivateBlankAnimation()
+    {
+        blankRadiusMesh.transform.SetParent(null);
+        blankRadiusMesh.GetComponent<MeshRenderer>().material.color = Color.white;
+        blankRadiusMesh.transform.position = transform.position;
+        blankRadiusMesh.SetActive(true);
+        LeanTween.alpha(blankRadiusMesh, 0.5f, 0f);
+        LeanTween.alpha(blankRadiusMesh, 0f, 0.4f).setEase(LeanTweenType.easeOutCirc);
+        LeanTween.scale(blankRadiusMesh, new Vector3(8, 8, 8), 0.4f).setEase(LeanTweenType.easeOutCirc).setOnComplete(DisableBlankRadiusMesh);
+    }
+
+    private void DisableBlankRadiusMesh()
+    {
+        blankRadiusMesh.SetActive(false);
+        blankRadiusMesh.transform.SetParent(this.gameObject.transform, false);
+        blankRadiusMesh.transform.localScale = Vector3.one * 0.9f;
+        canPlayerUseBlanks = true;
     }
 
 }
