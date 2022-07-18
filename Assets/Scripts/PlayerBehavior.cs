@@ -7,6 +7,7 @@ public class PlayerBehavior : MonoBehaviour
     #region PlayerBaseStats
     private int playerBaseHealth = 5;
     private int playerBaseBlanks = 10;
+    private int playerBaseMoney;
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 1f;
@@ -19,6 +20,7 @@ public class PlayerBehavior : MonoBehaviour
     #region Dynamic variables
 
     private int currentPlayerHealth;
+    private int currentPlayerMoney;
     private int currentPlayerBlanks;
     private bool doesPlayerHaveIFrames;
     private float canPlayerFire;
@@ -38,10 +40,19 @@ public class PlayerBehavior : MonoBehaviour
             uiManager.UpdateHealthText();
         }
     }
+    public int pub_currentPlayerMoney
+    {
+        get { return currentPlayerMoney; }
+        private set
+        {
+            currentPlayerMoney = value;
+            uiManager.UpdateMoneyText();
+        }
+    }
     public int pub_currentPlayerBlanks
     {
         get { return currentPlayerBlanks; }
-        set
+        private set
         { 
             currentPlayerBlanks = value;
             uiManager.UpdateBlanksText();
@@ -80,6 +91,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         currentPlayerHealth = playerBaseHealth;
+        currentPlayerMoney = playerBaseMoney;
         currentPlayerBlanks = playerBaseBlanks;
 
         blankRadiusMesh.SetActive(false);
