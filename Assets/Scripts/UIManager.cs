@@ -13,10 +13,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI blanksText;
 
     void Start()
     {
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth);
+        blanksText.SetText("Blanks: " + playerBehavior.pub_currentPlayerBlanks);
     }
 
     // Update is called once per frame
@@ -28,5 +30,10 @@ public class UIManager : MonoBehaviour
     public void UpdateHealthText()
     {
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth);
+    }
+
+    public void UpdateBlanksText()
+    {
+        blanksText.SetText("Blanks: " + playerBehavior.pub_currentPlayerBlanks);
     }
 }

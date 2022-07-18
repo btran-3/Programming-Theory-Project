@@ -19,18 +19,21 @@ public class EnemyBehaviorA : MonoBehaviour
 
     [SerializeField] private GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
+    private float playerBlankRadius;
     private bool isFollowingPlayer;
     private NavMeshAgent agent;
+
+    Vector3 knockbackDir;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        //agent.updatePosition = false;
         agent.enabled = false;
     }
 
     void Start()
     {
+        playerBlankRadius = playerBehavior.pub_playerBlankRadius;
         gameObject.SetActive(false);
     }
 
@@ -38,7 +41,6 @@ public class EnemyBehaviorA : MonoBehaviour
     void Update()
     {
 
-        
     }
 
     public void SpawnEnemy()
@@ -69,13 +71,22 @@ public class EnemyBehaviorA : MonoBehaviour
         }
     }
 
+    public void BlankKnockback()
+    {
+        Vector3 knockbackDirection = (transform.position - playerGO.transform.position).normalized;
+        knockbackDirection.y = 0;
+
+        float distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
+        float distanceDifference = playerBlankRadius - distanceFromPlayer;
+        agent.velocity = knockbackDirection * distanceDifference * 3;
+    }
+
     private void FixedUpdate()
     {
         if (isFollowingPlayer)
         {
             agent.SetDestination(playerGO.transform.position);
         }
-        //transform.position = Vector3.SmoothDamp(transform.position, agent.nextPosition, ref velocity, 0.3f);
     }
 
     private void LateUpdate()

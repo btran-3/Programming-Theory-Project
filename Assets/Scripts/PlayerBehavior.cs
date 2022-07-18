@@ -5,18 +5,21 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 10;
+    private int playerBaseHealth = 20;
+    private int playerBaseBlanks = 15;
     private float playerBaseSpeed = 10f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 1f;
     private float playerBaseFireRate = 0.30f;
     private float playerBaseProjectileSpeed = 12f;
     private float playerBaseRange;
+    private float playerBlankRadius = 5f;
     #endregion
 
     #region Dynamic variables
 
     private int currentPlayerHealth;
+    private int currentPlayerBlanks;
     private bool doesPlayerHaveIFrames;
     private float canPlayerFire;
 
@@ -28,12 +31,27 @@ public class PlayerBehavior : MonoBehaviour
     public int pub_currentPlayerHealth
     {
         get { return currentPlayerHealth; }
-        set
+        private set
         {
             currentPlayerHealth = value;
             uiManager.UpdateHealthText();
         }
     }
+    public int pub_currentPlayerBlanks
+    {
+        get { return currentPlayerBlanks; }
+        set
+        { 
+            currentPlayerBlanks = value;
+            uiManager.UpdateBlanksText();
+        }
+    }
+
+    public float pub_playerBlankRadius
+    {
+        get { return playerBlankRadius;}
+    }
+
     public float pub_projectileSpeed {
         get { return playerBaseProjectileSpeed; }
             //need to add with stat upgrades
@@ -48,8 +66,8 @@ public class PlayerBehavior : MonoBehaviour
     public List<GameObject> projectilePool;
     [SerializeField] UIManager uiManager;
 
-
-
+    [SerializeField] GameObject BlankRadiusMesh;
+    //[SerializeField] BlankExplosion blankExplosion;
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     private Color defaultColor;
 
@@ -62,6 +80,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         currentPlayerHealth = playerBaseHealth;
+        currentPlayerBlanks = playerBaseBlanks;
     }
 
 
@@ -69,7 +88,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         GetPlayerInput();
         FireProjectiles();
-
+        UseBlank();
     }
 
     private void GetPlayerInput()
@@ -128,6 +147,8 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+
+
     private void ShootThisDirection(Vector3 shootDirection)
     {
         if (projectilePool.Count > 0 && Time.time > canPlayerFire)
@@ -163,9 +184,22 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    void UseBlank()
+    private void UseBlank()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0)
+        {
+            //Debug.Log("Use blank");
+            pub_currentPlayerBlanks--;
+
+            Collider[] overlapSphere = Physics.OverlapSphere(gameObject.transform.position, playerBlankRadius);
+            foreach (Collider col in overlapSphere)
+            {
+                if (col.gameObject.GetComponent<EnemyBehaviorA>() != null) //if has enemy script
+                {
+                    col.gameObject.GetComponent<EnemyBehaviorA>().BlankKnockback();
+                }
+            }
+        }
     }
 
 }

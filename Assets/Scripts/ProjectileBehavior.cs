@@ -6,6 +6,7 @@ public class ProjectileBehavior : MonoBehaviour
 {
     [SerializeField] GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
+    
     private Rigidbody rb;
     private Rigidbody playerRB;
 

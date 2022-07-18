@@ -54,9 +54,8 @@ public class RoomBehavior : MonoBehaviour
     {
         if (!roomHasStarted && other.gameObject.CompareTag("Player"))
         {
-            //will only trigger once, when the player enters the room
+            //will only trigger once, when the player enters the room area
             roomHasStarted = true;
-            //method to spawn enemies
             SpawnRoomEnemies(Random.Range(3, 5));
         }
 
