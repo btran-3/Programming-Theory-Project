@@ -32,7 +32,13 @@ public class RoomBehavior : MonoBehaviour
                 int randSpawnPointIndex = Random.Range(0, spawnPoints.Count);
                 int randEnemyIndex = Random.Range(0, enemyPool.Count);
                 enemyPool[randEnemyIndex].transform.position = spawnPoints[randSpawnPointIndex].transform.position;
-                enemyPool[randEnemyIndex].SetActive(true);
+                enemyPool[randEnemyIndex].GetComponent<EnemyBehaviorA>().SpawnEnemy();
+                //enemyPool[randEnemyIndex].SetActive(true);
+                //if I'm going to have different enemy classes inheriting from a base class
+                //I need to have a way to check if they have a script inheriting from the base class
+                //rather than doing a series of if statements checking for each class script's name
+                //then is there a way to call a same-named method for each enemy instance?
+                //https://answers.unity.com/questions/1717478/find-script-inherits-from-a-specific-base-class.html
                 enemyPool.RemoveAt(randEnemyIndex);
                 spawnPoints.RemoveAt(randSpawnPointIndex);
             }
@@ -51,7 +57,7 @@ public class RoomBehavior : MonoBehaviour
             //will only trigger once, when the player enters the room
             roomHasStarted = true;
             //method to spawn enemies
-            SpawnRoomEnemies(3);
+            SpawnRoomEnemies(Random.Range(3, 5));
         }
 
     }
