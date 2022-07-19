@@ -9,6 +9,7 @@ public class PickupBehavior : MonoBehaviour
     [SerializeField] private string pickupType;
 
     [SerializeField] private AudioClip[] hitGroundSounds;
+    [SerializeField] private OnDestroySounds onDestroySounds;
 
     public int pub_moneyValue
     {
@@ -80,4 +81,8 @@ public class PickupBehavior : MonoBehaviour
         return x;
     }
 
+    private void OnDestroy()
+    {
+        onDestroySounds.PlayPickupCollectedSound(pickupType);
+    }
 }

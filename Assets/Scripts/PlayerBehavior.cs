@@ -3,28 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-
-//NEED PLAYER HIT AND DEATH SOUNDS
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
@@ -103,17 +81,16 @@ public class PlayerBehavior : MonoBehaviour
 
     #region References
     public List<GameObject> projectilePool;
-    [SerializeField] private AudioClip[] pickupCollectSounds;
+    [SerializeField] private AudioClip[] playerHurtSounds;
 
     [SerializeField] UIManager uiManager;
-
     [SerializeField] GameObject blankRadiusMesh;
+    [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
+
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     AudioSource audioSource;
     private Color defaultColor;
     #endregion
-
-    public UnityEvent playerCollidedWithPickup;
 
     void Awake()
     {
@@ -165,6 +142,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
             PlayerTakeDamage(dmg);
+            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
         }
     }
 
@@ -177,25 +155,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Pickup"))
         {
-            PickupCollectSound(collision);
-
             Destroy(collision.gameObject);
             pub_currentPlayerMoney += collision.gameObject.GetComponent<PickupBehavior>().pub_moneyValue;
             pub_currentPlayerBlanks += collision.gameObject.GetComponent<PickupBehavior>().pub_blankValue;
-        }
-    }
-
-    private void PickupCollectSound(Collision collision)
-    {
-        if (collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType == "Blank")
-        {
-            int randIndex = Random.Range(0, 3);
-            audioSource.PlayOneShot(pickupCollectSounds[randIndex]);
-        }
-        else if (collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType == "Money")
-        {
-            int randIndex = Random.Range(3, 6);
-            audioSource.PlayOneShot(pickupCollectSounds[randIndex]);
         }
     }
 
@@ -249,8 +211,7 @@ public class PlayerBehavior : MonoBehaviour
 
         if (currentPlayerHealth <= 0)
         {
-            this.gameObject.SetActive(false);
-            Debug.Log("GAME OVER");
+            PlayerDeath();
             return;
         }
 
@@ -264,6 +225,13 @@ public class PlayerBehavior : MonoBehaviour
         LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.85f), 0f).setDelay(0.9f);
         LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(1.05f).setOnComplete(PlayerRecoverFromDamage);
         //Invoke("PlayerRecoverFromDamage", 1.05f);
+    }
+
+    private void PlayerDeath()
+    {
+        globalOnDestroySounds.playPlayerDeathSound();
+        gameObject.SetActive(false);
+        Debug.Log("GAME OVER");
     }
 
     private void PlayerRecoverFromDamage()

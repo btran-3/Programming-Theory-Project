@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 3
   dealDamage: 1
+  enemyType: small
   roomBehavior: {fileID: 0}
   playerGO: {fileID: 0}
   playerBehavior: {fileID: 0}

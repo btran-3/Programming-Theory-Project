@@ -7,6 +7,7 @@ public class EnemyBehaviorA : MonoBehaviour
 {
     [SerializeField] private float enemyHealth = 6;
     [SerializeField] private int dealDamage;
+    [SerializeField] private string enemyType;
 
     public float pub_enemyHealth {
         get { return enemyHealth; }
@@ -25,6 +26,7 @@ public class EnemyBehaviorA : MonoBehaviour
     [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip hitSound;
+    [SerializeField] OnDestroySounds onDestroySounds;
 
     private Renderer enemyRenderer;
     private Color defaultColor;
@@ -113,6 +115,7 @@ public class EnemyBehaviorA : MonoBehaviour
     private void OnDestroy() //remove from room list
     {
         roomBehavior.spawnedEnemies.Remove(this.gameObject);
+        onDestroySounds.PlayEnemyDeathSound(enemyType);
     }
 
 }

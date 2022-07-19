@@ -19,29 +19,32 @@ public class RoomBehavior : MonoBehaviour
     private bool unenteredRoom = true;
     //private bool movingToRoom;
     private bool playingRoom;
-    private bool clearedRoom;
+    //private bool clearedRoom;
 
     private bool didPickupsSpawn;
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        InitializeEnemies(Random.Range(3, 5));
+        InitializeEnemies(Random.Range(3, 3));
         InitializePickups(3);
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playingRoom && spawnedEnemies.Count == 0) //killed all enemies
         {
-            audioSource.PlayOneShot(audioClips[0]);
+            Invoke("PlayRoomClearedSound", 0.2f);
             playingRoom = false;
-            clearedRoom = true;
+            //clearedRoom = true;
             EnablePickups();
         }
+    }
+
+    private void PlayRoomClearedSound()
+    {
+        audioSource.PlayOneShot(audioClips[0]);
     }
 
     private void OnTriggerEnter(Collider other)
