@@ -17,6 +17,8 @@ public class EnemyBehaviorA : MonoBehaviour
         }
     }
 
+    [SerializeField] private RoomBehavior roomBehavior;
+
     [SerializeField] private GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
     private Renderer enemyRenderer;
@@ -28,6 +30,7 @@ public class EnemyBehaviorA : MonoBehaviour
 
     private void Awake()
     {
+        //gameObject.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
     }
@@ -35,7 +38,7 @@ public class EnemyBehaviorA : MonoBehaviour
     void Start()
     {
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
-        gameObject.SetActive(false);
+        
         enemyRenderer = GetComponent<Renderer>();
         defaultColor = enemyRenderer.material.color;
     }
@@ -51,6 +54,7 @@ public class EnemyBehaviorA : MonoBehaviour
 
     public void SpawnEnemy()
     {
+        Debug.Log("Spawned an enemy");
         gameObject.SetActive(true);
         agent.enabled = true;
         Invoke("StartFollowingPlayer", 0.5f);
@@ -88,6 +92,11 @@ public class EnemyBehaviorA : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
         float distanceDifference = playerBlankRadius - distanceFromPlayer;
         agent.velocity = (knockbackDirection * distanceDifference * 3) + knockbackDirection;
+    }
+
+    private void OnDestroy()
+    {
+        roomBehavior.spawnedEnemies.Remove(this.gameObject);
     }
 
 }

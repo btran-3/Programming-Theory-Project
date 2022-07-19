@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class RoomBehavior : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemyPool;
+    [SerializeField] List<GameObject> possibleEnemies;
+    [SerializeField] List<GameObject> possiblePickups;
+
+    public List<GameObject> spawnedEnemies;
+    [SerializeField] List<GameObject> spawnedPickups;
+
+
+    //[SerializeField] List<GameObject> enemyPool;
+
     [SerializeField] List<GameObject> enemySpawnPoints;
     [SerializeField] List<GameObject> pickupPool;
     [SerializeField] List<GameObject> pickupSpawnPoints;
@@ -21,15 +29,19 @@ public class RoomBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnPickups(3);
+        //SpawnPickups(3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (playingRoom && spawnedEnemies.Count == 0)
+        {
+            EnablePickups();
+        }
     }
 
+    /*
     void SpawnRoomEnemies(int enemiesToSpawn)
     {
         if (enemiesToSpawn <= enemySpawnPoints.Count)
@@ -54,8 +66,43 @@ public class RoomBehavior : MonoBehaviour
         {
             Debug.LogWarning("Spawning more enemies than there are enemy spawn points");
         }
+    }*/
+
+    void InitializeEnemies(int enemiesToInit)
+    {
+        if (enemiesToInit <= enemySpawnPoints.Count)
+        {
+            for (int i = 0; i < enemiesToInit; i++)
+            {
+                int randSpawnPointIndex = Random.Range(0, enemySpawnPoints.Count);
+                int randomEnemyIndex = Random.Range(0, possibleEnemies.Count);
+                GameObject newEnemyInstance = Instantiate(possibleEnemies[randomEnemyIndex], enemySpawnPoints[randSpawnPointIndex].transform.position,
+                    possibleEnemies[randomEnemyIndex].transform.localRotation);
+                newEnemyInstance.gameObject.name = newEnemyInstance.gameObject.name + " " + i;
+                spawnedEnemies.Add(newEnemyInstance);
+                enemySpawnPoints.RemoveAt(randSpawnPointIndex);
+            }
+        }
     }
 
+    void EnableEnemies()
+    {
+        for (int i = 0; i < spawnedEnemies.Count; i++)
+        {
+            spawnedEnemies[i].SetActive(true);
+            spawnedEnemies[i].GetComponent<EnemyBehaviorA>().SpawnEnemy();
+        }
+        /*
+        foreach (GameObject enemy in spawnedEnemies)
+        {
+            int i = 0;
+            spawnedEnemies[i].SetActive(true);
+            spawnedEnemies[i].GetComponent<EnemyBehaviorA>().SpawnEnemy();
+            i ++;
+        } */
+    }
+
+    /*
     void SpawnPickups(int pickupsToSpawn)
     {
         if (pickupsToSpawn <= pickupSpawnPoints.Count)
@@ -75,6 +122,35 @@ public class RoomBehavior : MonoBehaviour
         {
             Debug.LogWarning("Spawning more pickups than there are pickup spawn points");
         }
+    } */
+
+    void InitializePickups(int pickupsToInit)
+    {
+        if (pickupsToInit <= pickupSpawnPoints.Count)
+        {
+            for (int i = 0; i < pickupsToInit; i++)
+            {
+                int randSpawnPointIndex = Random.Range(0, pickupSpawnPoints.Count);
+                int randPickupIndex = Random.Range(0, possiblePickups.Count);
+                GameObject newPickupInstance = Instantiate(possiblePickups[randPickupIndex], pickupSpawnPoints[randPickupIndex].transform.position,
+                    possiblePickups[randPickupIndex].transform.localRotation);
+                spawnedPickups.Add(newPickupInstance);
+                pickupSpawnPoints.RemoveAt(randSpawnPointIndex);
+            }
+        }
+    }
+
+    void EnablePickups()
+    {
+        if (!didPickupsSpawn)
+        {
+            didPickupsSpawn = true; //fire once
+            for (int i = 0; i < spawnedPickups.Count; i++)
+            {
+                spawnedPickups[i].SetActive(true);
+                spawnedPickups[i].GetComponent<PickupBehavior>().SpawnPickup();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,10 +158,22 @@ public class RoomBehavior : MonoBehaviour
         if (unenteredRoom && other.gameObject.CompareTag("Player"))
         {
             //will only trigger once, when the player enters the room area
+            //SpawnRoomEnemies(Random.Range(3, 5));
+            InitializeEnemies(Random.Range(3, 5));
+            InitializePickups(Random.Range(2, 4));
+            //InitializePickups(3);
+
             unenteredRoom = false;
             playingRoom = true;
-            SpawnRoomEnemies(Random.Range(3, 5));
         }
 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            EnableEnemies();
+        }
     }
 }
