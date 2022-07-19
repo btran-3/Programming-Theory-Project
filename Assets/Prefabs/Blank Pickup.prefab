@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6316160491874473025}
   m_Layer: 0
   m_Name: Blank Pickup
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,4 +129,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyValue: 0
-  blankValue: 0
+  blankValue: 1

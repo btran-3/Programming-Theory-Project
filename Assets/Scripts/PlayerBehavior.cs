@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -74,13 +75,17 @@ public class PlayerBehavior : MonoBehaviour
     }
     #endregion
 
-
+    #region References
     public List<GameObject> projectilePool;
+
     [SerializeField] UIManager uiManager;
 
     [SerializeField] GameObject blankRadiusMesh;
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     private Color defaultColor;
+    #endregion
+
+    public UnityEvent playerCollidedWithPickup;
 
     void Awake()
     {
@@ -128,6 +133,18 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Pickup"))
+        {
+            Destroy(collision.gameObject);
+            pub_currentPlayerMoney += collision.gameObject.GetComponent<PickupBehavior>().pub_moneyValue;
+            pub_currentPlayerBlanks += collision.gameObject.GetComponent<PickupBehavior>().pub_blankValue;
+
+            collision.gameObject.GetComponent<PickupBehavior>().CollectedByPlayer();
+        }
+    }
+
     private void MovePlayerRigidbody()
     {
         velocity = playerRB.velocity;
@@ -160,8 +177,6 @@ public class PlayerBehavior : MonoBehaviour
             ShootThisDirection(Vector3.forward);
         }
     }
-
-
 
     private void ShootThisDirection(Vector3 shootDirection)
     {

@@ -41,6 +41,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateBlanksText()
     {
-        blanksText.SetText("Blanks: " + playerBehavior.pub_currentPlayerBlanks);
+        blanksText.SetText("B: " + playerBehavior.pub_currentPlayerBlanks);
     }
 }

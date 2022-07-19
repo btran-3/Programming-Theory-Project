@@ -52,12 +52,12 @@ public class EnemyBehaviorA : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnableEnemy()
     {
-        Debug.Log("Spawned an enemy");
+        //Debug.Log("Spawned an enemy");
         gameObject.SetActive(true);
         agent.enabled = true;
-        Invoke("StartFollowingPlayer", 0.5f);
+        Invoke("StartFollowingPlayer", 0.75f);
     }
 
     private void StartFollowingPlayer()
