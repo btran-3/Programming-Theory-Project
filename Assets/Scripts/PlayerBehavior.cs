@@ -77,11 +77,13 @@ public class PlayerBehavior : MonoBehaviour
 
     #region References
     public List<GameObject> projectilePool;
+    [SerializeField] private AudioClip[] pickupCollectSounds;
 
     [SerializeField] UIManager uiManager;
 
     [SerializeField] GameObject blankRadiusMesh;
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
+    AudioSource audioSource;
     private Color defaultColor;
     #endregion
 
@@ -90,6 +92,7 @@ public class PlayerBehavior : MonoBehaviour
     void Awake()
     {
         playerRB = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -129,7 +132,8 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames)
         {
-            PlayerTakeDamage(1);
+            int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
+            PlayerTakeDamage(dmg);
         }
     }
 
@@ -137,11 +141,25 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Pickup"))
         {
+            PickupCollectSound(collision);
+
             Destroy(collision.gameObject);
             pub_currentPlayerMoney += collision.gameObject.GetComponent<PickupBehavior>().pub_moneyValue;
             pub_currentPlayerBlanks += collision.gameObject.GetComponent<PickupBehavior>().pub_blankValue;
+        }
+    }
 
-            collision.gameObject.GetComponent<PickupBehavior>().CollectedByPlayer();
+    private void PickupCollectSound(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType == "Blank")
+        {
+            int randIndex = Random.Range(0, 3);
+            audioSource.PlayOneShot(pickupCollectSounds[randIndex]);
+        }
+        else if (collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType == "Money")
+        {
+            int randIndex = Random.Range(3, 6);
+            audioSource.PlayOneShot(pickupCollectSounds[randIndex]);
         }
     }
 

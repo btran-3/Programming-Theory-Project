@@ -82,15 +82,19 @@ public class RoomBehavior : MonoBehaviour
         {
             for (int i = 0; i < pickupsToInit; i++)
             {
+                Vector3 randomPosOffset = new Vector3(RNGf(-0.5f, 0.5f), RNGf(-1, 1), RNGf(-0.5f, 0.5f));
+
                 int randSpawnPointIndex = Random.Range(0, pickupSpawnPoints.Count);
                 int randPickupIndex = Random.Range(0, possiblePickups.Count);
-                GameObject newPickupInstance = Instantiate(possiblePickups[randPickupIndex], pickupSpawnPoints[randSpawnPointIndex].transform.position,
+                GameObject newPickupInstance = Instantiate(possiblePickups[randPickupIndex],
+                    pickupSpawnPoints[randSpawnPointIndex].transform.position + randomPosOffset,
                     possiblePickups[randPickupIndex].transform.localRotation);
                 spawnedPickups.Add(newPickupInstance);
                 pickupSpawnPoints.RemoveAt(randSpawnPointIndex);
             }
         }
     }
+
     void EnablePickups()
     {
         if (!didPickupsSpawn)
@@ -104,6 +108,10 @@ public class RoomBehavior : MonoBehaviour
         }
     }
 
-
+    float RNGf(float min, float max)
+    {
+        float a = Random.Range(min, max);
+        return a;
+    }
 
 }

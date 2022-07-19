@@ -131,6 +131,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyValue: 1
   blankValue: 0
+  pickupType: Money
+  hitGroundSounds:
+  - {fileID: 8300000, guid: 28545cfce71bd43428da6aec8a4cbbb9, type: 3}
+  - {fileID: 8300000, guid: e68f80bbe939d6d46a51c46b4eb8b4fe, type: 3}
+  - {fileID: 8300000, guid: 776096b71bcb3ad4a8d89f48c4f1f0b1, type: 3}
+  collectedSounds:
+  - {fileID: 8300000, guid: c30306a051245d24ab2b3fcceacf3ace, type: 3}
+  - {fileID: 8300000, guid: d6cfb1aefbb4804479b10a057609f7cb, type: 3}
+  - {fileID: 8300000, guid: efe082e753e854d4988dea2a73a5d151, type: 3}
 --- !u!82 &5883063015249297098
 AudioSource:
   m_ObjectHideFlags: 0

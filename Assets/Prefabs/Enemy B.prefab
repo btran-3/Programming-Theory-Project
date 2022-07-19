@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: 5
+  dealDamage: 2
   roomBehavior: {fileID: 0}
   playerGO: {fileID: 0}
   playerBehavior: {fileID: 0}

@@ -7,6 +7,8 @@ public class EnemyBehaviorA : MonoBehaviour
 {
     [SerializeField]
     private float enemyHealth = 6;
+    [SerializeField] private int dealDamage;
+
     public float pub_enemyHealth {
         get { return enemyHealth; }
         private set { enemyHealth = value;
@@ -16,6 +18,7 @@ public class EnemyBehaviorA : MonoBehaviour
             }
         }
     }
+    public int pub_dealDamage { get { return dealDamage; } }
 
     [SerializeField] private RoomBehavior roomBehavior;
 
