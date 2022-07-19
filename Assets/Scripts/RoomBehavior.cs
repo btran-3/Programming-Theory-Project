@@ -13,6 +13,9 @@ public class RoomBehavior : MonoBehaviour
     [SerializeField] List<GameObject> enemySpawnPoints;
     [SerializeField] List<GameObject> pickupSpawnPoints;
 
+    [SerializeField] GameObject doorTop;
+    [SerializeField] GameObject doorBottom;
+
     private AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
@@ -22,6 +25,7 @@ public class RoomBehavior : MonoBehaviour
     //private bool clearedRoom;
 
     private bool didPickupsSpawn;
+    private Vector3 doorDefaultScale;
 
 
     void Start()
@@ -29,17 +33,35 @@ public class RoomBehavior : MonoBehaviour
         InitializeEnemies(Random.Range(3, 3));
         InitializePickups(3);
         audioSource = GetComponent<AudioSource>();
+        doorTop.SetActive(true);
+        doorBottom.SetActive(true);
+        doorDefaultScale = doorTop.transform.localScale;
     }
 
     void Update()
     {
         if (playingRoom && spawnedEnemies.Count == 0) //killed all enemies
         {
-            Invoke("PlayRoomClearedSound", 0.2f);
-            playingRoom = false;
-            //clearedRoom = true;
-            EnablePickups();
+            ClearedRoom();
         }
+    }
+
+    private void ClearedRoom()
+    {
+        Invoke("PlayRoomClearedSound", 0.2f);
+        playingRoom = false;
+        //clearedRoom = true;
+        EnablePickups();
+
+        AnimateDoorOpen();
+    }
+
+    private void AnimateDoorOpen()
+    {
+        LeanTween.move(doorTop, doorTop.transform.position - (Vector3.right * 2), 1f)
+            .setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
+        LeanTween.scale(doorTop, (doorDefaultScale - new Vector3(0.01f, 0, 0.01f)), 1f)
+            .setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
     }
 
     private void PlayRoomClearedSound()
@@ -52,14 +74,26 @@ public class RoomBehavior : MonoBehaviour
         if (unenteredRoom && other.gameObject.CompareTag("Player"))
         {
             //will only trigger once, when the player enters the room area
-            Invoke("EnableEnemies", 0f);
-
-            unenteredRoom = false;
-            playingRoom = true;
+            BeginRoom();
         }
 
     }
 
+    private void BeginRoom()
+    {
+        Invoke("EnableEnemies", 0f);
+
+        unenteredRoom = false;
+        playingRoom = true;
+        AnimateDoorClosed();
+    }
+    private void AnimateDoorClosed()
+    {
+        LeanTween.move(doorBottom, doorBottom.transform.position + (Vector3.right * 2), 0.5f)
+            .setEase(LeanTweenType.easeInOutCubic);
+        LeanTween.scale(doorBottom, doorDefaultScale, 0.5f)
+            .setEase(LeanTweenType.easeInOutCubic);
+    }
 
     void InitializeEnemies(int enemiesToInit)
     {
@@ -104,7 +138,6 @@ public class RoomBehavior : MonoBehaviour
             }
         }
     }
-
     void EnablePickups()
     {
         if (!didPickupsSpawn)
