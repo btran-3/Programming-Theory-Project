@@ -198,17 +198,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8630367374752303179, guid: b7e50afda81077e449bcfe82f2e3c802, type: 3}
   m_PrefabInstance: {fileID: 104791357}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &108109589 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 108109589, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
-  m_PrefabInstance: {fileID: 8371316786729554536}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d3a62f7f81267499d1f5ea25cb57a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &284770324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2309,7 +2298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 709d9be1f335671489dbe73a28a3ba4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBehavior: {fileID: 1585987111}
 --- !u!1001 &1672868648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2976,10 +2964,6 @@ PrefabInstance:
       propertyPath: playerBehavior
       value: 
       objectReference: {fileID: 1585987111}
-    - target: {fileID: 2240432615284712355, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
-      propertyPath: onDestroySounds
-      value: 
-      objectReference: {fileID: 108109589}
     - target: {fileID: 4056960100729131792, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: playerGO
       value: 
@@ -2988,10 +2972,6 @@ PrefabInstance:
       propertyPath: playerBehavior
       value: 
       objectReference: {fileID: 1585987111}
-    - target: {fileID: 4056960100729131792, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
-      propertyPath: onDestroySounds
-      value: 
-      objectReference: {fileID: 108109589}
     - target: {fileID: 4056960101444141618, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: m_RootOrder
       value: 5

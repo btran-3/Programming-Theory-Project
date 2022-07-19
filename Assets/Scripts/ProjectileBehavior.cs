@@ -51,22 +51,18 @@ public class ProjectileBehavior : MonoBehaviour
         this.gameObject.SetActive(true);
         playerBehavior.projectilePool.Remove(this.gameObject);
         rb.AddForce((shootdirection * playerBehavior.pub_projectileSpeed) + (playerRB.velocity / 2), ForceMode.Impulse);
-        LeanTween.scale(this.gameObject, (startingScale / 2f), range).setEase(LeanTweenType.easeInExpo).setOnComplete(DisableProjectileBecauseOfRange);
+        LeanTween.scale(this.gameObject, (startingScale / 3f), range/2).setEase(LeanTweenType.easeInQuart).setDelay(range/2).setOnComplete(DisableProjectile);
     }
 
     private void DisableProjectileUponHit(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Environment"))
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            LeanTween.cancel(gameObject);
-            this.gameObject.SetActive(false);
-            playerBehavior.projectilePool.Add(this.gameObject);
+            DisableProjectile();
         }
     }
 
-    private void DisableProjectileBecauseOfRange()
+    private void DisableProjectile()
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

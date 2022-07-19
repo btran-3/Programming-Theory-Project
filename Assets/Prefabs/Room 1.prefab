@@ -184,9 +184,6 @@ MonoBehaviour:
   enemyDeathSounds:
   - {fileID: 8300000, guid: 2f94b4fb3e214ed4b89cdcea58872175, type: 3}
   - {fileID: 8300000, guid: 2754ea16e19022840be667ed4b2fa96b, type: 3}
-  playerDeathSounds:
-  - {fileID: 8300000, guid: 5d8f6806463c025419a17a34c36330dd, type: 3}
-  - {fileID: 8300000, guid: 3efde61a71955d64087fac03824335a2, type: 3}
 --- !u!1 &406021650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1337,10 @@ PrefabInstance:
       propertyPath: playerBehavior
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 54716279, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
+      propertyPath: onDestroySounds
+      value: 
+      objectReference: {fileID: 108109589}
     - target: {fileID: 4354222522806592585, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
       propertyPath: m_Name
       value: Enemy B
@@ -1541,6 +1542,10 @@ PrefabInstance:
       propertyPath: playerBehavior
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2835765971106506873, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
+      propertyPath: onDestroySounds
+      value: 
+      objectReference: {fileID: 108109589}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
 --- !u!4 &2240432614387124871 stripped
