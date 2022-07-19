@@ -6,7 +6,10 @@ public class ProjectileBehavior : MonoBehaviour
 {
     [SerializeField] GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
-    
+
+    [SerializeField] AudioClip[] audioClips;
+
+    private AudioSource audioSource;
     private Rigidbody rb;
     private Rigidbody playerRB;
 
@@ -15,6 +18,7 @@ public class ProjectileBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerRB = playerGO.GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         this.gameObject.SetActive(false);
     }
 

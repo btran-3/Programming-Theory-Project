@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyBehaviorA : MonoBehaviour
 {
-    [SerializeField]
-    private float enemyHealth = 6;
+    [SerializeField] private float enemyHealth = 6;
     [SerializeField] private int dealDamage;
 
     public float pub_enemyHealth {
@@ -24,6 +23,9 @@ public class EnemyBehaviorA : MonoBehaviour
 
     [SerializeField] private GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip hitSound;
+
     private Renderer enemyRenderer;
     private Color defaultColor;
 
@@ -44,6 +46,7 @@ public class EnemyBehaviorA : MonoBehaviour
         
         enemyRenderer = GetComponent<Renderer>();
         defaultColor = enemyRenderer.material.color;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -70,8 +73,18 @@ public class EnemyBehaviorA : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        HitByPlayerProjectile(other);
+    }
+
+    private void HitByPlayerProjectile(Collider other)
+    {
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
+            if (this.gameObject.activeInHierarchy)//play sound before potential death update
+            {
+                audioSource.PlayOneShot(hitSound);
+            }
+
             pub_enemyHealth -= playerBehavior.pub_playerDamage;
             //THANKS https://www.youtube.com/watch?v=gFq0lO2E2Sc
             Vector3 knockbackDirection;
@@ -97,7 +110,7 @@ public class EnemyBehaviorA : MonoBehaviour
         agent.velocity = (knockbackDirection * distanceDifference * 3) + knockbackDirection;
     }
 
-    private void OnDestroy()
+    private void OnDestroy() //remove from room list
     {
         roomBehavior.spawnedEnemies.Remove(this.gameObject);
     }

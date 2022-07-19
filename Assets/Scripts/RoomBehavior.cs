@@ -13,8 +13,11 @@ public class RoomBehavior : MonoBehaviour
     [SerializeField] List<GameObject> enemySpawnPoints;
     [SerializeField] List<GameObject> pickupSpawnPoints;
 
+    private AudioSource audioSource;
+    [SerializeField] AudioClip[] audioClips;
+
     private bool unenteredRoom = true;
-    private bool movingToRoom;
+    //private bool movingToRoom;
     private bool playingRoom;
     private bool clearedRoom;
 
@@ -26,13 +29,17 @@ public class RoomBehavior : MonoBehaviour
     {
         InitializeEnemies(Random.Range(3, 5));
         InitializePickups(3);
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playingRoom && spawnedEnemies.Count == 0)
+        if (playingRoom && spawnedEnemies.Count == 0) //killed all enemies
         {
+            audioSource.PlayOneShot(audioClips[0]);
+            playingRoom = false;
+            clearedRoom = true;
             EnablePickups();
         }
     }

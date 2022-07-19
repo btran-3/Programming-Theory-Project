@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+
+//NEED PLAYER HIT AND DEATH SOUNDS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
@@ -38,6 +60,10 @@ public class PlayerBehavior : MonoBehaviour
         private set
         {
             currentPlayerHealth = value;
+            if (currentPlayerHealth <0)
+            {
+                currentPlayerHealth = 0;
+            }
             uiManager.UpdateHealthText();
         }
     }
@@ -130,6 +156,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        TakeDamageFromEnemy(collision);
+    }
+
+    private void TakeDamageFromEnemy(Collision collision)
+    {
         if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames)
         {
             int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
@@ -138,6 +169,11 @@ public class PlayerBehavior : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        TouchPickup(collision);
+    }
+
+    private void TouchPickup(Collision collision)
     {
         if (collision.gameObject.CompareTag("Pickup"))
         {
