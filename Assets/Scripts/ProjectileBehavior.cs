@@ -14,6 +14,7 @@ public class ProjectileBehavior : MonoBehaviour
     private Rigidbody playerRB;
 
     private Vector3 startingScale;
+    private float range;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,12 +22,15 @@ public class ProjectileBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerRB = playerGO.GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        this.gameObject.SetActive(false);
+
+        startingScale = transform.localScale;
     }
 
     private void Start()
     {
-        startingScale = transform.localScale;
+        range = playerBehavior.pub_playerProjectileRange;
+        //Debug.Log(range);
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,13 +46,12 @@ public class ProjectileBehavior : MonoBehaviour
 
     public void ShootProjectile(Vector3 shootdirection)
     {
-        
         transform.localScale = startingScale;
         transform.position = playerGO.transform.position;
-        playerBehavior.projectilePool.Remove(this.gameObject);
         this.gameObject.SetActive(true);
+        playerBehavior.projectilePool.Remove(this.gameObject);
         rb.AddForce((shootdirection * playerBehavior.pub_projectileSpeed) + (playerRB.velocity / 2), ForceMode.Impulse);
-        LeanTween.scale(this.gameObject, startingScale / 1.5f, 1f).setEase(LeanTweenType.easeInExpo).setOnComplete(DisableProjectileBecauseOfRange);
+        LeanTween.scale(this.gameObject, (startingScale / 2f), range).setEase(LeanTweenType.easeInExpo).setOnComplete(DisableProjectileBecauseOfRange);
     }
 
     private void DisableProjectileUponHit(Collider other)

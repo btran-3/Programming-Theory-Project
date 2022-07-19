@@ -14,7 +14,7 @@ public class PlayerBehavior : MonoBehaviour
     private float playerBaseDamage = 1f;
     private float playerBaseFireRate = 0.30f;
     private float playerBaseProjectileSpeed = 12f;
-    private float playerBaseProjectileRange;
+    private float playerBaseProjectileRange = 1f;
     private float playerBlankRadius = 5f;
     #endregion
 
@@ -77,6 +77,13 @@ public class PlayerBehavior : MonoBehaviour
         get { return playerBaseDamage; }
         //add with stat upgrades
     }
+
+    public float pub_playerProjectileRange
+    {
+        get { return playerBaseProjectileRange; }
+    }
+
+
     #endregion
 
     #region References
@@ -138,11 +145,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void TakeDamageFromEnemy(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames)
+        if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
+            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
             int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
             PlayerTakeDamage(dmg);
-            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
         }
     }
 

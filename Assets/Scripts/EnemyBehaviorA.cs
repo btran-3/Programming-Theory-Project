@@ -114,8 +114,8 @@ public class EnemyBehaviorA : MonoBehaviour
 
     private void OnDestroy() //remove from room list
     {
-        roomBehavior.spawnedEnemies.Remove(this.gameObject);
         onDestroySounds.PlayEnemyDeathSound(enemyType);
+        roomBehavior.spawnedEnemies.Remove(this.gameObject);
     }
 
 }
