@@ -31,6 +31,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool canPlayerMove = true;
 
     Vector3 velocity, desiredVelocity;
+    [SerializeField] private int currentRoomIndex = -1;
 
     #endregion
 
@@ -86,6 +87,16 @@ public class PlayerBehavior : MonoBehaviour
         get { return playerBaseProjectileRange; }
     }
 
+    public int pub_currentRoomIndex
+    {
+        get { return currentRoomIndex; }
+        private set
+        {
+            currentRoomIndex = value;
+            cameraCinemachine.ActivateNextCamera(currentRoomIndex);
+        }
+    }
+
 
     #endregion
 
@@ -96,6 +107,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] UIManager uiManager;
     [SerializeField] GameObject blankRadiusMesh;
     [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
+    [SerializeField] CameraCinemachine cameraCinemachine;
 
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     AudioSource audioSource;
@@ -179,6 +191,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             canPlayerMove = false;
 
+            pub_currentRoomIndex++;
             playerRB.velocity = Vector3.zero;
             playerRB.angularVelocity = Vector3.zero;
             transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
