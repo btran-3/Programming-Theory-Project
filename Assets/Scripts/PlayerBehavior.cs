@@ -31,7 +31,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool canPlayerMove = true;
 
     Vector3 velocity, desiredVelocity;
-    [SerializeField] private int currentRoomIndex = -1;
+    private int currentRoomIndex = 0;
 
     #endregion
 
