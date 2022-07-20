@@ -10,6 +10,9 @@ public class CameraCinemachine : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("modify camera script so instances of virtual cameras are generated at runtime" +
+            "based on getting the roomsToSpawn variable from floorLayoutManager");
+
         for (int i = 0; i < virtualCameras.Length; i++)
         {
 
