@@ -43,12 +43,8 @@ public class PickupBehavior : MonoBehaviour
 
     private void Start()
     {
+        transform.rotation = Random.rotation;
         this.gameObject.transform.localScale = Vector3.zero;
-    }
-
-    private void Update()
-    {
-        //MagnetToPlayer(transform.position, 2f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -59,16 +55,6 @@ public class PickupBehavior : MonoBehaviour
         }
     }
 
-    private void MagnetToPlayer(Vector3 center, float radius)
-    {
-        Collider[] overlappingSphere = Physics.OverlapSphere(center, radius, 8);
-        foreach (var item in overlappingSphere)
-        {
-            Debug.Log("Near player");
-        }
-
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -77,8 +63,6 @@ public class PickupBehavior : MonoBehaviour
 
             Vector3 playerPos = other.gameObject.transform.position;
             Vector3 targetPos = playerPos - transform.position;
-            //float distance = Vector3.Distance(transform.position, playerPos);
-            //Debug.Log(distance);
             rb.AddForce(targetPos * 10, ForceMode.Acceleration);
         }
     }
