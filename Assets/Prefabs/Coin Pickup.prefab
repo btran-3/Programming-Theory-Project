@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 7250276188827780340}
   - component: {fileID: 8548784874874994431}
   - component: {fileID: 5883063015249297098}
-  m_Layer: 0
+  - component: {fileID: -2970143580745839110}
+  m_Layer: 9
   m_Name: Coin Pickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -136,10 +137,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 28545cfce71bd43428da6aec8a4cbbb9, type: 3}
   - {fileID: 8300000, guid: e68f80bbe939d6d46a51c46b4eb8b4fe, type: 3}
   - {fileID: 8300000, guid: 776096b71bcb3ad4a8d89f48c4f1f0b1, type: 3}
-  collectedSounds:
-  - {fileID: 8300000, guid: c30306a051245d24ab2b3fcceacf3ace, type: 3}
-  - {fileID: 8300000, guid: d6cfb1aefbb4804479b10a057609f7cb, type: 3}
-  - {fileID: 8300000, guid: efe082e753e854d4988dea2a73a5d151, type: 3}
+  onDestroySounds: {fileID: 0}
 --- !u!82 &5883063015249297098
 AudioSource:
   m_ObjectHideFlags: 0
@@ -236,3 +234,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &-2970143580745839110
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250276188827780350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0.00000005960464, y: 0, z: -0.00000008940696}

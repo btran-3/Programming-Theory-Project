@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4517451672116045455}
   - component: {fileID: 6316160491874473025}
   - component: {fileID: 2470908802583947242}
-  m_Layer: 0
+  - component: {fileID: 4293942789443206904}
+  m_Layer: 9
   m_Name: Blank Pickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -136,10 +137,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b9ba659fead028144ba1cacc63825f43, type: 3}
   - {fileID: 8300000, guid: 41293a3f28665504281455ef69da2af2, type: 3}
   - {fileID: 8300000, guid: aeb2a8d6958a84e4a84a78166da793b1, type: 3}
-  collectedSounds:
-  - {fileID: 8300000, guid: 82c5336611ce6f14eab557795323991f, type: 3}
-  - {fileID: 8300000, guid: 833c5d1c5ba1fb048ba8b74fd55501a1, type: 3}
-  - {fileID: 8300000, guid: 828fb1b6df3675c4dab6034ff5f9dce6, type: 3}
+  onDestroySounds: {fileID: 0}
 --- !u!82 &2470908802583947242
 AudioSource:
   m_ObjectHideFlags: 0
@@ -236,3 +234,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &4293942789443206904
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4517451672116045488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0, y: 0, z: 0}

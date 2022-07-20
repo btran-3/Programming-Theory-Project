@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7031121108922162660}
   - component: {fileID: 4415903474598240064}
   - component: {fileID: 5998038671417361113}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Render Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 301773124980667189}
   - component: {fileID: 8973221155179332661}
   - component: {fileID: 7331249670228378146}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cutout Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078235330617007265}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hole Prefab
   m_TagString: Hole
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 4623670747780007539}
   - component: {fileID: 4623670747780007548}
   - component: {fileID: 4623670747780007549}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

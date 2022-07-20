@@ -46,11 +46,48 @@ public class PickupBehavior : MonoBehaviour
         this.gameObject.transform.localScale = Vector3.zero;
     }
 
+    private void Update()
+    {
+        //MagnetToPlayer(transform.position, 2f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Environment"))
         {
             HitGround();
+        }
+    }
+
+    private void MagnetToPlayer(Vector3 center, float radius)
+    {
+        Collider[] overlappingSphere = Physics.OverlapSphere(center, radius, 8);
+        foreach (var item in overlappingSphere)
+        {
+            Debug.Log("Near player");
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            rb.useGravity = false;
+
+            Vector3 playerPos = other.gameObject.transform.position;
+            Vector3 targetPos = playerPos - transform.position;
+            //float distance = Vector3.Distance(transform.position, playerPos);
+            //Debug.Log(distance);
+            rb.AddForce(targetPos * 10, ForceMode.Acceleration);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            rb.useGravity = true;
         }
     }
 
@@ -63,7 +100,6 @@ public class PickupBehavior : MonoBehaviour
             audioSource.PlayOneShot(hitGroundSounds[randIndex]);
         }
     }
-
 
     public void SpawnPickup()
     {
