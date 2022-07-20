@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class FloorLayoutManager : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class FloorLayoutManager : MonoBehaviour
     [SerializeField] private GameObject[] possibleKindRooms;
     [SerializeField] private List<GameObject> spawnedRooms;
 
+    [SerializeField] private NavMeshSurface surface;
+
     private int roomsToSpawn = 9;
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
@@ -18,6 +22,9 @@ public class FloorLayoutManager : MonoBehaviour
     {
         SetAllPoolRoomsInactive();
         SpawnRooms(roomsToSpawn);
+
+        //UPDATE NAVMESH AT RUNTIME
+
     }
 
 
