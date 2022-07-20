@@ -873,6 +873,8 @@ MonoBehaviour:
   playerStartPos: {fileID: 1637765526354712003}
   audioClips:
   - {fileID: 8300000, guid: 5f8245c7d6e294846aba0c41e8369987, type: 3}
+  enemiesToSpawnExclInt: {x: 3, y: 5}
+  pickupsToSpawnExclInt: {x: 2, y: 4}
 --- !u!65 &4056960101444141620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1853,6 +1855,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1849326900}
     m_Modifications:
+    - target: {fileID: 54716278, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 54716279, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
       propertyPath: playerGO
       value: 
@@ -2056,6 +2062,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2835765969923703133, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835765971106506872, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2835765971106506873, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}

@@ -27,7 +27,7 @@ public class PlayerBehavior : MonoBehaviour
     private float canPlayerFire;
     private bool canPlayerUseBlanks = true;
 
-    private bool didPlayerEnterRoom;
+    //private bool didPlayerEnterRoom;
     private bool canPlayerMove = true;
 
     Vector3 velocity, desiredVelocity;
@@ -175,9 +175,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerHitsRoomEnterTrigger(Collider other)
     {
-        if (other.gameObject.CompareTag("Room") && !didPlayerEnterRoom)
+        if (other.gameObject.CompareTag("Room"))
         {
-            didPlayerEnterRoom = true;
             canPlayerMove = false;
 
             playerRB.velocity = Vector3.zero;

@@ -21,6 +21,11 @@ public class RoomBehavior : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
+    [SerializeField] private Vector2 enemiesToSpawnExclInt;
+    [SerializeField] private Vector2 pickupsToSpawnExclInt;
+
+    private Collider colliderA;
+
     private bool unenteredRoom = true;
     //private bool movingToRoom;
     private bool playingRoom;
@@ -37,9 +42,10 @@ public class RoomBehavior : MonoBehaviour
 
     void Start()
     {
-        InitializeEnemies(Random.Range(3, 3));
-        InitializePickups(3);
+        InitializeEnemies(((int)Random.Range(enemiesToSpawnExclInt.x, enemiesToSpawnExclInt.y)));
+        InitializePickups(((int)Random.Range(pickupsToSpawnExclInt.x, pickupsToSpawnExclInt.y)));
         audioSource = GetComponent<AudioSource>();
+        colliderA = GetComponent<Collider>();
         doorTop.SetActive(true);
         doorBottom.SetActive(true);
         doorDefaultScale = doorTop.transform.localScale;
@@ -90,6 +96,7 @@ public class RoomBehavior : MonoBehaviour
         {
             //will only trigger once, when the player enters the room area
             BeginRoom();
+            colliderA.enabled = false;
         }
 
     }
