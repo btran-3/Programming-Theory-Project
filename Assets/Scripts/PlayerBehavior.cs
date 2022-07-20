@@ -27,6 +27,9 @@ public class PlayerBehavior : MonoBehaviour
     private float canPlayerFire;
     private bool canPlayerUseBlanks = true;
 
+    private bool didPlayerEnterRoom;
+    private bool canPlayerMove = true;
+
     Vector3 velocity, desiredVelocity;
 
     #endregion
@@ -125,12 +128,19 @@ public class PlayerBehavior : MonoBehaviour
 
     private void GetPlayerInput()
     {
-        Vector2 playerInput;
-        playerInput.x = Input.GetAxis("Horizontal");
-        playerInput.y = Input.GetAxis("Vertical");
-        playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+        if (canPlayerMove)
+        {
+            Vector2 playerInput;
+            playerInput.x = Input.GetAxis("Horizontal");
+            playerInput.y = Input.GetAxis("Vertical");
+            playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * playerBaseSpeed;
+            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * playerBaseSpeed;
+        }
+        else
+        {
+            desiredVelocity = Vector3.zero;
+        }
     }
 
     private void FixedUpdate()
@@ -158,6 +168,30 @@ public class PlayerBehavior : MonoBehaviour
         TouchPickup(collision);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        PlayerHitsRoomEnterTrigger(other);
+    }
+
+    private void PlayerHitsRoomEnterTrigger(Collider other)
+    {
+        if (other.gameObject.CompareTag("Room") && !didPlayerEnterRoom)
+        {
+            didPlayerEnterRoom = true;
+            canPlayerMove = false;
+
+            playerRB.velocity = Vector3.zero;
+            playerRB.angularVelocity = Vector3.zero;
+            transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
+            Invoke("AllowPlayerToMove", 0.5f);
+        }
+    }
+
+    private void AllowPlayerToMove()
+    {
+        canPlayerMove = true;
+    }
+
     private void TouchPickup(Collision collision)
     {
         if (collision.gameObject.CompareTag("Pickup"))
@@ -179,22 +213,22 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FireProjectiles()
     {
-        if (Input.GetAxis("Fire1") < 0)
+        if (Input.GetAxis("Fire1") < 0 && canPlayerMove)
         {
             //left
             ShootThisDirection(Vector3.left);
         }
-        else if (Input.GetAxis("Fire1") > 0)
+        else if (Input.GetAxis("Fire1") > 0 && canPlayerMove)
         {
             //right
             ShootThisDirection(Vector3.right);
         }
-        else if (Input.GetAxis("Fire2") < 0)
+        else if (Input.GetAxis("Fire2") < 0 && canPlayerMove)
         {
             //down
             ShootThisDirection(Vector3.back);
         }
-        else if (Input.GetAxis("Fire2") > 0)
+        else if (Input.GetAxis("Fire2") > 0 && canPlayerMove)
         {
             //up
             ShootThisDirection(Vector3.forward);

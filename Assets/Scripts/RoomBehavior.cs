@@ -16,6 +16,8 @@ public class RoomBehavior : MonoBehaviour
     [SerializeField] GameObject doorTop;
     [SerializeField] GameObject doorBottom;
 
+    [SerializeField] GameObject playerStartPos;
+
     private AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
@@ -27,6 +29,11 @@ public class RoomBehavior : MonoBehaviour
     private bool didPickupsSpawn;
     private Vector3 doorDefaultScale;
 
+    public Vector3 pub_playerStartPos
+    {
+        get { return playerStartPos.transform.position; }
+    }
+
 
     void Start()
     {
@@ -36,6 +43,14 @@ public class RoomBehavior : MonoBehaviour
         doorTop.SetActive(true);
         doorBottom.SetActive(true);
         doorDefaultScale = doorTop.transform.localScale;
+
+        StartDoorAsOpen(doorBottom);
+    }
+
+    void StartDoorAsOpen(GameObject door)
+    {
+        door.transform.position += (Vector3.left * 2);
+        door.transform.localScale -= (Vector3.one * 0.01f);
     }
 
     void Update()
@@ -53,14 +68,14 @@ public class RoomBehavior : MonoBehaviour
         //clearedRoom = true;
         EnablePickups();
 
-        AnimateDoorOpen();
+        AnimateDoorOpen(doorTop);
     }
 
-    private void AnimateDoorOpen()
+    private void AnimateDoorOpen(GameObject door)
     {
-        LeanTween.move(doorTop, doorTop.transform.position - (Vector3.right * 2), 1f)
+        LeanTween.move(door, door.transform.position - (Vector3.right * 2), 1f)
             .setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
-        LeanTween.scale(doorTop, (doorDefaultScale - new Vector3(0.01f, 0, 0.01f)), 1f)
+        LeanTween.scale(door, (doorDefaultScale - new Vector3(0.01f, 0, 0.01f)), 1f)
             .setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
     }
 
@@ -85,13 +100,13 @@ public class RoomBehavior : MonoBehaviour
 
         unenteredRoom = false;
         playingRoom = true;
-        AnimateDoorClosed();
+        AnimateDoorClosed(doorBottom);
     }
-    private void AnimateDoorClosed()
+    private void AnimateDoorClosed(GameObject door)
     {
-        LeanTween.move(doorBottom, doorBottom.transform.position + (Vector3.right * 2), 0.5f)
+        LeanTween.move(door, door.transform.position + (Vector3.right * 2), 0.5f)
             .setEase(LeanTweenType.easeInOutCubic);
-        LeanTween.scale(doorBottom, doorDefaultScale, 0.5f)
+        LeanTween.scale(door, doorDefaultScale, 0.5f)
             .setEase(LeanTweenType.easeInOutCubic);
     }
 
