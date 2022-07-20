@@ -143,6 +143,7 @@ MonoBehaviour:
   playerBehavior: {fileID: 0}
   audioSource: {fileID: 0}
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
+  onDestroySounds: {fileID: 0}
 --- !u!82 &-7635126799466764556
 AudioSource:
   m_ObjectHideFlags: 0
