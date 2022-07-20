@@ -195,7 +195,7 @@ public class PlayerBehavior : MonoBehaviour
             playerRB.velocity = Vector3.zero;
             playerRB.angularVelocity = Vector3.zero;
             transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 0.5f);
+            Invoke("AllowPlayerToMove", 0.65f);
         }
     }
 

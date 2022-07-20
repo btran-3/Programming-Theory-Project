@@ -16,7 +16,7 @@ public class CameraCinemachine : MonoBehaviour
             virtualCameras[i].gameObject.SetActive(false);
 
         }
-        //virtualCameras[0].gameObject.SetActive(true);
+        virtualCameras[0].gameObject.SetActive(true);
     }
 
     public void ActivateNextCamera(int camIndex)

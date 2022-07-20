@@ -1291,7 +1291,7 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 5f8245c7d6e294846aba0c41e8369987, type: 3}
   enemiesToSpawnExclInt: {x: 2, y: 2}
-  pickupsToSpawnExclInt: {x: 1, y: 4}
+  pickupsToSpawnExclInt: {x: 2, y: 4}
   colliderA: {fileID: 0}
 --- !u!65 &3000005167435870742
 BoxCollider:
