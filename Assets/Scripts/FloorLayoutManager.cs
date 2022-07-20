@@ -18,12 +18,16 @@ public class FloorLayoutManager : MonoBehaviour
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
 
-    private void Start()
+    private void Awake()
     {
         SetAllPoolRoomsInactive();
+    }
+
+    private void Start()
+    {
         SpawnRooms(roomsToSpawn);
 
-        //UPDATE NAVMESH AT RUNTIME
+        surface.BuildNavMesh();
 
     }
 

@@ -23,8 +23,8 @@ TagManager:
   - Player Layer
   - Pickup Layer
   - Obstacle Gap
-  - 
-  - 
+  - Ground for NavMesh
+  - NavMesh Ignore
   - 
   - 
   - 

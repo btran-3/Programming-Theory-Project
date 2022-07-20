@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 6018080983878221263}
   - component: {fileID: 1849983284680353831}
   - component: {fileID: 6038029602659336669}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PlayerStartPos
   m_TagString: PlayerStartPos
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 8952642280826018285}
   - component: {fileID: 8952642280826018282}
   - component: {fileID: 8952642280826018283}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Ground
   m_TagString: Environment
   m_Icon: {fileID: 0}
@@ -1152,7 +1152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8952642281900344162
 Transform:
   m_ObjectHideFlags: 0

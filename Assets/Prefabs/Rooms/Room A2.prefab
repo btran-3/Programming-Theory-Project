@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 8184381851806057004}
   - component: {fileID: 4304371236774713284}
   - component: {fileID: 8204191577788677694}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PlayerStartPos
   m_TagString: PlayerStartPos
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6786479970203335809
 Transform:
   m_ObjectHideFlags: 0
@@ -1281,7 +1281,7 @@ GameObject:
   - component: {fileID: 6786479971277923854}
   - component: {fileID: 6786479971277923849}
   - component: {fileID: 6786479971277923848}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Ground
   m_TagString: Environment
   m_Icon: {fileID: 0}
@@ -1748,6 +1748,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7377841925459362695}
     m_Modifications:
+    - target: {fileID: 54716279, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
+      propertyPath: roomBehavior
+      value: 
+      objectReference: {fileID: 6786479970203335814}
+    - target: {fileID: 54716279, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
+      propertyPath: onDestroySounds
+      value: 
+      objectReference: {fileID: 7377841925052080550}
     - target: {fileID: 4354222522806592589, guid: 52a15251804d9094c9dacccafadcf5eb, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1841,6 +1849,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2835765971106506873, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
+      propertyPath: roomBehavior
+      value: 
+      objectReference: {fileID: 6786479970203335814}
+    - target: {fileID: 2835765971106506873, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
+      propertyPath: onDestroySounds
+      value: 
+      objectReference: {fileID: 7377841925052080550}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd0613f1de492b2449ba254c8614ab22, type: 3}
 --- !u!4 &4579460409928459268 stripped

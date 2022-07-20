@@ -38,7 +38,7 @@ public class EnemyBehaviorA : MonoBehaviour
     private void Awake()
     {
         //reenable after setting up NavMesh at runtime
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
     }
@@ -58,7 +58,7 @@ public class EnemyBehaviorA : MonoBehaviour
         if (isFollowingPlayer)
         {
             //reenable after setting up NavMesh at runtime
-            //agent.SetDestination(playerGO.transform.position);
+            agent.SetDestination(playerGO.transform.position);
         }
     }
 
@@ -66,7 +66,7 @@ public class EnemyBehaviorA : MonoBehaviour
     {
         gameObject.SetActive(true);
         //reenable after setting up NavMesh at runtime
-        //agent.enabled = true;
+        agent.enabled = true;
         Invoke("StartFollowingPlayer", 0.75f);
     }
 
