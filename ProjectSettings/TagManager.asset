@@ -9,6 +9,8 @@ TagManager:
   - PlayerProjectile
   - Pickup
   - Room
+  - Hole
+  - PlayerStartPos
   layers:
   - Default
   - TransparentFX

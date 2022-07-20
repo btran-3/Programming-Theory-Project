@@ -24,7 +24,7 @@ public class RoomBehavior : MonoBehaviour
     [SerializeField] private Vector2 enemiesToSpawnExclInt;
     [SerializeField] private Vector2 pickupsToSpawnExclInt;
 
-    private Collider colliderA;
+    [SerializeField] private Collider colliderA;
 
     private bool unenteredRoom = true;
     //private bool movingToRoom;
@@ -49,6 +49,7 @@ public class RoomBehavior : MonoBehaviour
         doorTop.SetActive(true);
         doorBottom.SetActive(true);
         doorDefaultScale = doorTop.transform.localScale;
+        playerStartPos.GetComponent<Renderer>().enabled = false;
 
         StartDoorAsOpen(doorBottom);
     }
