@@ -646,7 +646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &686314880740049225
 Transform:
   m_ObjectHideFlags: 0
@@ -1866,6 +1866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin Pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7250276188827780350, guid: a0e41c489a76c8b4e9fc7f06476bba50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8548784874874994431, guid: a0e41c489a76c8b4e9fc7f06476bba50, type: 3}
       propertyPath: onDestroySounds
       value: 
@@ -2091,6 +2095,10 @@ PrefabInstance:
     - target: {fileID: 4517451672116045452, guid: a1469a20e84767845ac461de5afb57f9, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4517451672116045488, guid: a1469a20e84767845ac461de5afb57f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6316160491874473025, guid: a1469a20e84767845ac461de5afb57f9, type: 3}
       propertyPath: onDestroySounds

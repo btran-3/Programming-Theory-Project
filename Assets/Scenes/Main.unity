@@ -4358,10 +4358,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room A4
       objectReference: {fileID: 0}
-    - target: {fileID: 686314880740049224, guid: 14ebe916e0b7252488d82456e875e424, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 686314880740049225, guid: 14ebe916e0b7252488d82456e875e424, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -4453,10 +4449,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room A2
       objectReference: {fileID: 0}
-    - target: {fileID: 6786479970203335808, guid: 6139e46c6ec45954094ef08bf051c544, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6786479970203335809, guid: 6139e46c6ec45954094ef08bf051c544, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -4513,10 +4505,6 @@ PrefabInstance:
     - target: {fileID: 1361360528343830678, guid: 2c6dccf4d9b20b84bb1172a401920aca, type: 3}
       propertyPath: m_Name
       value: Room A0 - Start
-      objectReference: {fileID: 0}
-    - target: {fileID: 1361360528343830678, guid: 2c6dccf4d9b20b84bb1172a401920aca, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1361360528343830679, guid: 2c6dccf4d9b20b84bb1172a401920aca, type: 3}
       propertyPath: m_RootOrder
@@ -4619,10 +4607,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room AX
       objectReference: {fileID: 0}
-    - target: {fileID: 8952642281900344163, guid: 26fa4d80cf9c89b40b2e385c39f509b7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26fa4d80cf9c89b40b2e385c39f509b7, type: 3}
 --- !u!1001 &8257659184716666365
@@ -4687,10 +4671,6 @@ PrefabInstance:
     - target: {fileID: 3000005167435870737, guid: ddedb9dbe8c81fe4a9853d482bab537e, type: 3}
       propertyPath: m_Name
       value: Room A3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3000005167435870737, guid: ddedb9dbe8c81fe4a9853d482bab537e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddedb9dbe8c81fe4a9853d482bab537e, type: 3}
@@ -4764,10 +4744,6 @@ PrefabInstance:
     - target: {fileID: 4056960101444141619, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: m_Name
       value: Room A1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4056960101444141619, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
