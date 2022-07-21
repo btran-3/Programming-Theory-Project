@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RoomBehavior : MonoBehaviour
 {
     [SerializeField] List<GameObject> possibleEnemies;
@@ -156,6 +157,7 @@ public class RoomBehavior : MonoBehaviour
                 GameObject newPickupInstance = Instantiate(possiblePickups[randPickupIndex],
                     pickupSpawnPoints[randSpawnPointIndex].transform.position + randomPosOffset,
                     possiblePickups[randPickupIndex].transform.localRotation);
+                //newPickupInstance.GetComponent<EnemyBehaviorA>().enabled = true;
                 spawnedPickups.Add(newPickupInstance);
                 pickupSpawnPoints.RemoveAt(randSpawnPointIndex);
             }

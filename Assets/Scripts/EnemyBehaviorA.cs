@@ -37,7 +37,6 @@ public class EnemyBehaviorA : MonoBehaviour
 
     private void Awake()
     {
-        //reenable after setting up NavMesh at runtime
         gameObject.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
@@ -57,7 +56,6 @@ public class EnemyBehaviorA : MonoBehaviour
     {
         if (isFollowingPlayer)
         {
-            //reenable after setting up NavMesh at runtime
             agent.SetDestination(playerGO.transform.position);
         }
     }
