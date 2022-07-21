@@ -18,16 +18,13 @@ public class OnDestroySounds : MonoBehaviour
     {
         if (pickUpType == "Blank")
         {
-            //it's definitely reading the pickUpType string being passed in.
-            int rand = Random.Range(0, 3); //can't be the int.
-            //Debug.Log(pickUpCollectedSounds[rand].name); //it's successfully picking out an audioclip!
-            audioSource.PlayOneShot(pickUpCollectedSounds[rand]); //is it something in the array?
+            int rand = Random.Range(0, 3);
+            audioSource.PlayOneShot(pickUpCollectedSounds[rand]);
 
         }
         else if (pickUpType == "Money")
         {
             int rand = Random.Range(3, 6);
-            //Debug.Log(rand);
             audioSource.PlayOneShot(pickUpCollectedSounds[rand]);
         }
         
@@ -41,7 +38,6 @@ public class OnDestroySounds : MonoBehaviour
         }
         else if (enemyType == "large")
         {
-            int rand = Random.Range(3, 5);
             audioSource.PlayOneShot(enemyDeathSounds[1], 0.7f);
         }
     }

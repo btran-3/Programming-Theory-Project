@@ -104,6 +104,5 @@ public class PickupBehavior : MonoBehaviour
     private void OnDestroy()
     {
         onDestroySounds.PlayPickupCollectedSound(pub_pickupType);
-        Debug.Log(pub_pickupType); //not executing this debug because thje above method isn't executing?
     }
 }

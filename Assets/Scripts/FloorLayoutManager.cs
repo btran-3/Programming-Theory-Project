@@ -18,6 +18,22 @@ public class FloorLayoutManager : MonoBehaviour
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
 
+    #region public get variables
+    public int pub_roomsToSpawn
+    {
+        get { return roomsToSpawn; }
+    }
+    public float pub_roomZSpacing
+    {
+        get { return roomZSpacing; }
+    }
+    public Vector3 pub_startingRoomSpawnPos
+    {
+        get { return startingRoomSpawnPos; }
+    }
+    #endregion
+
+
     private void Awake()
     {
         SetAllPoolRoomsInactive();
