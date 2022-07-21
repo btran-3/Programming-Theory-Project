@@ -20,6 +20,8 @@ public class CameraCinemachine : MonoBehaviour
         roomsToSpawn = floorLayoutManager.pub_roomsToSpawn;
         roomZSpacing = floorLayoutManager.pub_roomZSpacing;
 
+        Debug.Log(roomsToSpawn);
+
         for (int i = 0; i < roomsToSpawn; i++)
         {
             CinemachineVirtualCamera cam = Instantiate(virtualCameraToInstance,

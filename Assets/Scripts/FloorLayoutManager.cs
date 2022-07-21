@@ -36,12 +36,12 @@ public class FloorLayoutManager : MonoBehaviour
 
     private void Awake()
     {
-        SetAllPoolRoomsInactive();
+        //SetAllPoolRoomsInactive();
     }
 
     private void Start()
     {
-        SpawnRooms(roomsToSpawn);
+        //SpawnRooms(roomsToSpawn);
 
         surface.BuildNavMesh();
 

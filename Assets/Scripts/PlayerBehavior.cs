@@ -93,6 +93,7 @@ public class PlayerBehavior : MonoBehaviour
         private set
         {
             currentRoomIndex = value;
+            Debug.Log(currentRoomIndex);
             cameraCinemachine.ActivateNextCamera(currentRoomIndex);
         }
     }
