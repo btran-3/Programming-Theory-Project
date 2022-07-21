@@ -42,9 +42,8 @@ public class OnDestroySounds : MonoBehaviour
         }
         else
         {
-            
             audioSource.PlayOneShot(enemyDeathSounds[0], 0.7f);
-            Debug.Log(enemyType);
+            Debug.Log(enemyType + " enemy was destroyed");
         }
     }
 

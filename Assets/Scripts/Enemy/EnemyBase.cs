@@ -47,7 +47,7 @@ public abstract class EnemyBase : MonoBehaviour
     #endregion
 
     #region dynamic variables
-    private bool isFollowingPlayer;
+    protected bool isFollowingPlayer;
     #endregion
 
     #region misc. variables
@@ -66,11 +66,6 @@ public abstract class EnemyBase : MonoBehaviour
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
     }
 
-    protected virtual void Start()
-    {
-        
-    }
-
     public void EnableEnemy()
     {
         gameObject.SetActive(true);
@@ -84,12 +79,10 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        
         HitByPlayerProjectile(other);
-        
     }
 
-    //play sound, take damage, animate hit color, and execute custom projectile knockback
+    //play sound, take damage, animate hit color, and execute child-specified projectile knockback
     private void HitByPlayerProjectile(Collider other)
     {
         if (other.gameObject.CompareTag("PlayerProjectile"))
@@ -107,11 +100,11 @@ public abstract class EnemyBase : MonoBehaviour
             LeanTween.color(this.gameObject, defaultColor, 0.25f).setDelay(0.05f)
                 .setEase(LeanTweenType.easeOutCubic);
 
-            ProjectileKnockBack();
+            ProjectileKnockBack(other); //the parameter is for the optional overload
         }
     }
 
-    protected abstract void ProjectileKnockBack();
+    protected abstract void ProjectileKnockBack(Collider other);
     //could be calculated differently for navmesh, physics, no knockback at all, etc.
     //see EnemyBehaviorA for navmesh knockback code
 

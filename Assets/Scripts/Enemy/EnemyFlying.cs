@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyFlying : EnemyBase
 {
-    protected override void ProjectileKnockBack()
+
+    protected override void ProjectileKnockBack(Collider other)
     {
 
     }

@@ -6,43 +6,54 @@ using Unity.AI.Navigation;
 
 public class EnemyNormal : EnemyBase
 {
-    [SerializeField] protected float enemyAcceleration = 15f;
-    [SerializeField] protected float enemyStoppingDistance = 1.4f;
+    [SerializeField] private float enemyAcceleration = 15f;
+    [SerializeField] private float enemyStoppingDistance = 1.4f;
 
     #region references
     //internal
-    [SerializeField] protected NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
 
     //external references
     #endregion
 
-    protected override void Start()
+    private void Start()
     {
-        enemySpeed = 5f;
-
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        enemySpeed = 6f;
         navMeshAgent.speed = enemySpeed;
         navMeshAgent.acceleration = enemyAcceleration;
         navMeshAgent.stoppingDistance = enemyStoppingDistance;
-        navMeshAgent.enabled = false;
+        //for some reason, setting navmesh to false here prevents it from being set to true
+        //in the FollowPlayer() method...not sure why?
     }
 
-    protected override void ProjectileKnockBack()
+    private void Update()
     {
-
+        if (isFollowingPlayer)
+        {
+            //update destination position every frame
+            navMeshAgent.SetDestination(playerGO.transform.position);
+        }
     }
-    //could be calculated differently for navmesh, physics, no knockback at all, etc.
-    //see EnemyBehaviorA for navmesh knockback code
 
-
-    protected override void FollowPlayer()
+    protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
     {
-        Debug.Log("overridden method in normal enemy");
+        //THANKS https://www.youtube.com/watch?v=gFq0lO2E2Sc
+        Vector3 knockbackDirection;
+        knockbackDirection.x = transform.position.x - other.gameObject.transform.position.x;
+        knockbackDirection.y = 0f;
+        knockbackDirection.z = transform.position.z - other.gameObject.transform.position.z;
+        navMeshAgent.velocity += knockbackDirection * 6;
     }
-    //enemy may use navMesh, position damping, not follow player at all, etc
 
 
-    protected override void BlankKnockBack()
+    protected override void FollowPlayer() //designed for NavMeshAgent
+    {
+        isFollowingPlayer = true;
+        navMeshAgent.enabled = true;
+    }
+
+
+    protected override void BlankKnockBack() //designed for NavMeshAgent
     {
 
     }

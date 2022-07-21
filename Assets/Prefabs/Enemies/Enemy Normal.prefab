@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2835765969923703132}
   - component: {fileID: 2835765969923703135}
   - component: {fileID: 2835765969923703134}
+  - component: {fileID: 794111845612182275}
   - component: {fileID: 2835765971106506872}
   - component: {fileID: -2693491223738389098}
-  - component: {fileID: 794111845612182275}
   m_Layer: 0
   m_Name: Enemy Normal
   m_TagString: Enemy
@@ -101,6 +101,32 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &794111845612182275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2835765969923703121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a4c5707e7991546afaa5d20b57d443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: normal
+  enemyHealth: 3
+  enemyDamage: 1
+  enemySpeed: 6
+  audioSource: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  roomBehavior: {fileID: 0}
+  playerGO: {fileID: 0}
+  playerBehavior: {fileID: 0}
+  onDestroySounds: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
+  enemyAcceleration: 15
+  enemyStoppingDistance: 1.4
+  navMeshAgent: {fileID: 2835765971106506872}
 --- !u!195 &2835765971106506872
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -219,27 +245,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &794111845612182275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2835765969923703121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a4c5707e7991546afaa5d20b57d443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: normal
-  enemyHealth: 3
-  enemyDamage: 1
-  enemySpeed: 5
-  roomBehavior: {fileID: 0}
-  playerGO: {fileID: 0}
-  playerBehavior: {fileID: 0}
-  onDestroySounds: {fileID: 0}
-  hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
-  enemyAcceleration: 15
-  enemyStoppingDistance: 1.4
-  navMeshAgent: {fileID: 0}
