@@ -140,7 +140,10 @@ public class RoomBehavior : MonoBehaviour
         for (int i = 0; i < spawnedEnemies.Count; i++)
         {
             spawnedEnemies[i].SetActive(true);
-            spawnedEnemies[i].GetComponent<EnemyBehaviorA>().SpawnEnableEnemy();
+            //OLD ENEMY METHOD spawnedEnemies[i].GetComponent<EnemyBehaviorA>().SpawnEnableEnemy();
+
+            //all child classes derive from EnemyBase!
+            spawnedEnemies[i].GetComponent<EnemyBase>().EnableEnemy();
         }
     }
 

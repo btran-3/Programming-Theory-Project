@@ -40,6 +40,12 @@ public class OnDestroySounds : MonoBehaviour
         {
             audioSource.PlayOneShot(enemyDeathSounds[1], 0.7f);
         }
+        else
+        {
+            
+            audioSource.PlayOneShot(enemyDeathSounds[0], 0.7f);
+            Debug.Log(enemyType);
+        }
     }
 
 }

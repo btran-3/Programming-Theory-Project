@@ -9,10 +9,8 @@ public abstract class EnemyBase : MonoBehaviour
     #region stats
     [SerializeField] protected string enemyType;
     [SerializeField] protected float enemyHealth;
-    [SerializeField] protected float enemyDamage;
-    [SerializeField] protected float enemySpeed = 5f;
-    [SerializeField] protected float enemyAcceleration = 15f;
-    [SerializeField] protected float enemyStoppingDistance = 1.4f;
+    [SerializeField] protected int enemyDamage;
+    [SerializeField] protected float enemySpeed;
     #endregion
 
     #region public get variables
@@ -27,7 +25,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    public float pub_enemyDamage
+    public int pub_enemyDamage
     {
         get { return enemyDamage; }
     }
@@ -35,9 +33,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     #region references
     //internal
-    AudioSource audioSource;
-    NavMeshAgent navMeshAgent;
-    Renderer enemyRenderer;
+    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected Renderer enemyRenderer;
     Color defaultColor;
 
     //external references
@@ -54,31 +51,27 @@ public abstract class EnemyBase : MonoBehaviour
     #endregion
 
     #region misc. variables
-    private float playerBlankRadius;
+    protected float playerBlankRadius;
     #endregion
 
     //dealing damage is in Player script
 
-    private void Awake()
+    protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         enemyRenderer = GetComponent<Renderer>();
         defaultColor = enemyRenderer.material.color;
-
-        if (GetComponent<NavMeshAgent>() != null) //does this have a NavMeshAgent component?
-        {
-            navMeshAgent = GetComponent<NavMeshAgent>();
-            navMeshAgent.speed = enemySpeed;
-            navMeshAgent.acceleration = enemyAcceleration;
-            navMeshAgent.stoppingDistance = enemyStoppingDistance;
-            navMeshAgent.enabled = false;
-        }
         
         gameObject.SetActive(false);
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
     }
 
-    protected void EnableEnemy()
+    protected virtual void Start()
+    {
+        
+    }
+
+    public void EnableEnemy()
     {
         gameObject.SetActive(true);
         FollowPlayer();
@@ -91,10 +84,12 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
+        
         HitByPlayerProjectile(other);
+        
     }
 
-    //play sound, take damage, animate hit color, and apply custom projectile knockback
+    //play sound, take damage, animate hit color, and execute custom projectile knockback
     private void HitByPlayerProjectile(Collider other)
     {
         if (other.gameObject.CompareTag("PlayerProjectile"))
@@ -122,6 +117,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected abstract void FollowPlayer();
     //enemy may use navMesh, position damping, not follow player at all, etc
+    //see EnemyBehaviorA for Navmesh follow player stuff
 
     protected abstract void BlankKnockBack();
     //enemy may or may not be impacted by blank knockback

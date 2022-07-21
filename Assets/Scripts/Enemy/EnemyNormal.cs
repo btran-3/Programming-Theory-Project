@@ -1,12 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 public class EnemyNormal : EnemyBase
 {
-    private void Start()
+    [SerializeField] protected float enemyAcceleration = 15f;
+    [SerializeField] protected float enemyStoppingDistance = 1.4f;
+
+    #region references
+    //internal
+    [SerializeField] protected NavMeshAgent navMeshAgent;
+
+    //external references
+    #endregion
+
+    protected override void Start()
     {
-        
+        enemySpeed = 5f;
+
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = enemySpeed;
+        navMeshAgent.acceleration = enemyAcceleration;
+        navMeshAgent.stoppingDistance = enemyStoppingDistance;
+        navMeshAgent.enabled = false;
     }
 
     protected override void ProjectileKnockBack()
@@ -19,7 +37,7 @@ public class EnemyNormal : EnemyBase
 
     protected override void FollowPlayer()
     {
-
+        Debug.Log("overridden method in normal enemy");
     }
     //enemy may use navMesh, position damping, not follow player at all, etc
 
@@ -30,7 +48,5 @@ public class EnemyNormal : EnemyBase
     }
     //enemy may or may not be impacted by blank knockback
     //see EnemyBehaviorA for blank knockback code
-
-
 
 }

@@ -93,7 +93,6 @@ public class PlayerBehavior : MonoBehaviour
         private set
         {
             currentRoomIndex = value;
-            Debug.Log(currentRoomIndex);
             cameraCinemachine.ActivateNextCamera(currentRoomIndex);
         }
     }
@@ -171,7 +170,8 @@ public class PlayerBehavior : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
             audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
-            int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
+            //OLD int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
+            int dmg = collision.gameObject.GetComponent<EnemyBase>().pub_enemyDamage;
             PlayerTakeDamage(dmg);
         }
     }
