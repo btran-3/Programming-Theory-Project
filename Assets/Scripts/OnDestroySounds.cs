@@ -32,11 +32,11 @@ public class OnDestroySounds : MonoBehaviour
 
     public void PlayEnemyDeathSound(string enemyType)
     {
-        if (enemyType == "small")
+        if (enemyType == "small" || enemyType == "normal")
         {
             audioSource.PlayOneShot(enemyDeathSounds[0], 0.7f);
         }
-        else if (enemyType == "large")
+        else if (enemyType == "large" || enemyType == "normalBigger")
         {
             audioSource.PlayOneShot(enemyDeathSounds[1], 0.7f);
         }

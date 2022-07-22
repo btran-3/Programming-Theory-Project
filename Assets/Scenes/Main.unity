@@ -212,6 +212,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6786479970203335809, guid: 6139e46c6ec45954094ef08bf051c544, type: 3}
   m_PrefabInstance: {fileID: 4725082527313835614}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &225138636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7673799774337937003, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &284770324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1332,6 +1337,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8630367374752303179, guid: b7e50afda81077e449bcfe82f2e3c802, type: 3}
   m_PrefabInstance: {fileID: 771435246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &786147922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2892307451637134606, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &794128671
 GameObject:
@@ -3765,6 +3775,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room A1
       objectReference: {fileID: 0}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 225138636}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 786147922}
     - target: {fileID: 5053384683949651001, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: playerGO
       value: 
