@@ -17,7 +17,7 @@ public abstract class EnemyBase : MonoBehaviour
     public float pub_enemyHealth
     {
         get { return enemyHealth; }
-        private set { enemyHealth = value;
+        protected set { enemyHealth = value;
             if (enemyHealth <= 0)
             {
                 Destroy(this.gameObject);
@@ -35,7 +35,7 @@ public abstract class EnemyBase : MonoBehaviour
     //internal
     [SerializeField] protected AudioSource audioSource;
     [SerializeField] protected Renderer enemyRenderer;
-    Color defaultColor;
+    protected Color defaultColor;
 
     //external references
     [SerializeField] protected RoomBehavior roomBehavior;
@@ -43,11 +43,11 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected PlayerBehavior playerBehavior;
     [SerializeField] protected OnDestroySounds onDestroySounds;
 
-    [SerializeField] AudioClip hitSound;
+    [SerializeField] protected AudioClip hitSound;
     #endregion
 
     #region dynamic variables
-    protected bool isFollowingPlayer;
+    protected bool isTrackingPlayer;
     #endregion
 
     #region misc. variables
@@ -60,17 +60,20 @@ public abstract class EnemyBase : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        enemyRenderer = GetComponent<Renderer>();
-        defaultColor = enemyRenderer.material.color;
+        if (GetComponent<Renderer>() != null)
+        {
+            enemyRenderer = GetComponent<Renderer>();
+            defaultColor = enemyRenderer.material.color;
+        }
         
         gameObject.SetActive(false);
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
     }
 
-    public void EnableEnemy()
+    public void EnableEnemy() //executed once, when player enters hostile room
     {
         gameObject.SetActive(true);
-        EnemyMovement();
+        EnableEnemyMovement();
     }
 
     void Update()
@@ -84,7 +87,7 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     //play sound, take damage, animate hit color, and execute child-specified projectile knockback
-    protected void HitByPlayerProjectile(Collider other)
+    protected virtual void HitByPlayerProjectile(Collider other)
     {
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
@@ -96,12 +99,15 @@ public abstract class EnemyBase : MonoBehaviour
 
             pub_enemyHealth -= playerBehavior.pub_playerDamage;
 
-            LeanTween.cancel(gameObject);
-            enemyRenderer.material.color = Color.red;
-            LeanTween.color(this.gameObject, defaultColor, 0.25f).setDelay(0.05f)
-                .setEase(LeanTweenType.easeOutCubic);
+            if (enemyRenderer != null)
+            {
+                LeanTween.cancel(gameObject);
+                enemyRenderer.material.color = Color.red;
+                LeanTween.color(this.gameObject, defaultColor, 0.25f).setDelay(0.05f)
+                    .setEase(LeanTweenType.easeOutCubic);
+            }
 
-            ProjectileKnockBack(other); //the parameter is for the optional overload
+            ProjectileKnockBack(other);
         }
     }
 
@@ -109,7 +115,7 @@ public abstract class EnemyBase : MonoBehaviour
     //could be calculated differently for navmesh, physics, no knockback at all, etc.
     //see EnemyBehaviorA for navmesh knockback code
 
-    protected abstract void EnemyMovement();
+    protected abstract void EnableEnemyMovement(); //executed once
     //enemy may use navMesh, position damping, not follow player at all, etc
     //see EnemyBehaviorA for Navmesh follow player stuff
 

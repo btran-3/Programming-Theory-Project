@@ -18,7 +18,7 @@ public class EnemyFlying : EnemyBase
 
     private void FixedUpdate()
     {
-        if (isFollowingPlayer)
+        if (isTrackingPlayer)
         {
             Vector3 playerPos = playerGO.transform.position;
             Vector3 targetPos = playerPos - transform.position;
@@ -46,14 +46,14 @@ public class EnemyFlying : EnemyBase
     }
 
 
-    protected override void EnemyMovement()
+    protected override void EnableEnemyMovement()
     {
         Invoke("DelayCanFollowPlayer", enemyMovementDelay);
     }
 
     void DelayCanFollowPlayer()
     {
-        isFollowingPlayer = true;
+        isTrackingPlayer = true;
     }
 
 

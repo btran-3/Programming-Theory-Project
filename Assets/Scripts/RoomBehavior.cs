@@ -105,7 +105,8 @@ public class RoomBehavior : MonoBehaviour
 
     private void BeginRoom()
     {
-        Invoke("EnableEnemies", 0f);
+        //Invoke("EnableEnemies", 0f);
+        EnableEnemies(); //only executed once
 
         unenteredRoom = false;
         playingRoom = true;
@@ -135,7 +136,7 @@ public class RoomBehavior : MonoBehaviour
             }
         }
     }
-    void EnableEnemies()
+    void EnableEnemies() //executed once
     {
         for (int i = 0; i < spawnedEnemies.Count; i++)
         {

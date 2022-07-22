@@ -35,7 +35,7 @@ public class EnemyNormal : EnemyBase
 
     private void Update()
     {
-        if (isFollowingPlayer)
+        if (isTrackingPlayer)
         {
             //update destination position every frame
             navMeshAgent.SetDestination(playerGO.transform.position);
@@ -53,7 +53,7 @@ public class EnemyNormal : EnemyBase
     }
 
 
-    protected override void EnemyMovement() //designed for NavMeshAgent
+    protected override void EnableEnemyMovement() //designed for NavMeshAgent
     {
         
         Invoke("DelayFollowPlayerNavMesh", enemyMovementDelay);
@@ -61,7 +61,7 @@ public class EnemyNormal : EnemyBase
 
     void DelayFollowPlayerNavMesh()
     {
-        isFollowingPlayer = true;
+        isTrackingPlayer = true;
         navMeshAgent.enabled = true;
     }
 
