@@ -51,6 +51,7 @@ public abstract class EnemyBase : MonoBehaviour
     #endregion
 
     #region misc. variables
+    protected float enemyMovementDelay = 0.75f;
     protected float playerBlankRadius;
     #endregion
 

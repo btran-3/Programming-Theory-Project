@@ -42,6 +42,8 @@ public class ProjectileBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         DisableProjectileUponHit(other);
+        Debug.Log("add sfx for projectiles hitting environment");
+        Debug.Log("create base class for projectiles? player and enemy projectiles?");
     }
 
     public void ShootProjectile(Vector3 shootdirection)

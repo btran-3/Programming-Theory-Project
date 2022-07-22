@@ -48,6 +48,11 @@ public class EnemyNormal : EnemyBase
 
     protected override void FollowPlayer() //designed for NavMeshAgent
     {
+        Invoke("DelayedEnemyMovement", enemyMovementDelay);
+    }
+
+    void DelayedEnemyMovement()
+    {
         isFollowingPlayer = true;
         navMeshAgent.enabled = true;
     }
