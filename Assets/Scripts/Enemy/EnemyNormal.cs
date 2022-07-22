@@ -11,19 +11,26 @@ public class EnemyNormal : EnemyBase
 
     #region references
     //internal
-    public NavMeshAgent navMeshAgent;
+    [SerializeField] Collider enemyCollider;
+    [SerializeField] NavMeshAgent navMeshAgent;
+
 
     //external references
     #endregion
 
+    #region dynamic variables
+    #endregion
+
+
     private void Start()
     {
-        enemySpeed = 6f;
         navMeshAgent.speed = enemySpeed;
         navMeshAgent.acceleration = enemyAcceleration;
         navMeshAgent.stoppingDistance = enemyStoppingDistance;
         //for some reason, setting navmesh to false here prevents it from being set to true
         //in the FollowPlayer() method...not sure why?
+        enemyCollider = GetComponent<Collider>();
+
     }
 
     private void Update()
@@ -46,12 +53,13 @@ public class EnemyNormal : EnemyBase
     }
 
 
-    protected override void FollowPlayer() //designed for NavMeshAgent
+    protected override void EnemyMovement() //designed for NavMeshAgent
     {
-        Invoke("DelayedEnemyMovement", enemyMovementDelay);
+        
+        Invoke("DelayFollowPlayerNavMesh", enemyMovementDelay);
     }
 
-    void DelayedEnemyMovement()
+    void DelayFollowPlayerNavMesh()
     {
         isFollowingPlayer = true;
         navMeshAgent.enabled = true;

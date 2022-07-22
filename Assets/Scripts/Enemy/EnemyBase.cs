@@ -57,7 +57,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     //dealing damage is in Player script
 
-    protected void Awake()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         enemyRenderer = GetComponent<Renderer>();
@@ -70,7 +70,7 @@ public abstract class EnemyBase : MonoBehaviour
     public void EnableEnemy()
     {
         gameObject.SetActive(true);
-        FollowPlayer();
+        EnemyMovement();
     }
 
     void Update()
@@ -84,7 +84,7 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     //play sound, take damage, animate hit color, and execute child-specified projectile knockback
-    private void HitByPlayerProjectile(Collider other)
+    protected void HitByPlayerProjectile(Collider other)
     {
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
@@ -109,7 +109,7 @@ public abstract class EnemyBase : MonoBehaviour
     //could be calculated differently for navmesh, physics, no knockback at all, etc.
     //see EnemyBehaviorA for navmesh knockback code
 
-    protected abstract void FollowPlayer();
+    protected abstract void EnemyMovement();
     //enemy may use navMesh, position damping, not follow player at all, etc
     //see EnemyBehaviorA for Navmesh follow player stuff
 

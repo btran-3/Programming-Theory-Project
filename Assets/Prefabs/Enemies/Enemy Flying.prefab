@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3624267126008268841}
   - component: {fileID: -2544990727977594329}
   - component: {fileID: 987685663344548253}
+  - component: {fileID: 4486688426197772011}
   m_Layer: 0
   m_Name: Enemy Flying
   m_TagString: Enemy
@@ -29,9 +30,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2772682531916336896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -93,7 +94,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2772682531916336896}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9e1f35a11792e1f4fbf511566444aa9a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -208,9 +209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: flying
-  enemyHealth: 2
+  enemyHealth: 4
   enemyDamage: 1
-  enemySpeed: 5
+  enemySpeed: 80
   audioSource: {fileID: 0}
   enemyRenderer: {fileID: 0}
   roomBehavior: {fileID: 0}
@@ -218,3 +219,19 @@ MonoBehaviour:
   playerBehavior: {fileID: 0}
   onDestroySounds: {fileID: 0}
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
+--- !u!54 &4486688426197772011
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772682531916336896}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0

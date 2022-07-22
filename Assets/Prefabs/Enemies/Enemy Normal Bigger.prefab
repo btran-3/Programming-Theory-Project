@@ -16,12 +16,12 @@ GameObject:
   - component: {fileID: 2835765971106506872}
   - component: {fileID: -2693491223738389098}
   m_Layer: 0
-  m_Name: Enemy Normal
+  m_Name: Enemy Normal Bigger
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2835765969923703133
 Transform:
   m_ObjectHideFlags: 0
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 2835765969923703121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.46, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a68d32393bd9f074fa0c2c902ddd2998, type: 2}
+  - {fileID: 2100000, guid: 198f03caf9cca4b4c81d99d8c53c68c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: normal
-  enemyHealth: 3
-  enemyDamage: 1
-  enemySpeed: 5
+  enemyHealth: 5
+  enemyDamage: 2
+  enemySpeed: 3.5
   audioSource: {fileID: 0}
   enemyRenderer: {fileID: 0}
   roomBehavior: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   enemyAcceleration: 15
   enemyStoppingDistance: 1.4
+  enemyCollider: {fileID: 0}
   navMeshAgent: {fileID: 2835765971106506872}
 --- !u!195 &2835765971106506872
 NavMeshAgent:
