@@ -7,7 +7,8 @@ public class EnemyShooting : EnemyBase
     [SerializeField] Renderer[] enemyRenderers;
     [SerializeField] GameObject enemyProjectilePrefab;
 
-    private float projectileSpeed = 10f;
+    private float projectileSpeed = 8f;
+    private float projectileRange = 0.75f;
     private float distanceFromPlayer;
     private float shootingCooldown = 1.5f;
     private float enemyShootTiming;
@@ -34,9 +35,9 @@ public class EnemyShooting : EnemyBase
         if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f)
         {
             enemyShootTiming = Time.time + shootingCooldown;
-            GameObject newProjectile = Instantiate(enemyProjectilePrefab, transform.position, gameObject.transform.localRotation);
+            GameObject newProjectile = Instantiate(enemyProjectilePrefab, transform.position, transform.rotation);
             newProjectile.SetActive(true); //MUST SET ACTIVE HERE
-            newProjectile.GetComponent<ProjectileEnemy>().ShootProjectile(transform.position, Vector3.forward, projectileSpeed, 0.75f);
+            newProjectile.GetComponent<ProjectileEnemy>().ShootProjectile(transform.position, Vector3.forward, projectileSpeed, projectileRange);
             
         }
 

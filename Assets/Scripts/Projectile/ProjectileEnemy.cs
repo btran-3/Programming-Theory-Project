@@ -30,7 +30,7 @@ public class ProjectileEnemy : ProjectileBase
         //Debug.Log(projectileSpeed);
         this.gameObject.SetActive(true); //must override the Awake() in ProjectileBase
         rb = GetComponent<Rigidbody>();
-        rb.AddForce((shootDirection * projectileSpeed), ForceMode.Impulse);
+        rb.AddRelativeForce((shootDirection * projectileSpeed), ForceMode.Impulse);
         LeanTween.scale(this.gameObject, (startingScale / 3f), range / 2).setEase(LeanTweenType.easeInQuart).setDelay(range / 2).setOnComplete(DisableProjectile);
     }
 

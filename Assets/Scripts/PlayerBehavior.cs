@@ -177,16 +177,9 @@ public class PlayerBehavior : MonoBehaviour
     private void TakeDamageFromEnemy(Collider other) //onTriggerEnter - enemy projectile damage
     {
         audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
-        if (other.gameObject.GetComponent<ProjectileEnemy>() != null)
-        {
-            int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
-            Debug.Log(dmg);
-            PlayerTakeDamage(dmg);
-        }
-        else
-        {
-            Debug.Log("script does not exist");
-        }
+        int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
+        Debug.Log(dmg);
+        PlayerTakeDamage(dmg);
         
     }
 
@@ -202,7 +195,7 @@ public class PlayerBehavior : MonoBehaviour
             PlayerHitsRoomEnterTrigger(other);
         }
 
-        if (other.gameObject.CompareTag("EnemyProjectile"))
+        if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
             TakeDamageFromEnemy(other);
         }
