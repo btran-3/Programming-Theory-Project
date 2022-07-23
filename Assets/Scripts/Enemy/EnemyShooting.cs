@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemyShooting : EnemyBase
 {
     [SerializeField] Renderer[] enemyRenderers;
+    [SerializeField] GameObject enemyProjectilePrefab;
+
+    private float projectileSpeed = 10f;
+    private float distanceFromPlayer;
+    private float shootingCooldown = 1.5f;
+    private float enemyShootTiming;
 
     private void Start()
     {
@@ -22,11 +28,22 @@ public class EnemyShooting : EnemyBase
             var rotation = Quaternion.LookRotation(lookPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
         }
+
+        distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
+
+        if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f)
+        {
+            enemyShootTiming = Time.time + shootingCooldown;
+            GameObject newProjectile = Instantiate(enemyProjectilePrefab, transform.position, gameObject.transform.localRotation);
+            newProjectile.SetActive(true); //MUST SET ACTIVE HERE
+            newProjectile.GetComponent<ProjectileEnemy>().ShootProjectile(transform.position, Vector3.forward, projectileSpeed, 0.75f);
+            
+        }
+
     }
 
     protected override void HitByPlayerProjectile(Collider other)
     {
-        //base.HitByPlayerProjectile(other); autofilled in?
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
             //play hit sound before potential death update
@@ -34,9 +51,9 @@ public class EnemyShooting : EnemyBase
             {
                 audioSource.PlayOneShot(hitSound);
             }
-
             pub_enemyHealth -= playerBehavior.pub_playerDamage;
 
+            //had to override because this enemy has 2 meshes and 2 renderers
             for (int i = 0; i < enemyRenderers.Length; i++)
             {
                 LeanTween.cancel(enemyRenderers[i].gameObject);
@@ -60,7 +77,7 @@ public class EnemyShooting : EnemyBase
     }
 
 
-    protected override void BlankKnockBack() //designed for 
+    public override void BlankKnockback() //designed for 
     {
 
     }

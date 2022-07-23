@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8630367374752303174}
   - component: {fileID: 8630367374752303177}
   - component: {fileID: 7802860029074573498}
-  - component: {fileID: 2504027575177381908}
   - component: {fileID: 4387927957764333776}
   - component: {fileID: 5606441131387599119}
+  - component: {fileID: -3649488571008803931}
   m_Layer: 0
   m_Name: Enemy Projectile Prefab
-  m_TagString: PlayerProjectile
+  m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,25 +103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2504027575177381908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630367374752303179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb1021af0c2fc745a5f55ff2e8356cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerGO: {fileID: 0}
-  playerBehavior: {fileID: 0}
-  globalOnDestroySounds: {fileID: 0}
-  audioClips:
-  - {fileID: 8300000, guid: 0b7407fdee14c9445b577fa5028a3b71, type: 3}
-  - {fileID: 8300000, guid: aff8052734b1e6444b700f8c799f51fc, type: 3}
-  - {fileID: 8300000, guid: c312f0c6bfe52fc4385d19960185e6eb, type: 3}
 --- !u!82 &4387927957764333776
 AudioSource:
   m_ObjectHideFlags: 0
@@ -232,3 +213,17 @@ CapsuleCollider:
   m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3649488571008803931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630367374752303179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c80b57514eed42438a33ae0cbe27fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBehavior: {fileID: 0}
+  globalOnDestroySounds: {fileID: 0}

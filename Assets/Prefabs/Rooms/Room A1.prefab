@@ -823,6 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleEnemies:
+  - {fileID: 2473855008989957825}
   - {fileID: 6177012223204073073}
   possiblePickups:
   - {fileID: 2954348384707109823}
@@ -844,7 +845,7 @@ MonoBehaviour:
   playerStartPos: {fileID: 5536485313617982766}
   audioClips:
   - {fileID: 8300000, guid: 5f8245c7d6e294846aba0c41e8369987, type: 3}
-  enemiesToSpawnExclInt: {x: 3, y: 5}
+  enemiesToSpawnExclInt: {x: 4, y: 5}
   pickupsToSpawnExclInt: {x: 2, y: 4}
   colliderA: {fileID: 0}
 --- !u!65 &4056960101444141620
@@ -1841,6 +1842,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 358edfe2dc9ece04ba2ecca49c68db04, type: 3}
+--- !u!1 &2473855008989957825 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2772682531916336896, guid: 358edfe2dc9ece04ba2ecca49c68db04, type: 3}
+  m_PrefabInstance: {fileID: 301294861383303617}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2583092199867178543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2879654758871556078, guid: 358edfe2dc9ece04ba2ecca49c68db04, type: 3}
@@ -2538,7 +2544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2291991482574712789, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.15
       objectReference: {fileID: 0}
     - target: {fileID: 2291991482574712789, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2580,8 +2586,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Shooting
       objectReference: {fileID: 0}
+    - target: {fileID: 2291991482574712790, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 3254232633783813371}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: roomBehavior
+      value: 
+      objectReference: {fileID: 4056960101444141621}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: enemyRenderer
+      value: 
+      objectReference: {fileID: 6177012223055838680}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: onDestroySounds
+      value: 
+      objectReference: {fileID: 108109589}
+    - target: {fileID: 7447079340496001120, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+      propertyPath: enemyProjectilePrefab
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+--- !u!82 &3254232633783813371 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7448591672082838876, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+  m_PrefabInstance: {fileID: 5366019164438081959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6177012223055838680 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2291991482694372479, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}
+  m_PrefabInstance: {fileID: 5366019164438081959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6177012223204073073 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2291991482574712790, guid: 7d6dd19185ceb774eb7e7a229ef2f6e5, type: 3}

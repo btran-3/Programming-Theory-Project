@@ -62,6 +62,7 @@ MonoBehaviour:
   enemyRenderers:
   - {fileID: 2291991482694372479}
   - {fileID: 2291991483443520919}
+  enemyProjectilePrefab: {fileID: 8630367374752303179, guid: b7862a0976843c041995469efe3c4900, type: 3}
 --- !u!82 &7448591672082838876
 AudioSource:
   m_ObjectHideFlags: 0

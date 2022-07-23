@@ -42,7 +42,7 @@ public class EnemyFlying : EnemyBase
         knockbackDirection.z = transform.position.z - other.gameObject.transform.position.z;
         knockbackDirection = (knockbackDirection.normalized) * 10;
         rb.AddForce(knockbackDirection, ForceMode.VelocityChange);
-        Debug.Log(knockbackDirection);
+        //Debug.Log(knockbackDirection);
     }
 
 
@@ -57,7 +57,7 @@ public class EnemyFlying : EnemyBase
     }
 
 
-    protected override void BlankKnockBack()
+    public override void BlankKnockback()
     {
 
     }

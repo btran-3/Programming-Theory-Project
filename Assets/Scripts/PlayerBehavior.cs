@@ -14,8 +14,8 @@ public class PlayerBehavior : MonoBehaviour
     private float playerBaseDamage = 1f;
     private float playerBaseFireRate = 0.30f;
     private float playerBaseProjectileSpeed = 12f;
-    private float playerBaseProjectileRange = 1f;
-    private float playerBlankRadius = 5f;
+    private float playerBaseProjectileRange = 0.75f;
+    private float playerBlankRadius = 6f;
     #endregion
 
     #region Dynamic variables
@@ -130,7 +130,6 @@ public class PlayerBehavior : MonoBehaviour
         blankRadiusMesh.SetActive(false);
     }
 
-
     void Update()
     {
         GetPlayerInput();
@@ -162,18 +161,33 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        TakeDamageFromEnemy(collision);
-    }
-
-    private void TakeDamageFromEnemy(Collision collision)
-    {
         if (collision.gameObject.CompareTag("Enemy") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
-            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
-            //OLD int dmg = collision.gameObject.GetComponent<EnemyBehaviorA>().pub_dealDamage;
-            int dmg = collision.gameObject.GetComponent<EnemyBase>().pub_enemyDamage;
+            TakeDamageFromEnemy(collision);
+        }
+        
+    }
+    private void TakeDamageFromEnemy(Collision collision) //onCollisionStay - enemy contact damage
+    {
+        audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
+        int dmg = collision.gameObject.GetComponent<EnemyBase>().pub_enemyDamage;
+        PlayerTakeDamage(dmg);
+    }
+
+    private void TakeDamageFromEnemy(Collider other) //onTriggerEnter - enemy projectile damage
+    {
+        audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
+        if (other.gameObject.GetComponent<ProjectileEnemy>() != null)
+        {
+            int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
+            Debug.Log(dmg);
             PlayerTakeDamage(dmg);
         }
+        else
+        {
+            Debug.Log("script does not exist");
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -183,21 +197,26 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerHitsRoomEnterTrigger(other);
+        if (other.gameObject.CompareTag("Room"))
+        {
+            PlayerHitsRoomEnterTrigger(other);
+        }
+
+        if (other.gameObject.CompareTag("EnemyProjectile"))
+        {
+            TakeDamageFromEnemy(other);
+        }
     }
 
     private void PlayerHitsRoomEnterTrigger(Collider other)
     {
-        if (other.gameObject.CompareTag("Room"))
-        {
-            canPlayerMove = false;
+        canPlayerMove = false;
 
-            pub_currentRoomIndex++;
-            playerRB.velocity = Vector3.zero;
-            playerRB.angularVelocity = Vector3.zero;
-            transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 0.65f);
-        }
+        pub_currentRoomIndex++;
+        playerRB.velocity = Vector3.zero;
+        playerRB.angularVelocity = Vector3.zero;
+        transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
+        Invoke("AllowPlayerToMove", 0.65f);
     }
 
     private void AllowPlayerToMove()
@@ -254,7 +273,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             canPlayerFire = Time.time + playerBaseFireRate;
             int rand = Random.Range(0, projectilePool.Count);
-            projectilePool[rand].GetComponent<ProjectileBehavior>().ShootProjectile(shootDirection);
+            //projectilePool[rand].GetComponent<ProjectileBase>().ShootProjectile(shootDirection);
+            projectilePool[rand].GetComponent<ProjectileBase>().ShootProjectile(transform.position, shootDirection, pub_projectileSpeed, pub_playerProjectileRange);
         }
     }
 
@@ -309,9 +329,13 @@ public class PlayerBehavior : MonoBehaviour
             Collider[] overlapSphere = Physics.OverlapSphere(gameObject.transform.position, playerBlankRadius);
             foreach (Collider col in overlapSphere)
             {
-                if (col.gameObject.GetComponent<EnemyBehaviorA>() != null) //if has enemy script
+                if (col.gameObject.GetComponent<EnemyBase>() != null) //if has enemy script
                 {
-                    col.gameObject.GetComponent<EnemyBehaviorA>().BlankKnockback();
+                    col.gameObject.GetComponent<EnemyBase>().BlankKnockback();
+                }
+                else if (col.gameObject.GetComponent<ProjectileEnemy>() != null)
+                {
+                    col.gameObject.GetComponent<ProjectileEnemy>().DisableProjectile();
                 }
             }
         }

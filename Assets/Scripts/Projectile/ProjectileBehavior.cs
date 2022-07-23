@@ -8,9 +8,6 @@ public class ProjectileBehavior : MonoBehaviour
     [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
 
-    [SerializeField] AudioClip[] audioClips;
-
-    private AudioSource audioSource;
     private Rigidbody rb;
     private Rigidbody playerRB;
 
@@ -22,7 +19,6 @@ public class ProjectileBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerRB = playerGO.GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
 
         startingScale = transform.localScale;
     }
@@ -30,20 +26,13 @@ public class ProjectileBehavior : MonoBehaviour
     private void Start()
     {
         range = playerBehavior.pub_playerProjectileRange;
-        //Debug.Log(range);
         this.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         DisableProjectileUponHit(other);
-        //Debug.Log("create base class for projectiles? player and enemy projectiles?");
     }
 
     public void ShootProjectile(Vector3 shootdirection)
@@ -54,10 +43,6 @@ public class ProjectileBehavior : MonoBehaviour
         playerBehavior.projectilePool.Remove(this.gameObject);
         rb.AddForce((shootdirection * playerBehavior.pub_projectileSpeed) + (playerRB.velocity / 2), ForceMode.Impulse);
         LeanTween.scale(this.gameObject, (startingScale / 3f), range/2).setEase(LeanTweenType.easeInQuart).setDelay(range/2).setOnComplete(DisableProjectile);
-
-        //sounds too much like a clock
-        //int rand = Random.Range(0, audioClips.Length);
-        //audioSource.PlayOneShot(audioClips[rand], 0.2f);
     }
 
     private void DisableProjectileUponHit(Collider other)

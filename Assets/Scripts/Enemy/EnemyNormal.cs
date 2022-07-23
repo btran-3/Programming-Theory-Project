@@ -66,9 +66,14 @@ public class EnemyNormal : EnemyBase
     }
 
 
-    protected override void BlankKnockBack() //designed for NavMeshAgent
+    public override void BlankKnockback() //designed for NavMeshAgent
     {
+        Vector3 knockbackDirection = (transform.position - playerGO.transform.position).normalized;
+        knockbackDirection.y = 0;
 
+        float distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
+        float distanceDifference = playerBlankRadius - distanceFromPlayer;
+        navMeshAgent.velocity = (knockbackDirection * distanceDifference * 3) + knockbackDirection;
     }
     //enemy may or may not be impacted by blank knockback
     //see EnemyBehaviorA for blank knockback code

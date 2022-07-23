@@ -119,7 +119,7 @@ public abstract class EnemyBase : MonoBehaviour
     //enemy may use navMesh, position damping, not follow player at all, etc
     //see EnemyBehaviorA for Navmesh follow player stuff
 
-    protected abstract void BlankKnockBack();
+    public abstract void BlankKnockback();
     //enemy may or may not be impacted by blank knockback
     //see EnemyBehaviorA for blank knockback code
 
