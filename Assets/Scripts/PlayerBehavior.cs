@@ -9,7 +9,7 @@ public class PlayerBehavior : MonoBehaviour
     private int playerBaseHealth = 5;
     private int playerBaseBlanks = 2;
     private int playerBaseMoney;
-    private float playerBaseSpeed = 8f;
+    private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 0.8f;
     private float playerBaseFireCooldown = 0.35f; //less is faster
@@ -49,6 +49,34 @@ public class PlayerBehavior : MonoBehaviour
             uiManager.UpdateHealthText();
         }
     }
+    public float pub_playerBlankRadius
+    {
+        get { return playerBlankRadius;}
+    }
+    public float pub_projectileSpeed {
+        get { return playerBaseProjectileSpeed; }
+    }
+    public float pub_playerDamage {
+        get { return playerBaseDamage; }
+        //add with stat upgrades
+    }
+    public float pub_playerSpeed
+    {
+        get { return playerBaseSpeed; }
+        //add with stat upgrades
+    }
+    public float pub_playerFireCooldown
+    {
+        get { return playerBaseFireCooldown; }
+        //add with stat upgrades
+    }
+
+    public float pub_playerProjectileRange
+    {
+        get { return playerBaseProjectileRange; }
+    }
+
+
     public int pub_currentPlayerMoney
     {
         get { return currentPlayerMoney; }
@@ -62,29 +90,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         get { return currentPlayerBlanks; }
         private set
-        { 
+        {
             currentPlayerBlanks = value;
             uiManager.UpdateBlanksText();
         }
-    }
-
-    public float pub_playerBlankRadius
-    {
-        get { return playerBlankRadius;}
-    }
-
-    public float pub_projectileSpeed {
-        get { return playerBaseProjectileSpeed; }
-            //need to add with stat upgrades
-    }
-    public float pub_playerDamage {
-        get { return playerBaseDamage; }
-        //add with stat upgrades
-    }
-
-    public float pub_playerProjectileRange
-    {
-        get { return playerBaseProjectileRange; }
     }
 
     public int pub_currentRoomIndex
@@ -123,11 +132,13 @@ public class PlayerBehavior : MonoBehaviour
     private void Start()
     {
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
+        blankRadiusMesh.SetActive(false);
+
+        //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
+
         currentPlayerHealth = playerBaseHealth;
         currentPlayerMoney = playerBaseMoney;
         currentPlayerBlanks = playerBaseBlanks;
-
-        blankRadiusMesh.SetActive(false);
     }
 
     void Update()
