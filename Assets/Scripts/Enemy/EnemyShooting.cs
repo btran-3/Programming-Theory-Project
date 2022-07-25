@@ -7,8 +7,8 @@ public class EnemyShooting : EnemyBase
     [SerializeField] Renderer[] enemyRenderers;
     [SerializeField] GameObject enemyProjectilePrefab;
 
-    private float projectileSpeed = 8f;
-    private float projectileRange = 0.75f;
+    private float projectileSpeed = 7f;
+    private float projectileRange = 0.85f;
     private float distanceFromPlayer;
     private float shootingCooldown = 1.5f;
     private float enemyShootTiming;
@@ -20,27 +20,29 @@ public class EnemyShooting : EnemyBase
 
     private void Update()
     {
-        if (isTrackingPlayer)
-        {
-            int damping = 10;
+        LookAtPlayer();
 
-            Vector3 lookPosition = playerGO.transform.position - transform.position;
-            lookPosition.y = 0;
-            var rotation = Quaternion.LookRotation(lookPosition);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
-        }
-
-        distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
-
-        if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f)
+        if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f && isTrackingPlayer)
         {
             enemyShootTiming = Time.time + shootingCooldown;
             GameObject newProjectile = Instantiate(enemyProjectilePrefab, transform.position, transform.rotation);
             newProjectile.SetActive(true); //MUST SET ACTIVE HERE
-            newProjectile.GetComponent<ProjectileEnemy>().ShootProjectile(transform.position, Vector3.forward, projectileSpeed, projectileRange);
-            
+            newProjectile.GetComponent<ProjectileEnemy>()
+                .ShootProjectile(transform.position, Vector3.forward, projectileSpeed, projectileRange);
         }
 
+    }
+
+    private void LookAtPlayer()
+    {
+        int damping = 10;
+
+        Vector3 lookPosition = playerGO.transform.position - transform.position;
+        lookPosition.y = 0;
+        var rotation = Quaternion.LookRotation(lookPosition);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+
+        distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
     }
 
     protected override void HitByPlayerProjectile(Collider other)
@@ -73,6 +75,11 @@ public class EnemyShooting : EnemyBase
     }
 
     protected override void EnableEnemyMovement() //enemy only rotates head to shoot player
+    {
+        Invoke("DelayShooting", enemyMovementDelay);
+    }
+
+    void DelayShooting()
     {
         isTrackingPlayer = true;
     }

@@ -14,6 +14,8 @@ public class EnemyNormal : EnemyBase
     [SerializeField] Collider enemyCollider;
     [SerializeField] NavMeshAgent navMeshAgent;
 
+    float defaultSpeed;
+
 
     //external references
     #endregion
@@ -24,7 +26,8 @@ public class EnemyNormal : EnemyBase
 
     private void Start()
     {
-        navMeshAgent.speed = enemySpeed;
+        defaultSpeed = enemySpeed;
+        //navMeshAgent.speed = enemySpeed;
         navMeshAgent.acceleration = enemyAcceleration;
         navMeshAgent.stoppingDistance = enemyStoppingDistance;
         //for some reason, setting navmesh to false here prevents it from being set to true
@@ -55,16 +58,20 @@ public class EnemyNormal : EnemyBase
 
     protected override void EnableEnemyMovement() //designed for NavMeshAgent
     {
-        
+        navMeshAgent.enabled = true; //place here so the enemies get "bumped up" by NavMesh before they're on screen
         Invoke("DelayFollowPlayerNavMesh", enemyMovementDelay);
     }
 
     void DelayFollowPlayerNavMesh()
     {
         isTrackingPlayer = true;
-        navMeshAgent.enabled = true;
+        LeanTween.value(0, defaultSpeed, 1f).setEase(LeanTweenType.easeInOutCubic).setOnUpdate(UpdateEnemySpeed);
     }
 
+    void UpdateEnemySpeed(float value)
+    {
+        navMeshAgent.speed = value;
+    }
 
     public override void BlankKnockback() //designed for NavMeshAgent
     {

@@ -7,12 +7,12 @@ public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
     private int playerBaseHealth = 5;
-    private int playerBaseBlanks = 10;
+    private int playerBaseBlanks = 2;
     private int playerBaseMoney;
-    private float playerBaseSpeed = 10f;
+    private float playerBaseSpeed = 8f;
     private float playerBaseMaxAcceleration = 1000f;
-    private float playerBaseDamage = 1f;
-    private float playerBaseFireRate = 0.30f;
+    private float playerBaseDamage = 0.8f;
+    private float playerBaseFireCooldown = 0.35f; //less is faster
     private float playerBaseProjectileSpeed = 12f;
     private float playerBaseProjectileRange = 0.75f;
     private float playerBlankRadius = 6f;
@@ -178,7 +178,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
         int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
-        Debug.Log(dmg);
+        //Debug.Log(dmg);
         PlayerTakeDamage(dmg);
         
     }
@@ -264,7 +264,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (projectilePool.Count > 0 && Time.time > canPlayerFire)
         {
-            canPlayerFire = Time.time + playerBaseFireRate;
+            canPlayerFire = Time.time + playerBaseFireCooldown;
             int rand = Random.Range(0, projectilePool.Count);
             //projectilePool[rand].GetComponent<ProjectileBase>().ShootProjectile(shootDirection);
             projectilePool[rand].GetComponent<ProjectileBase>().ShootProjectile(transform.position, shootDirection, pub_projectileSpeed, pub_playerProjectileRange);

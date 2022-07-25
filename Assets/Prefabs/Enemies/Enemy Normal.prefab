@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: normal
-  enemyHealth: 3
+  enemyHealth: 4
   enemyDamage: 1
   enemySpeed: 5
   audioSource: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   enemyAcceleration: 15
   enemyStoppingDistance: 1.4
+  enemyCollider: {fileID: 0}
   navMeshAgent: {fileID: 2835765971106506872}
 --- !u!195 &2835765971106506872
 NavMeshAgent:

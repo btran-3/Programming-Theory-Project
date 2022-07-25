@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &84970964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7673799774337937003, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136590635 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6786479970203335808, guid: 6139e46c6ec45954094ef08bf051c544, type: 3}
@@ -896,6 +901,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &875098640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2892307451637134606, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3125,6 +3135,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room A1
       objectReference: {fileID: 0}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 84970964}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 875098640}
     - target: {fileID: 5053384683949651001, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: playerGO
       value: 

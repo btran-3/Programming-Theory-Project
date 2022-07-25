@@ -5,10 +5,14 @@ using UnityEngine;
 public class EnemyFlying : EnemyBase
 {
     Rigidbody rb;
+    float noiseAmp = 20f;
+    float noiseFreq = 0.1f;
+    float defaultSpeed;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        defaultSpeed = enemySpeed;
     }
 
     private void Update()
@@ -23,10 +27,19 @@ public class EnemyFlying : EnemyBase
             Vector3 playerPos = playerGO.transform.position;
             Vector3 targetPos = playerPos - transform.position;
             Vector3 targetPosNormalized = (playerPos - transform.position).normalized;
-            Vector3 targetPosAveraged = (targetPos + targetPosNormalized) / 2;
+            Vector3 targetPosAveraged = (targetPos + targetPosNormalized);
             targetPosAveraged.y = 0;
-            rb.velocity = targetPosAveraged * enemySpeed * Time.fixedDeltaTime;
+            //rb.AddForce(targetPosNormalized * enemySpeed * Time.fixedDeltaTime, ForceMode.Acceleration);
+            rb.velocity = (targetPosAveraged + targetPosNormalized) * enemySpeed * Time.fixedDeltaTime;
+
+            float randSeed = Random.Range(-1000f, 1000f);
+            float xVar = (Mathf.PerlinNoise((Time.time + randSeed) * noiseFreq, 0f) - 0.5f) * noiseAmp;
+            float yVar = (Mathf.PerlinNoise(0f, (Time.time + randSeed) * noiseFreq) - 0.5f) * noiseAmp;
+            Vector3 addRandomForce = new Vector3(xVar, 0f, yVar);
+            rb.velocity += addRandomForce;
         }
+
+
     }
 
     private void LateUpdate()
@@ -36,13 +49,7 @@ public class EnemyFlying : EnemyBase
 
     protected override void ProjectileKnockBack(Collider other) //for rigidbody enemy
     {
-        Vector3 knockbackDirection;
-        knockbackDirection.x = transform.position.x - other.gameObject.transform.position.x;
-        knockbackDirection.y = 0f;
-        knockbackDirection.z = transform.position.z - other.gameObject.transform.position.z;
-        knockbackDirection = (knockbackDirection.normalized) * 10;
-        rb.AddForce(knockbackDirection, ForceMode.VelocityChange);
-        //Debug.Log(knockbackDirection);
+        rb.velocity *= 0f;
     }
 
 
@@ -54,12 +61,29 @@ public class EnemyFlying : EnemyBase
     void DelayCanFollowPlayer()
     {
         isTrackingPlayer = true;
+
+        //updates enemySpeed value only during tween. Awesome.
+        LeanTween.value(0, defaultSpeed, 1f).setEase(LeanTweenType.easeInOutCubic).setOnUpdate(UpdateEnemySpeed);
     }
 
+    void UpdateEnemySpeed(float value)
+    {
+        enemySpeed = value;
+        Debug.Log(enemySpeed);
+    }
 
     public override void BlankKnockback()
     {
+        enemySpeed = 0f;
+        isTrackingPlayer = false;
+        Vector3 knockbackDirection = (transform.position - playerGO.transform.position).normalized;
+        knockbackDirection.y = 0;
 
+        float distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
+        float distanceDifference = playerBlankRadius - distanceFromPlayer;
+        rb.velocity = knockbackDirection * distanceDifference * 2.5f;
+
+        Invoke("DelayCanFollowPlayer", enemyMovementDelay);
     }
     //enemy may or may not be impacted by blank knockback
     //see EnemyBehaviorA for blank knockback code
