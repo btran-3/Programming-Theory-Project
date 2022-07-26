@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 5;
+    private int playerBaseHealth = 50;
     private int playerBaseBlanks = 2;
     private int playerBaseMoney = 11;
     private float playerBaseSpeed = 7.5f;
@@ -164,6 +164,8 @@ public class PlayerBehavior : MonoBehaviour
         currentPlayerHealth = playerBaseHealth;
         currentPlayerMoney = playerBaseMoney;
         currentPlayerBlanks = playerBaseBlanks;
+
+
     }
 
     void Update()

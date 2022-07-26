@@ -16,6 +16,7 @@ public class EnemyNormal : EnemyBase
     Rigidbody rb;
 
     float defaultSpeed;
+    float colliderRadius;
 
 
     //external references
@@ -34,6 +35,8 @@ public class EnemyNormal : EnemyBase
         //for some reason, setting navmesh to false here prevents it from being set to true
         //in the FollowPlayer() method...not sure why?
         enemyCollider = GetComponent<Collider>();
+        colliderRadius = enemyCollider.bounds.extents.x;
+        Debug.Log(colliderRadius);
 
         if (gameObject.GetComponent<Rigidbody>() != null)
         {
@@ -48,6 +51,11 @@ public class EnemyNormal : EnemyBase
             //update destination position every frame
             navMeshAgent.SetDestination(playerGO.transform.position);
         }
+
+        if (Vector3.Distance(transform.position, playerGO.transform.position) > (colliderRadius + 0.65f))
+        {
+            rb.isKinematic = true;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -57,8 +65,9 @@ public class EnemyNormal : EnemyBase
 
     private void OnCollisionExit(Collision collision)
     {
-        rb.isKinematic = true;
+        
     }
+
 
     protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
     {
