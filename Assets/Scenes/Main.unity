@@ -2645,6 +2645,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5d8f6806463c025419a17a34c36330dd, type: 3}
   - {fileID: 8300000, guid: 3efde61a71955d64087fac03824335a2, type: 3}
   projectileHitObstacleSound: {fileID: 8300000, guid: cb92707ccc213044382f3afe19dcc361, type: 3}
+  upgradeItemSound: {fileID: 8300000, guid: 42a286425d22a2d489a1e2390a886129, type: 3}
 --- !u!4 &2112454243
 Transform:
   m_ObjectHideFlags: 0
@@ -2817,6 +2818,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 686107054, guid: 4015bd1c2b1412949af9ab855ff497ea, type: 3}
+      propertyPath: playerBehavior
+      value: 
+      objectReference: {fileID: 1585987111}
     - target: {fileID: 686107054, guid: 4015bd1c2b1412949af9ab855ff497ea, type: 3}
       propertyPath: ondestroySounds
       value: 
@@ -3008,6 +3013,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 963194227}
     - target: {fileID: 5933640270893620337, guid: e07788091b49bd745908d312d92a6ba0, type: 3}
+      propertyPath: playerBehavior
+      value: 
+      objectReference: {fileID: 1585987111}
+    - target: {fileID: 5933640270893620337, guid: e07788091b49bd745908d312d92a6ba0, type: 3}
       propertyPath: ondestroySounds
       value: 
       objectReference: {fileID: 2112454240}
@@ -3020,6 +3029,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 431409355, guid: 4e205170f1e39e94299000d0fd480b6c, type: 3}
+      propertyPath: playerBehavior
+      value: 
+      objectReference: {fileID: 1585987111}
     - target: {fileID: 431409355, guid: 4e205170f1e39e94299000d0fd480b6c, type: 3}
       propertyPath: ondestroySounds
       value: 
@@ -3168,6 +3181,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1193049972, guid: f5ff0a80af0cd2f44affefebf9437ae4, type: 3}
+      propertyPath: playerBehavior
+      value: 
+      objectReference: {fileID: 1585987111}
     - target: {fileID: 1193049972, guid: f5ff0a80af0cd2f44affefebf9437ae4, type: 3}
       propertyPath: ondestroySounds
       value: 

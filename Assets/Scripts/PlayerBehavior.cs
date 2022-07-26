@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
     #region PlayerBaseStats
     private int playerBaseHealth = 5;
     private int playerBaseBlanks = 2;
-    private int playerBaseMoney;
+    private int playerBaseMoney = 11;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 0.8f;
@@ -98,6 +98,7 @@ public class PlayerBehavior : MonoBehaviour
     }
 
 
+
     public int pub_currentPlayerMoney
     {
         get { return currentPlayerMoney; }
@@ -127,7 +128,6 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-
     #endregion
 
     #region References
@@ -156,7 +156,7 @@ public class PlayerBehavior : MonoBehaviour
         blankRadiusMesh.SetActive(false);
 
         //methods can only be subscribed or removed using += or -=
-        GameEvents.instance.onUpgradeItemTriggerEnter += TakeUpgradeItem;
+        GameEvents.instance.upgradePlayerStats += TakeUpgradeItem;
 
 
         //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
@@ -219,7 +219,7 @@ public class PlayerBehavior : MonoBehaviour
         
     }
 
-    private void TakeUpgradeItem(string itemTag, int health, float damage, float speed, float firerate) //GameEvent
+    private void TakeUpgradeItem(string itemTag, int price, int health, float damage, float speed, float firerate) //GameEvent
     {
         switch (itemTag)
         {
@@ -227,18 +227,22 @@ public class PlayerBehavior : MonoBehaviour
                 Debug.Log(itemTag + " upgraded from " + pub_maxPlayerHealth + " to");
                 pub_maxPlayerHealth += health;
                 pub_currentPlayerHealth = pub_maxPlayerHealth;
+                pub_currentPlayerMoney -= price;
                 break;
             case "damage":
                 Debug.Log(itemTag + " upgraded from " + pub_playerDamage + " to");
                 pub_playerDamage += damage;
+                pub_currentPlayerMoney -= price;
                 break;
             case "speed":
                 Debug.Log(itemTag + " upgraded from " + pub_playerSpeed + " to");
                 pub_playerSpeed += speed;
+                pub_currentPlayerMoney -= price;
                 break;
             case "firerate":
                 Debug.Log(itemTag + " upgraded from " + pub_playerFireCooldown + " to");
                 pub_playerFireCooldown += firerate;
+                pub_currentPlayerMoney -= price;
                 break;
             default:
                 Debug.LogWarning("Item type not defined");
@@ -359,7 +363,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerDeath()
     {
-        globalOnDestroySounds.playPlayerDeathSound();
+        globalOnDestroySounds.PlayPlayerDeathSound();
         gameObject.SetActive(false);
         Debug.Log("GAME OVER");
     }

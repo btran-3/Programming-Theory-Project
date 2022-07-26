@@ -54,7 +54,7 @@ public class ProjectileBehavior : MonoBehaviour
         else if (other.gameObject.CompareTag("Environment"))
         {
             DisableProjectile();
-            globalOnDestroySounds.playProjectileHitObstacleSound();
+            globalOnDestroySounds.PlayProjectileHitObstacleSound();
         }
     }
 

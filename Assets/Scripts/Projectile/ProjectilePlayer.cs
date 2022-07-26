@@ -31,7 +31,7 @@ public class ProjectilePlayer : ProjectileBase
         else if (other.gameObject.CompareTag("Environment"))
         {
             DisableProjectile();
-            globalOnDestroySounds.playProjectileHitObstacleSound();
+            globalOnDestroySounds.PlayProjectileHitObstacleSound();
         }
     }
     public override void DisableProjectile()

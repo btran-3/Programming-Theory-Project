@@ -266,7 +266,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8644838893112691939}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -285,12 +285,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isItemFree: 0
   priceTextTMP: {fileID: 1606716643}
-  costNumber: 5
+  price: 5
   itemTag: speed
   healthUpAmt: 0
   damageUpAmt: 0
   speedUpAmt: 2.5
   firerateUpAmt: 0
+  playerBehavior: {fileID: 0}
   ondestroySounds: {fileID: 0}
 --- !u!1 &8644838893511091331
 GameObject:

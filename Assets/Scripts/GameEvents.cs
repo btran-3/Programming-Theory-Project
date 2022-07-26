@@ -18,18 +18,28 @@ public class GameEvents : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    public event Action<string, int, int, float, float, float> upgradePlayerStats; //upgrade player stats
+    public event Action upgradeItemPlaySFX; //play SFX when touched
 
 
+    //UpgradeItemTriggerEnter is called in the UpgradeItemBehavior OnTriggerEnter
+    //it has overloads depending on what needs to be passed in
 
-    public event Action<string, int, float, float, float> onUpgradeItemTriggerEnter;
-
-    //this method is called when Upgrade Item trigger has been entered
-    public void UpgradeItemTriggerEnter(string tag, int health, float damage, float speed, float firerate)
+    public void UpgradeItemTriggerEnter(string tag, int price, int health, float damage, float speed, float firerate)
     {
-        if (onUpgradeItemTriggerEnter != null)
+        if (upgradePlayerStats != null)
         {
             //this is the Action that the player has subscribed to
-            onUpgradeItemTriggerEnter(tag, health, damage, speed, firerate);
+            upgradePlayerStats(tag, price, health, damage, speed, firerate);
+        }
+    }
+
+    public void UpgradeItemTriggerEnter()
+    {
+        if (upgradeItemPlaySFX != null)
+        {
+            //this is the Action that GlobalOnDestroySounds has subscribed to
+            upgradeItemPlaySFX();
         }
     }
 

@@ -7,7 +7,7 @@ public class UpgradeItemBehavior : MonoBehaviour
 {
     [SerializeField] bool isItemFree;
     [SerializeField] TextMeshPro priceTextTMP;
-    [SerializeField] int costNumber;
+    [SerializeField] int price;
 
     #region upgrade stats
     [SerializeField] string itemTag;
@@ -39,12 +39,16 @@ public class UpgradeItemBehavior : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] GameObject ondestroySounds;
+
     private bool hasBeenTouched;
+    Collider itemCollider;
 
     private void Awake()
     {
         //gameObject.SetActive(false);
+        itemCollider = GetComponent<Collider>();
         priceTextTMP.enabled = false;
     }
 
@@ -56,29 +60,45 @@ public class UpgradeItemBehavior : MonoBehaviour
     {
         if (!isItemFree) //if not free, it has a cost
         {
-            if (costNumber == 0)
+            if (price == 0)
             {
                 Debug.LogWarning("Item that should have a cost is not assigned one");
             }
             else
             {
-                priceTextTMP.SetText("$" + costNumber);
+                priceTextTMP.SetText("$" + price);
                 priceTextTMP.enabled = true;
             }
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!hasBeenTouched && collision.gameObject.CompareTag("Player") && playerBehavior.pub_currentPlayerMoney >= price)
+        {
+            itemCollider.enabled = false;
+            //upgrade player (PlayerBehavior)
+            GameEvents.instance.UpgradeItemTriggerEnter(itemTag, price, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
+            //play SFX (GlobalOnDestroySounds)
+            GameEvents.instance.UpgradeItemTriggerEnter();
+            LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
+        }
+    }
 
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (!hasBeenTouched && other.gameObject.CompareTag("Player"))
         {
+            //upgrade player (PlayerBehavior)
             GameEvents.instance.UpgradeItemTriggerEnter(itemTag, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
+            //play SFX (GlobalOnDestroySounds)
+            GameEvents.instance.UpgradeItemTriggerEnter();
             LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
             
         }
     }
+    */
 
     void DestroyObject()
     {
