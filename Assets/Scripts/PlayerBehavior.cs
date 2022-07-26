@@ -20,6 +20,7 @@ public class PlayerBehavior : MonoBehaviour
 
     #region Dynamic variables
 
+    private int maxPlayerHealth;
     private int currentPlayerHealth;
     private int currentPlayerMoney;
     private int currentPlayerBlanks;
@@ -36,6 +37,16 @@ public class PlayerBehavior : MonoBehaviour
     #endregion
 
     #region Public Get Stats
+    public int pub_maxPlayerHealth
+    {
+        get { return maxPlayerHealth; }
+        private set
+        {
+            maxPlayerHealth = value;
+            Debug.Log(pub_maxPlayerHealth);
+            uiManager.UpdateHealthText();
+        }
+    }
     public int pub_currentPlayerHealth
     {
         get { return currentPlayerHealth; }
@@ -58,17 +69,27 @@ public class PlayerBehavior : MonoBehaviour
     }
     public float pub_playerDamage {
         get { return playerBaseDamage; }
-        //add with stat upgrades
+        private set {
+            playerBaseDamage = value;
+            Debug.Log(pub_playerDamage);
+        }
     }
     public float pub_playerSpeed
     {
         get { return playerBaseSpeed; }
-        //add with stat upgrades
+        private set {
+            playerBaseSpeed = value;
+            Debug.Log(pub_playerSpeed);
+        }
     }
     public float pub_playerFireCooldown
     {
         get { return playerBaseFireCooldown; }
-        //add with stat upgrades
+        private set
+        {
+            playerBaseFireCooldown = value;
+            Debug.Log(pub_playerFireCooldown);
+        }
     }
 
     public float pub_playerProjectileRange
@@ -134,8 +155,12 @@ public class PlayerBehavior : MonoBehaviour
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);
 
-        //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
+        //methods can only be subscribed or removed using += or -=
+        GameEvents.instance.onUpgradeItemTriggerEnter += TakeUpgradeItem;
 
+
+        //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
+        maxPlayerHealth = playerBaseHealth;
         currentPlayerHealth = playerBaseHealth;
         currentPlayerMoney = playerBaseMoney;
         currentPlayerBlanks = playerBaseBlanks;
@@ -157,7 +182,7 @@ public class PlayerBehavior : MonoBehaviour
             playerInput.y = Input.GetAxis("Vertical");
             playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * playerBaseSpeed;
+            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * pub_playerSpeed;
         }
         else
         {
@@ -192,6 +217,33 @@ public class PlayerBehavior : MonoBehaviour
         //Debug.Log(dmg);
         PlayerTakeDamage(dmg);
         
+    }
+
+    private void TakeUpgradeItem(string itemTag, int health, float damage, float speed, float firerate) //GameEvent
+    {
+        switch (itemTag)
+        {
+            case "health":
+                Debug.Log(itemTag + " upgraded from " + pub_maxPlayerHealth + " to");
+                pub_maxPlayerHealth += health;
+                pub_currentPlayerHealth = pub_maxPlayerHealth;
+                break;
+            case "damage":
+                Debug.Log(itemTag + " upgraded from " + pub_playerDamage + " to");
+                pub_playerDamage += damage;
+                break;
+            case "speed":
+                Debug.Log(itemTag + " upgraded from " + pub_playerSpeed + " to");
+                pub_playerSpeed += speed;
+                break;
+            case "firerate":
+                Debug.Log(itemTag + " upgraded from " + pub_playerFireCooldown + " to");
+                pub_playerFireCooldown += firerate;
+                break;
+            default:
+                Debug.LogWarning("Item type not defined");
+                break;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

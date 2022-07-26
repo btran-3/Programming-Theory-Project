@@ -125,7 +125,7 @@ MonoBehaviour:
   onDestroySounds: {fileID: 0}
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   enemyAcceleration: 15
-  enemyStoppingDistance: 1.4
+  enemyStoppingDistance: 1.2
   enemyCollider: {fileID: 0}
   navMeshAgent: {fileID: 2835765971106506872}
 --- !u!195 &2835765971106506872

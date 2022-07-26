@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UpgradeItemBehavior : MonoBehaviour
 {
     [SerializeField] bool isItemFree;
-    [SerializeField] GameObject priceText;
+    [SerializeField] TextMeshPro priceTextTMP;
+    [SerializeField] int costNumber;
 
-    #region upgrades
+    #region upgrade stats
+    [SerializeField] string itemTag;
     [SerializeField] int healthUpAmt;
     [SerializeField] float damageUpAmt;
     [SerializeField] float speedUpAmt;
@@ -36,12 +39,53 @@ public class UpgradeItemBehavior : MonoBehaviour
     }
     #endregion
 
-    void Start()
+    [SerializeField] GameObject ondestroySounds;
+    private bool hasBeenTouched;
+
+    private void Awake()
     {
-        
+        //gameObject.SetActive(false);
+        priceTextTMP.enabled = false;
     }
 
-    void Update()
+    void Start()
+    {
+        SetPriceTagText();
+    }
+    private void SetPriceTagText()
+    {
+        if (!isItemFree) //if not free, it has a cost
+        {
+            if (costNumber == 0)
+            {
+                Debug.LogWarning("Item that should have a cost is not assigned one");
+            }
+            else
+            {
+                priceTextTMP.SetText("$" + costNumber);
+                priceTextTMP.enabled = true;
+            }
+        }
+    }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!hasBeenTouched && other.gameObject.CompareTag("Player"))
+        {
+            GameEvents.instance.UpgradeItemTriggerEnter(itemTag, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
+            LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
+            
+        }
+    }
+
+    void DestroyObject()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
     {
         
     }

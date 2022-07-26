@@ -18,7 +18,8 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth);
+        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
+            playerBehavior.pub_maxPlayerHealth);
         moneyText.SetText("$" + playerBehavior.pub_currentPlayerMoney);
         blanksText.SetText("B: " + playerBehavior.pub_currentPlayerBlanks);
     }
@@ -31,7 +32,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealthText()
     {
-        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth);
+        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
+            playerBehavior.pub_maxPlayerHealth);
     }
 
     public void UpdateMoneyText()
