@@ -13,6 +13,7 @@ public class EnemyNormal : EnemyBase
     //internal
     [SerializeField] Collider enemyCollider;
     [SerializeField] NavMeshAgent navMeshAgent;
+    Rigidbody rb;
 
     float defaultSpeed;
 
@@ -34,6 +35,10 @@ public class EnemyNormal : EnemyBase
         //in the FollowPlayer() method...not sure why?
         enemyCollider = GetComponent<Collider>();
 
+        if (gameObject.GetComponent<Rigidbody>() != null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
     }
 
     private void Update()
@@ -43,6 +48,16 @@ public class EnemyNormal : EnemyBase
             //update destination position every frame
             navMeshAgent.SetDestination(playerGO.transform.position);
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        rb.isKinematic = false;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        rb.isKinematic = true;
     }
 
     protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
