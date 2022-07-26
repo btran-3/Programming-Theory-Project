@@ -420,4 +420,9 @@ public class PlayerBehavior : MonoBehaviour
         canPlayerUseBlanks = true;
     }
 
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.upgradePlayerStats -= TakeUpgradeItem;
+    }
 }

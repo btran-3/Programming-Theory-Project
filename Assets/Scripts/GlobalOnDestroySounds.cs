@@ -31,4 +31,8 @@ public class GlobalOnDestroySounds : MonoBehaviour
         audioSource.PlayOneShot(upgradeItemSound);
     }
 
+    private void OnDestroy()
+    {
+        GameEvents.instance.upgradeItemPlaySFX -= PlayUpgradeItemSound;
+    }
 }
