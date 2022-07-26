@@ -58,16 +58,10 @@ public class EnemyNormal : EnemyBase
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         rb.isKinematic = false;
     }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        
-    }
-
 
     protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
     {
