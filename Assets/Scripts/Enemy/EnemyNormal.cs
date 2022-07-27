@@ -36,7 +36,7 @@ public class EnemyNormal : EnemyBase
         //in the FollowPlayer() method...not sure why?
         enemyCollider = GetComponent<Collider>();
         colliderRadius = enemyCollider.bounds.extents.x;
-        Debug.Log(colliderRadius);
+        //Debug.Log(colliderRadius);
 
         if (gameObject.GetComponent<Rigidbody>() != null)
         {
