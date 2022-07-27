@@ -46,7 +46,7 @@ public class EnemyNormal : EnemyBase
 
     private void Update()
     {
-        if (isTrackingPlayer)
+        if (isTrackingPlayer && navMeshAgent.enabled)
         {
             //update destination position every frame
             navMeshAgent.SetDestination(playerGO.transform.position);
