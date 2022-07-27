@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RoomBehavior : MonoBehaviour
 {
+    [SerializeField] private string roomMusicType;
+
     [SerializeField] List<GameObject> possibleEnemies;
     [SerializeField] List<GameObject> possiblePickups;
 
@@ -35,6 +37,10 @@ public class RoomBehavior : MonoBehaviour
     private bool didPickupsSpawn;
     private Vector3 doorDefaultScale;
 
+    public string pub_roomMusicType
+    {
+        get { return roomMusicType; }
+    }
     public Vector3 pub_playerStartPos
     {
         get { return playerStartPos.transform.position; }

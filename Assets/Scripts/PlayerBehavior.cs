@@ -19,7 +19,6 @@ public class PlayerBehavior : MonoBehaviour
     #endregion
 
     #region Dynamic variables
-
     private int maxPlayerHealth;
     private int currentPlayerHealth;
     private int currentPlayerMoney;
@@ -33,6 +32,8 @@ public class PlayerBehavior : MonoBehaviour
 
     Vector3 velocity, desiredVelocity;
     private int currentRoomIndex = 0;
+
+    private string currentRoomTypeMusic;
 
     #endregion
 
@@ -133,6 +134,7 @@ public class PlayerBehavior : MonoBehaviour
     #region References
     public List<GameObject> projectilePool;
     [SerializeField] private AudioClip[] playerHurtSounds;
+    [SerializeField] private AudioClip[] musicTracks;
 
     [SerializeField] UIManager uiManager;
     [SerializeField] GameObject blankRadiusMesh;
@@ -152,6 +154,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
+        currentRoomTypeMusic = "Hostile";
+
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);
 
@@ -262,6 +266,24 @@ public class PlayerBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Room"))
         {
             PlayerHitsRoomEnterTrigger(other);
+            if (other.gameObject.GetComponent<RoomBehavior>() != null && other.gameObject.GetComponent<RoomBehavior>().pub_roomMusicType != currentRoomTypeMusic)
+            {
+                string musicTag = other.gameObject.GetComponent<RoomBehavior>().pub_roomMusicType;
+                currentRoomTypeMusic = musicTag;
+                switch (currentRoomTypeMusic)
+                {
+                    case "Hostile":
+                        MusicManager.instance.SwapTrack(musicTracks[0]);
+                        break;
+                    case "Friendly":
+                        MusicManager.instance.SwapTrack(musicTracks[1]);
+                        break;
+                    case "Boss":
+                        MusicManager.instance.SwapTrack(musicTracks[2]);
+                        break;
+                }
+                
+            }
         }
 
         if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)

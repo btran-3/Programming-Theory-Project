@@ -822,6 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016fdcc9bdce7b34992b31ea7ef2cbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomMusicType: Hostile
   possibleEnemies:
   - {fileID: 7673799774337937003}
   - {fileID: 2892307451637134606}
