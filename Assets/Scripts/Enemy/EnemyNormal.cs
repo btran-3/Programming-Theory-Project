@@ -55,12 +55,18 @@ public class EnemyNormal : EnemyBase
         if (Vector3.Distance(transform.position, playerGO.transform.position) > (colliderRadius + 0.65f))
         {
             rb.isKinematic = true;
+            navMeshAgent.enabled = true;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        rb.isKinematic = false;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            navMeshAgent.enabled = false;
+            rb.isKinematic = false;
+        }
+        
     }
 
     protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
