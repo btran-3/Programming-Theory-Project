@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 5933640270893620337}
   m_Layer: 0
   m_Name: Health Up Prefab
-  m_TagString: Untagged
+  m_TagString: UpgradeItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

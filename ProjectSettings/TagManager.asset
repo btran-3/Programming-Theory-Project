@@ -12,6 +12,7 @@ TagManager:
   - Hole
   - PlayerStartPos
   - EnemyProjectile
+  - UpgradeItem
   layers:
   - Default
   - TransparentFX

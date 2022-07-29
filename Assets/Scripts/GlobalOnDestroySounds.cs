@@ -8,6 +8,8 @@ public class GlobalOnDestroySounds : MonoBehaviour
     [SerializeField] private AudioClip[] playerDeathSounds;
     [SerializeField] private AudioClip projectileHitObstacleSound;
     [SerializeField] private AudioClip upgradeItemSound;
+    [SerializeField] private AudioClip[] blankPickupSounds;
+    [SerializeField] private AudioClip halfHeartPickupSound;
 
     void Start()
     {
@@ -29,6 +31,21 @@ public class GlobalOnDestroySounds : MonoBehaviour
     void PlayUpgradeItemSound()
     {
         audioSource.PlayOneShot(upgradeItemSound);
+    }
+
+    public void PlayPickupCollectedSound(string pickUpType)
+    {
+        if (pickUpType == "Blank")
+        {
+            int rand = Random.Range(0, 3);
+            audioSource.PlayOneShot(blankPickupSounds[rand]);
+
+        }
+        else if (pickUpType == "HalfHeart")
+        {
+            audioSource.PlayOneShot(halfHeartPickupSound);
+        }
+
     }
 
     private void OnDestroy()

@@ -207,7 +207,12 @@ public class PlayerBehavior : MonoBehaviour
         {
             TakeDamageFromEnemy(collision);
         }
-        
+        //the following is for testing
+        else if (collision.gameObject.name == "Debug hurt player" && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
+        {
+            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
+            PlayerTakeDamage(1);
+        }
     }
     private void TakeDamageFromEnemy(Collision collision) //onCollisionStay - enemy contact damage
     {
@@ -310,11 +315,21 @@ public class PlayerBehavior : MonoBehaviour
 
     private void TouchPickup(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Pickup"))
+        if (collision.gameObject.CompareTag("Pickup")
+            && collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType != "HalfHeart")
         {
             Destroy(collision.gameObject);
             pub_currentPlayerMoney += collision.gameObject.GetComponent<PickupBehavior>().pub_moneyValue;
             pub_currentPlayerBlanks += collision.gameObject.GetComponent<PickupBehavior>().pub_blankValue;
+            
+        }
+        else if (collision.gameObject.CompareTag("Pickup")
+            && collision.gameObject.GetComponent<PickupBehavior>().pub_pickupType == "HalfHeart"
+            && currentPlayerHealth < maxPlayerHealth)
+        {
+            //Debug.LogWarning("need to prevent player from pciking up too many hearts and over-healing");
+            Destroy(collision.gameObject);
+            pub_currentPlayerHealth += collision.gameObject.GetComponent<PickupBehavior>().pub_healthValue;
         }
     }
 

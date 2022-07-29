@@ -31,7 +31,9 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         track01 = gameObject.AddComponent<AudioSource>();
+        track01.loop = true;
         track02 = gameObject.AddComponent<AudioSource>();
+        track02.loop = true;
         isPlayingTrack01 = true;
 
         SwapTrack(defaultAmbience);
