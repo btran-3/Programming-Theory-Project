@@ -41,7 +41,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected RoomBehavior roomBehavior;
     [SerializeField] protected GameObject playerGO;
     [SerializeField] protected PlayerBehavior playerBehavior;
-    [SerializeField] protected OnDestroySounds onDestroySounds;
+    //[SerializeField] protected OnDestroySounds onDestroySounds;
     [SerializeField] protected GlobalOnDestroySounds globalOnDestroySounds;
 
     [SerializeField] protected AudioClip hitSound;

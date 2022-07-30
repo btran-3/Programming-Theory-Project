@@ -10,7 +10,7 @@ public class GlobalOnDestroySounds : MonoBehaviour
     [SerializeField] private AudioClip[] enemyDeathSounds;
     [SerializeField] private AudioClip projectileHitObstacleSound;
     [SerializeField] private AudioClip upgradeItemSound;
-    [SerializeField] private AudioClip[] blankPickupSounds;
+    //[SerializeField] private AudioClip[] blankPickupSounds;
     [SerializeField] private AudioClip halfHeartPickupSound;
 
     void Start()

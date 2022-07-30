@@ -1360,6 +1360,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8630367374752303175, guid: b7e50afda81077e449bcfe82f2e3c802, type: 3}
   m_PrefabInstance: {fileID: 402125037}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1238944154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6177012223204073073, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1265312291
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,6 +2488,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8630367374752303175, guid: b7862a0976843c041995469efe3c4900, type: 3}
   m_PrefabInstance: {fileID: 1678589472}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1703628801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2473855008989957825, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+  m_PrefabInstance: {fileID: 8371316786729554536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1726551152 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4056960101444141619, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
@@ -2857,10 +2867,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2754ea16e19022840be667ed4b2fa96b, type: 3}
   projectileHitObstacleSound: {fileID: 8300000, guid: cb92707ccc213044382f3afe19dcc361, type: 3}
   upgradeItemSound: {fileID: 8300000, guid: 42a286425d22a2d489a1e2390a886129, type: 3}
-  blankPickupSounds:
-  - {fileID: 8300000, guid: 82c5336611ce6f14eab557795323991f, type: 3}
-  - {fileID: 8300000, guid: 833c5d1c5ba1fb048ba8b74fd55501a1, type: 3}
-  - {fileID: 8300000, guid: 828fb1b6df3675c4dab6034ff5f9dce6, type: 3}
   halfHeartPickupSound: {fileID: 8300000, guid: 63d5e2e4e9fec374e9e5356d638f7460, type: 3}
 --- !u!4 &2112454243
 Transform:
@@ -3960,6 +3966,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room A1
       objectReference: {fileID: 0}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1238944154}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 1703628801}
     - target: {fileID: 4234141731515079102, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: globalOnDestroySounds
       value: 
