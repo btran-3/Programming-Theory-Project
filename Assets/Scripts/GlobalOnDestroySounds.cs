@@ -5,7 +5,9 @@ using UnityEngine;
 public class GlobalOnDestroySounds : MonoBehaviour
 {
     private AudioSource audioSource;
+    [SerializeField] private AudioClip[] pickupCollectedSounds;
     [SerializeField] private AudioClip[] playerDeathSounds;
+    [SerializeField] private AudioClip[] enemyDeathSounds;
     [SerializeField] private AudioClip projectileHitObstacleSound;
     [SerializeField] private AudioClip upgradeItemSound;
     [SerializeField] private AudioClip[] blankPickupSounds;
@@ -23,6 +25,28 @@ public class GlobalOnDestroySounds : MonoBehaviour
         audioSource.PlayOneShot(playerDeathSounds[rand]);
     }
 
+    public void PlayEnemyDeathSound(string enemyType)
+    {
+        if (enemyType == "normal")
+        {
+            audioSource.PlayOneShot(enemyDeathSounds[0]);
+        }
+        else if (enemyType == "normalBigger")
+        {
+            audioSource.PlayOneShot(enemyDeathSounds[1]);
+        }
+        else if (enemyType == "flying")
+        {
+            audioSource.PlayOneShot(enemyDeathSounds[0]);
+            Debug.Log("assign custom death sound for flying");
+        }
+        else if (enemyType == "shooting")
+        {
+            audioSource.PlayOneShot(enemyDeathSounds[0]);
+            Debug.Log("assign custom death sound for shooting");
+        }
+    }
+
     public void PlayProjectileHitObstacleSound()
     {
         audioSource.PlayOneShot(projectileHitObstacleSound, 0.3f);
@@ -38,14 +62,17 @@ public class GlobalOnDestroySounds : MonoBehaviour
         if (pickUpType == "Blank")
         {
             int rand = Random.Range(0, 3);
-            audioSource.PlayOneShot(blankPickupSounds[rand]);
-
+            audioSource.PlayOneShot(pickupCollectedSounds[rand]);
+        }
+        else if (pickUpType == "Money")
+        {
+            int rand = Random.Range(3, 6);
+            audioSource.PlayOneShot(pickupCollectedSounds[rand]);
         }
         else if (pickUpType == "HalfHeart")
         {
-            audioSource.PlayOneShot(halfHeartPickupSound);
+            audioSource.PlayOneShot(pickupCollectedSounds[6]);
         }
-
     }
 
     private void OnDestroy()

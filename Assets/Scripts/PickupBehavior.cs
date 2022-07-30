@@ -64,8 +64,7 @@ public class PickupBehavior : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && pickupType == "HalfHeart"
-            && other.gameObject.GetComponent<PlayerBehavior>().pub_currentPlayerHealth
-            < other.gameObject.GetComponent<PlayerBehavior>().pub_maxPlayerHealth)
+            && other.gameObject.GetComponent<PlayerBehavior>().pub_currentPlayerHealth < other.gameObject.GetComponent<PlayerBehavior>().pub_maxPlayerHealth)
         {
             rb.useGravity = false;
 
@@ -135,12 +134,7 @@ public class PickupBehavior : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
-        if (onDestroySounds != null)
-        {
-            onDestroySounds.PlayPickupCollectedSound(pub_pickupType);
-        }
-        else if (globalOnDestroySounds != null)
+    {if (globalOnDestroySounds != null)
         {
             globalOnDestroySounds.PlayPickupCollectedSound(pub_pickupType);
         }

@@ -42,6 +42,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected GameObject playerGO;
     [SerializeField] protected PlayerBehavior playerBehavior;
     [SerializeField] protected OnDestroySounds onDestroySounds;
+    [SerializeField] protected GlobalOnDestroySounds globalOnDestroySounds;
 
     [SerializeField] protected AudioClip hitSound;
     #endregion
@@ -125,7 +126,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void OnDestroy()
     {
-        onDestroySounds.PlayEnemyDeathSound(enemyType); //remove from room list
+        globalOnDestroySounds.PlayEnemyDeathSound(enemyType); //remove from room list
         roomBehavior.spawnedEnemies.Remove(gameObject);
     }
 
