@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7447079340496001120}
   - component: {fileID: 7448591672082838876}
   - component: {fileID: 8275851117307065736}
+  - component: {fileID: 42482497864383834}
   m_Layer: 0
   m_Name: Enemy Shooting
   m_TagString: Enemy
@@ -57,7 +58,7 @@ MonoBehaviour:
   roomBehavior: {fileID: 0}
   playerGO: {fileID: 0}
   playerBehavior: {fileID: 0}
-  onDestroySounds: {fileID: 0}
+  globalOnDestroySounds: {fileID: 0}
   hitSound: {fileID: 0}
   enemyRenderers:
   - {fileID: 2291991482694372479}
@@ -173,6 +174,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &42482497864383834
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291991482574712790}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2291991482694372466
 GameObject:
   m_ObjectHideFlags: 0

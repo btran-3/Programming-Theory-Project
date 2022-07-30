@@ -313,7 +313,6 @@ public class PlayerBehavior : MonoBehaviour
                         MusicManager.instance.SwapTrack(musicTracks[2]);
                         break;
                 }
-                
             }
         }
 
@@ -330,7 +329,15 @@ public class PlayerBehavior : MonoBehaviour
         pub_currentRoomIndex++;
         playerRB.velocity = Vector3.zero;
         playerRB.angularVelocity = Vector3.zero;
-        transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
+        if (other.gameObject.GetComponent<RoomBehavior>() != null)
+        {
+            transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
+        }
+        else if (other.gameObject.GetComponent<RoomWithItemsBehavior>() != null)
+        {
+            transform.position = other.gameObject.GetComponent<RoomWithItemsBehavior>().pub_playerStartPos;
+        }
+        
         Invoke("AllowPlayerToMove", 0.65f);
     }
 

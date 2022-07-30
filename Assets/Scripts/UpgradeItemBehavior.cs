@@ -5,6 +5,8 @@ using TMPro;
 
 public class UpgradeItemBehavior : MonoBehaviour
 {
+    [SerializeField] RoomWithItemsBehavior roomWithItemsBehavior;
+
     [SerializeField] bool isItemFree;
     [SerializeField] TextMeshPro priceTextTMP;
     [SerializeField] int price;
@@ -60,7 +62,9 @@ public class UpgradeItemBehavior : MonoBehaviour
     void Start()
     {
         SetPriceTagText();
+        //gameObject.SetActive(false);
     }
+
     private void SetPriceTagText()
     {
         if (!isItemFree) //if not free, it has a cost
@@ -86,6 +90,17 @@ public class UpgradeItemBehavior : MonoBehaviour
             GameEvents.instance.UpgradeItemTriggerEnter(itemTag, price, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
             //play SFX (GlobalOnDestroySounds)
             GameEvents.instance.UpgradeItemTriggerEnter();
+
+            if (!isItemFree)
+            {
+                Debug.LogWarning("Should not make money noise when taking free item");
+            }
+
+            if (roomWithItemsBehavior != null)
+            {
+                roomWithItemsBehavior.PlayerTookAnItem(gameObject);
+            }
+
             LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
         }
     }

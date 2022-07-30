@@ -69,7 +69,7 @@ public class EnemyFlying : EnemyBase
     void UpdateEnemySpeed(float value)
     {
         enemySpeed = value;
-        Debug.Log(enemySpeed);
+        //Debug.Log(enemySpeed);
     }
 
     public override void BlankKnockback()
