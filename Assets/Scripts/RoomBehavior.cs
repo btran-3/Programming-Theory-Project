@@ -93,9 +93,14 @@ public class RoomBehavior : MonoBehaviour
             .setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
     }
 
-    private void PlayRoomClearedSound()
+
+    private void PlayRoomEnterSound()
     {
         audioSource.PlayOneShot(audioClips[0]);
+    }
+    private void PlayRoomClearedSound()
+    {
+        audioSource.PlayOneShot(audioClips[1]);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -116,6 +121,7 @@ public class RoomBehavior : MonoBehaviour
 
         unenteredRoom = false;
         playingRoom = true;
+        PlayRoomEnterSound();
         AnimateDoorClosed(doorBottom);
     }
     private void AnimateDoorClosed(GameObject door)

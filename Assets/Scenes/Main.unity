@@ -1915,7 +1915,7 @@ GameObject:
   - component: {fileID: 1265651321}
   m_Layer: 0
   m_Name: Heart Dispenser Prefab
-  m_TagString: Untagged
+  m_TagString: Dispenser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2000,6 +2000,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupToDispense: {fileID: 54592814014821257}
+  priceTextTMP: {fileID: 563803087}
+  cost: 2
+  playerBehavior: {fileID: 1585987111}
 --- !u!64 &1265651322
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2715,6 +2718,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b7dce641143804548991e28977e2303e, type: 3}
   - {fileID: 8300000, guid: 3a8833842931e0e4f8386ad21deae68e, type: 3}
   - {fileID: 8300000, guid: 3235fbd3530bc3549b8039f5beadc8bb, type: 3}
+  spendMoneySound: {fileID: 8300000, guid: ddcf4d472829bb44cb5dbbbd2a4af477, type: 3}
+  negativeSound: {fileID: 8300000, guid: b7d28e52897a99b4da42636cab610034, type: 3}
   uiManager: {fileID: 1406485785}
   blankRadiusMesh: {fileID: 1620151786}
   globalOnDestroySounds: {fileID: 2112454242}
@@ -4355,10 +4360,6 @@ PrefabInstance:
     - target: {fileID: 4056960101444141619, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: m_Name
       value: Room A1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
-      propertyPath: roomMusicType
-      value: Friendly
       objectReference: {fileID: 0}
     - target: {fileID: 5053384683949651001, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: playerGO

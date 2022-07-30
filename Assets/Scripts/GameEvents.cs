@@ -20,11 +20,11 @@ public class GameEvents : MonoBehaviour
     }
     public event Action<string, int, int, float, float, float> upgradePlayerStats; //upgrade player stats
     public event Action upgradeItemPlaySFX; //play SFX when touched
+    public event Action<int> useDispenser;
 
 
     //UpgradeItemTriggerEnter is called in the UpgradeItemBehavior OnTriggerEnter
     //it has overloads depending on what needs to be passed in
-
     public void UpgradeItemTriggerEnter(string tag, int price, int health, float damage, float speed, float firerate)
     {
         if (upgradePlayerStats != null)
@@ -40,6 +40,16 @@ public class GameEvents : MonoBehaviour
         {
             //this is the Action that GlobalOnDestroySounds has subscribed to
             upgradeItemPlaySFX();
+        }
+    }
+
+    //DispenserItemCollisionEnter is called in DispenserBehavior OnCollisionEnter
+    public void DispenserItemCollisionEnter(int cost)
+    {
+        if (useDispenser != null)
+        {
+            //this is another action that the player has subscribed to
+            useDispenser(cost);
         }
     }
 

@@ -708,6 +708,7 @@ MonoBehaviour:
   doorBottom: {fileID: 1266918082807053505}
   playerStartPos: {fileID: 9015920615236597333}
   audioClips:
+  - {fileID: 8300000, guid: 9e7f97cb4bc7c414ca96fbeb99b23117, type: 3}
   - {fileID: 8300000, guid: 5f8245c7d6e294846aba0c41e8369987, type: 3}
   enemiesToSpawnExclInt: {x: 4, y: 5}
   pickupsToSpawnExclInt: {x: 4, y: 5}

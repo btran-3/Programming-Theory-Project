@@ -18,6 +18,11 @@ public class UpgradeItemBehavior : MonoBehaviour
     #endregion
 
     #region public get set
+    public int pub_price
+    {
+        get { return price; }
+    }
+
     public int pub_healthUpAmt
     {
         get { return healthUpAmt; }

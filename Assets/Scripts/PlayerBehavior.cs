@@ -98,13 +98,16 @@ public class PlayerBehavior : MonoBehaviour
         get { return playerBaseProjectileRange; }
     }
 
-
-
     public int pub_currentPlayerMoney
     {
         get { return currentPlayerMoney; }
         private set
         {
+            if (value < currentPlayerMoney)
+            {
+                Debug.Log("Spending money");
+                audioSource.PlayOneShot(spendMoneySound);
+            }
             currentPlayerMoney = value;
             uiManager.UpdateMoneyText();
         }
@@ -135,6 +138,8 @@ public class PlayerBehavior : MonoBehaviour
     public List<GameObject> projectilePool;
     [SerializeField] private AudioClip[] playerHurtSounds;
     [SerializeField] private AudioClip[] musicTracks;
+    [SerializeField] private AudioClip spendMoneySound;
+    [SerializeField] private AudioClip negativeSound;
 
     [SerializeField] UIManager uiManager;
     [SerializeField] GameObject blankRadiusMesh;
@@ -161,6 +166,7 @@ public class PlayerBehavior : MonoBehaviour
 
         //methods can only be subscribed or removed using += or -=
         GameEvents.instance.upgradePlayerStats += TakeUpgradeItem;
+        GameEvents.instance.useDispenser += UseDispenser;
 
 
         //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
@@ -261,9 +267,29 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void UseDispenser(int cost)
+    {
+        pub_currentPlayerMoney -= cost;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         TouchPickup(collision);
+        NotEnoughMoneySounds(collision);
+    }
+
+    private void NotEnoughMoneySounds(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Dispenser")
+            && collision.gameObject.GetComponent<DispenserBehavior>().pub_cost > currentPlayerMoney)
+        {
+            audioSource.PlayOneShot(negativeSound);
+        }
+        else if (collision.gameObject.CompareTag("UpgradeItem")
+            && collision.gameObject.GetComponent<UpgradeItemBehavior>().pub_price > currentPlayerMoney)
+        {
+            audioSource.PlayOneShot(negativeSound);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -463,5 +489,6 @@ public class PlayerBehavior : MonoBehaviour
     private void OnDestroy()
     {
         GameEvents.instance.upgradePlayerStats -= TakeUpgradeItem;
+        GameEvents.instance.useDispenser -= UseDispenser;
     }
 }
