@@ -7,8 +7,8 @@ public class EnemyShooting : EnemyBase
     [SerializeField] Renderer[] enemyRenderers;
     [SerializeField] GameObject enemyProjectilePrefab;
 
-    private float projectileSpeed = 7f;
-    private float projectileRange = 0.85f;
+    private float projectileSpeed = 6.25f;
+    private float projectileRange = 1.2f;
     private float distanceFromPlayer;
     private float shootingCooldown = 1.5f;
     private float enemyShootTiming;
@@ -22,6 +22,12 @@ public class EnemyShooting : EnemyBase
     {
         LookAtPlayer();
 
+        ShootAtPlayer();
+
+    }
+
+    private void ShootAtPlayer()
+    {
         if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f && isTrackingPlayer)
         {
             enemyShootTiming = Time.time + shootingCooldown;
@@ -30,7 +36,6 @@ public class EnemyShooting : EnemyBase
             newProjectile.GetComponent<ProjectileEnemy>()
                 .ShootProjectile(transform.position, Vector3.forward, projectileSpeed, projectileRange);
         }
-
     }
 
     private void LookAtPlayer()
