@@ -74,6 +74,14 @@ public class RoomWithItemsBehavior : MonoBehaviour
     {
         didPlayerTakeAnItem = true;
         spawnedUpgradeItems.Remove(takenItem);
+
+        for (int i = 0; i < spawnedUpgradeItems.Count; i++)
+        {
+            spawnedUpgradeItems[i].GetComponent<Collider>().enabled = false;
+            //LeanTween.scale(spawnedUpgradeItems[i], Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroySpawnedItemsInList);
+            LeanTween.moveLocalY(spawnedUpgradeItems[i], 65f, 1.25f).setEase(LeanTweenType.easeInCubic).setOnComplete(DestroySpawnedItemsInList);
+            LeanTween.moveLocalZ(spawnedUpgradeItems[i], 25f, 0.35f).setEase(LeanTweenType.easeInSine).setDelay(0.9f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -84,6 +92,17 @@ public class RoomWithItemsBehavior : MonoBehaviour
             EnableUpgradeItems();
             waitingForPlayerToPickAnItem = true;
         }
+    }
+
+    void DestroySpawnedItemsInList()
+    {
+        for (int i = 0; i < spawnedUpgradeItems.Count; i++)
+        {
+            GameObject instance = spawnedUpgradeItems[i];
+            spawnedUpgradeItems.Remove(instance);
+            Destroy(instance);
+        }
+        
     }
 
 }

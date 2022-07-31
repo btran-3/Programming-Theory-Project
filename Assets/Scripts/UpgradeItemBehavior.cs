@@ -85,33 +85,38 @@ public class UpgradeItemBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (playerBehavior.pub_currentPlayerMoney >= price && !isItemFree) //if player can afford and item costs money
-            {
-                itemCollider.enabled = false;
-                //upgrade player (PlayerBehavior)
-                GameEvents.instance.UpgradeItemTriggerEnter(itemTag, price, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
-                //play SFX (GlobalOnDestroySounds)
-                GameEvents.instance.UpgradeItemTriggerEnter();
-
-                LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
-            }
-            else if (isItemFree)
-            {
-                itemCollider.enabled = false;
-                //upgrade player (PlayerBehavior) and DO NOT pass a price amount
-                GameEvents.instance.UpgradeItemTriggerEnter(itemTag, 0, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
-                //play SFX (GlobalOnDestroySounds)
-                GameEvents.instance.UpgradeItemTriggerEnter();
-
-                LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
-                if (roomWithItemsBehavior != null)
-                {
-                    roomWithItemsBehavior.PlayerTookAnItem(gameObject);
-                }
-            }
+            CheckIfPlayerCanTakeItem();
         }
     }
 
+    private void CheckIfPlayerCanTakeItem()
+    {
+        if (playerBehavior.pub_currentPlayerMoney >= price && !isItemFree) //if player can afford and item costs money
+        {
+            itemCollider.enabled = false;
+            //upgrade player (PlayerBehavior)
+            GameEvents.instance.UpgradeItemTriggerEnter(itemTag, price, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
+            //play SFX (GlobalOnDestroySounds)
+            GameEvents.instance.UpgradeItemTriggerEnter();
+
+            LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
+        }
+        else if (isItemFree) //if the item is free
+        {
+            itemCollider.enabled = false;
+            //upgrade player (PlayerBehavior) and DO NOT pass a price amount
+            GameEvents.instance.UpgradeItemTriggerEnter(itemTag, 0, healthUpAmt, damageUpAmt, speedUpAmt, firerateUpAmt);
+            //play SFX (GlobalOnDestroySounds)
+            GameEvents.instance.UpgradeItemTriggerEnter();
+
+            LeanTween.scale(gameObject, Vector3.zero, 0.3f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(DestroyObject);
+
+            if (roomWithItemsBehavior != null) //make the other free item disappear
+            {
+                roomWithItemsBehavior.PlayerTookAnItem(gameObject);
+            }
+        }
+    }
 
     void DestroyObject()
     {
