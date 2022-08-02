@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
 
         float maxHealthRemainer = playerBehavior.pub_maxPlayerHealth % 2; //check if even, or odd with a remainer
         int heartsToMake = (int)((playerBehavior.pub_maxPlayerHealth / 2 + maxHealthRemainer)); //convert to int
-        Debug.Log(heartsToMake);
+
         for (int i = 0; i < heartsToMake; i++)
         {
             CreateEmptyHeart();
@@ -64,7 +64,10 @@ public class UIManager : MonoBehaviour
 
         for (int i = 0; i < hearts.Count; i++)
         {
-            int heartStatusRemainder = (int)Mathf.Clamp(playerBehavior.pub_currentPlayerHealth - (1 * 2), 0, 2);
+            int heartStatusRemainder = (int)Mathf.Clamp(playerBehavior.pub_currentPlayerHealth - (i * 2), 0, 2);
+
+            //Debug.Log(heartStatusRemainder);
+
             hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
         }
     }
