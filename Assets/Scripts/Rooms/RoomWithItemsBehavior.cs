@@ -48,6 +48,14 @@ public class RoomWithItemsBehavior : MonoBehaviour
 
         doorDefaultScale = doorTop.transform.localScale;
         mainLightDefaultIntensity = mainLight.intensity;
+
+        StartDoorAsOpen(doorBottom);
+    }
+
+    void StartDoorAsOpen(GameObject door)
+    {
+        door.transform.position += (Vector3.left * 2);
+        door.transform.localScale -= (Vector3.one * 0.01f);
     }
 
     private void Update()
@@ -132,7 +140,18 @@ public class RoomWithItemsBehavior : MonoBehaviour
             colliderA.enabled = false;
             EnableUpgradeItems();
             waitingForPlayerToPickAnItem = true;
+
+            AnimateDoorClosed(doorBottom);
         }
+    }
+
+    private void AnimateDoorClosed(GameObject door)
+    {
+        door.SetActive(true);
+        LeanTween.move(door, door.transform.position + (Vector3.right * 2), 0.5f)
+            .setEase(LeanTweenType.easeInOutCubic);
+        LeanTween.scale(door, doorDefaultScale, 0.5f)
+            .setEase(LeanTweenType.easeInOutCubic);
     }
 
     void DestroySpawnedItemsInList()
