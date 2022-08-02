@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 50;
+    private int playerBaseHealth = 8;
     private int playerBaseBlanks = 2;
     private int playerBaseMoney = 11;
     private float playerBaseSpeed = 7.5f;
@@ -59,6 +59,7 @@ public class PlayerBehavior : MonoBehaviour
                 currentPlayerHealth = 0;
             }
             uiManager.UpdateHealthText();
+            uiManager.DrawHearts();
         }
     }
     public float pub_playerBlankRadius

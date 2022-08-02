@@ -12,12 +12,22 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject playerGO;
     [SerializeField] PlayerBehavior playerBehavior;
+
+    [Space(10)]
+
+    [SerializeField] GameObject heartPrefab;
+    [SerializeField] GameObject healthBarUI;
+    List<UIHealthHeart> hearts = new List<UIHealthHeart>();
+
+    [Space (10)]
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI blanksText;
 
     void Start()
     {
+        DrawHearts();
+
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
             playerBehavior.pub_maxPlayerHealth);
         moneyText.SetText("$" + playerBehavior.pub_currentPlayerMoney);
@@ -28,6 +38,44 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void CreateEmptyHeart()
+    {
+        GameObject newHeart = Instantiate(heartPrefab);
+        newHeart.transform.SetParent(healthBarUI.transform); //parent to hearts bar (its transform)
+
+        UIHealthHeart UIHeartComponent = newHeart.GetComponent<UIHealthHeart>();
+        UIHeartComponent.SetHeartImage(HeartStatus.Empty); //set instance's script enum status to empty
+        hearts.Add(UIHeartComponent); //add instance's script to the list
+    }
+
+    public void DrawHearts()
+    {
+        ClearHearts(); //start fresh
+
+        float maxHealthRemainer = playerBehavior.pub_maxPlayerHealth % 2; //check if even, or odd with a remainer
+        int heartsToMake = (int)((playerBehavior.pub_maxPlayerHealth / 2 + maxHealthRemainer)); //convert to int
+        Debug.Log(heartsToMake);
+        for (int i = 0; i < heartsToMake; i++)
+        {
+            CreateEmptyHeart();
+        }
+
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            int heartStatusRemainder = (int)Mathf.Clamp(playerBehavior.pub_currentPlayerHealth - (1 * 2), 0, 2);
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
+        }
+    }
+
+    public void ClearHearts()
+    {
+        foreach(Transform t in healthBarUI.transform) //specifically children of the healthBarUI object, not the canvas's children
+        {
+            Destroy(t.gameObject); //this does not remove them from the canvas list, it only destroys child gameobjects
+        }
+        hearts = new List<UIHealthHeart>(); //clear out list, removing the missing gameobjects
     }
 
     public void UpdateHealthText()
