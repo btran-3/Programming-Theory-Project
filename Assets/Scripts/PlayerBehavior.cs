@@ -297,22 +297,20 @@ public class PlayerBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Room"))
         {
             PlayerHitsRoomEnterTrigger(other);
-            if (other.gameObject.GetComponent<RoomBehavior>() != null && other.gameObject.GetComponent<RoomBehavior>().pub_roomMusicType != currentRoomTypeMusic)
+
+            if (other.gameObject.GetComponent<RoomBehavior>() != null && currentRoomTypeMusic != "Hostile") //regular hostile room
             {
-                string musicTag = other.gameObject.GetComponent<RoomBehavior>().pub_roomMusicType;
-                currentRoomTypeMusic = musicTag;
-                switch (currentRoomTypeMusic)
-                {
-                    case "Hostile":
-                        MusicManager.instance.SwapTrack(musicTracks[0]);
-                        break;
-                    case "Friendly":
-                        MusicManager.instance.SwapTrack(musicTracks[1]);
-                        break;
-                    case "Boss":
-                        MusicManager.instance.SwapTrack(musicTracks[2]);
-                        break;
-                }
+                currentRoomTypeMusic = "Hostile";
+                MusicManager.instance.SwapTrack(musicTracks[0]);
+            }
+            else if (other.gameObject.GetComponent<RoomWithItemsBehavior>() != null && currentRoomTypeMusic != "Friendly") //item room OR store room
+            {
+                currentRoomTypeMusic = "Friendly";
+                MusicManager.instance.SwapTrack(musicTracks[1]);
+            }
+            else if (true)//boss room
+            {
+
             }
         }
 

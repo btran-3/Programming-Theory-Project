@@ -10,6 +10,7 @@ public class EnemyShooting : EnemyBase
     private float projectileSpeed = 6.25f;
     private float projectileRange = 1.2f;
     private float distanceFromPlayer;
+    private float shootPlayerRange = 10f;
     private float shootingCooldown = 1.5f;
     private float enemyShootTiming;
 
@@ -28,7 +29,7 @@ public class EnemyShooting : EnemyBase
 
     private void ShootAtPlayer()
     {
-        if (Time.time > enemyShootTiming && distanceFromPlayer <= 8f && isTrackingPlayer)
+        if (Time.time > enemyShootTiming && distanceFromPlayer <= shootPlayerRange && isTrackingPlayer)
         {
             enemyShootTiming = Time.time + shootingCooldown;
             GameObject newProjectile = Instantiate(enemyProjectilePrefab, transform.position, transform.rotation);

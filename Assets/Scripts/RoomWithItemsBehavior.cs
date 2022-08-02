@@ -17,7 +17,7 @@ public class RoomWithItemsBehavior : MonoBehaviour
     [Space(10)]
 
     private float mainLightDefaultIntensity;
-    private float spotLightMaxIntensity;
+    private float spotLightMaxIntensity = 250f;
     [SerializeField] Light mainLight;
     [SerializeField] List<Light> spotLights;
 
@@ -48,7 +48,6 @@ public class RoomWithItemsBehavior : MonoBehaviour
 
         doorDefaultScale = doorTop.transform.localScale;
         mainLightDefaultIntensity = mainLight.intensity;
-        spotLightMaxIntensity = 300f;
     }
 
     private void Update()
