@@ -30,8 +30,8 @@ public class UIManager : MonoBehaviour
 
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
             playerBehavior.pub_maxPlayerHealth);
-        moneyText.SetText("$" + playerBehavior.pub_currentPlayerMoney);
-        blanksText.SetText("B: " + playerBehavior.pub_currentPlayerBlanks);
+        moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
+        blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
     }
 
     // Update is called once per frame
@@ -89,11 +89,11 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMoneyText()
     {
-        moneyText.SetText("$" + playerBehavior.pub_currentPlayerMoney);
+        moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
     }
 
     public void UpdateBlanksText()
     {
-        blanksText.SetText("B: " + playerBehavior.pub_currentPlayerBlanks);
+        blanksText.SetText("B: " + playerBehavior.pub_currentPlayerBlanks.ToString());
     }
 }
