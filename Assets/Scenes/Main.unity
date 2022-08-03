@@ -259,18 +259,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart UI Prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.b
-      value: 0.30431822
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23510142
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.r
-      value: 0.9811321
-      objectReference: {fileID: 0}
     - target: {fileID: 7193679125208128750, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1036,7 +1024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 215.5, y: -96.20003}
+  m_AnchoredPosition: {x: 215.5, y: -94.4}
   m_SizeDelta: {x: 280.6127, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &757287148
@@ -1659,7 +1647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 215.5, y: -145.1}
+  m_AnchoredPosition: {x: 215.5, y: -144.7}
   m_SizeDelta: {x: 280.6127, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1265312293
@@ -1774,18 +1762,6 @@ PrefabInstance:
     - target: {fileID: 7193679125208128745, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Name
       value: Heart UI Prefab (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.b
-      value: 0.30431822
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23510142
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.r
-      value: 0.9811321
       objectReference: {fileID: 0}
     - target: {fileID: 7193679125208128750, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Pivot.x
@@ -2447,18 +2423,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart UI Prefab (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.b
-      value: 0.30431822
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23510142
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.r
-      value: 0.9811321
-      objectReference: {fileID: 0}
     - target: {fileID: 7193679125208128750, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2555,18 +2519,6 @@ PrefabInstance:
     - target: {fileID: 7193679125208128745, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Name
       value: Heart UI Prefab (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.b
-      value: 0.30431822
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23510142
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193679125208128748, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
-      propertyPath: m_Color.r
-      value: 0.9811321
       objectReference: {fileID: 0}
     - target: {fileID: 7193679125208128750, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
       propertyPath: m_Pivot.x
@@ -2955,7 +2907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.24770378, g: 0.9245283, b: 0.84955406, a: 1}
+  m_Color: {r: 0.25266996, g: 0.8018868, b: 0.7415682, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2992,7 +2944,6 @@ GameObject:
   - component: {fileID: 1620151790}
   - component: {fileID: 1620151789}
   - component: {fileID: 1620151788}
-  - component: {fileID: 1620151791}
   m_Layer: 8
   m_Name: BlankRadius
   m_TagString: Untagged
@@ -3078,18 +3029,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620151786}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1620151791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620151786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709d9be1f335671489dbe73a28a3ba4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1631962840
 GameObject:
   m_ObjectHideFlags: 0

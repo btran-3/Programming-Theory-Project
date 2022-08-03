@@ -7,8 +7,8 @@ public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
     private int playerBaseHealth = 6;
-    private int playerBaseBlanks = 2;
-    private int playerBaseMoney = 11;
+    private int playerBaseBlanks = 0;
+    private int playerBaseMoney = 0;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 0.8f;
@@ -484,7 +484,7 @@ public class PlayerBehavior : MonoBehaviour
     private void ActivateBlankAnimation()
     {
         blankRadiusMesh.transform.SetParent(null);
-        blankRadiusMesh.GetComponent<MeshRenderer>().material.color = Color.white;
+        //blankRadiusMesh.GetComponent<MeshRenderer>().material.color = Color.white;
         blankRadiusMesh.transform.position = transform.position;
         blankRadiusMesh.SetActive(true);
         LeanTween.alpha(blankRadiusMesh, 0.5f, 0f);
