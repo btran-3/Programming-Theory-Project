@@ -531,11 +531,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461f161c1aa9ff14b8589d38118cd33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomWithItemsBehavior: {fileID: 0}
   isItemFree: 0
   priceTextTMP: {fileID: 7807235996634433670}
   price: 5
   itemTag: health
-  healthUpAmt: 1
+  healthUpAmt: 2
   damageUpAmt: 0
   speedUpAmt: 0
   firerateUpAmt: 0
