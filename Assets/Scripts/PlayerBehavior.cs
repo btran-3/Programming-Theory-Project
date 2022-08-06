@@ -314,6 +314,8 @@ public class PlayerBehavior : MonoBehaviour
         playerRB.velocity = Vector3.zero;
         playerRB.angularVelocity = Vector3.zero;
 
+        Invoke("AllowPlayerToMove", 0.65f);
+
         if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
         {
             if (currentRoomTypeMusic != "Hostile")
@@ -322,8 +324,6 @@ public class PlayerBehavior : MonoBehaviour
                 MusicManager.instance.SwapTrack(musicTracks[0]);
             } //change music
             transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 0.65f);
-
         }
         else if ((other.gameObject.GetComponent<RoomWithItemsBehavior>() != null)) //item room
         {
@@ -333,8 +333,6 @@ public class PlayerBehavior : MonoBehaviour
                 MusicManager.instance.SwapTrack(musicTracks[1]);
             } //change music
             transform.position = other.gameObject.GetComponent<RoomWithItemsBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 0.65f);
-
         }
         else if (other.gameObject.GetComponent<RoomShopBehavior>() != null) //shop
         {
@@ -344,15 +342,12 @@ public class PlayerBehavior : MonoBehaviour
                 MusicManager.instance.SwapTrack(musicTracks[1]);
             } //change music
             transform.position = other.gameObject.GetComponent<RoomShopBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 0.65f);
-
         }
         else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null) //boss room
         {
             currentRoomTypeMusic = "Boss";
             MusicManager.instance.SwapTrack(musicTracks[2]);
             transform.position = other.gameObject.GetComponent<RoomFinalBossBehavior>().pub_playerStartPos;
-            Invoke("AllowPlayerToMove", 2f);
         }
     }
 
