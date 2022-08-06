@@ -310,9 +310,10 @@ public class PlayerBehavior : MonoBehaviour
                 currentRoomTypeMusic = "Friendly";
                 MusicManager.instance.SwapTrack(musicTracks[1]);
             }
-            else if (true)//boss room
+            else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null) //boss room
             {
-
+                currentRoomTypeMusic = "Boss";
+                MusicManager.instance.SwapTrack(musicTracks[2]);
             }
         }
 
@@ -332,21 +333,25 @@ public class PlayerBehavior : MonoBehaviour
         if (other.gameObject.GetComponent<RoomBehavior>() != null)
         {
             transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
+            Invoke("AllowPlayerToMove", 0.65f);
         }
         else if (other.gameObject.GetComponent<RoomWithItemsBehavior>() != null)
         {
             transform.position = other.gameObject.GetComponent<RoomWithItemsBehavior>().pub_playerStartPos;
+            Invoke("AllowPlayerToMove", 0.65f);
         }
         else if (other.gameObject.GetComponent<RoomShopBehavior>() != null)
         {
             transform.position = other.gameObject.GetComponent<RoomShopBehavior>().pub_playerStartPos;
+            Invoke("AllowPlayerToMove", 0.65f);
         }
-        else if (true)
+        else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null)
         {
-            //for boss room
+            transform.position = other.gameObject.GetComponent<RoomFinalBossBehavior>().pub_playerStartPos;
+            Invoke("AllowPlayerToMove", 2f);
         }
 
-        Invoke("AllowPlayerToMove", 0.65f);
+        
     }
 
     private void AllowPlayerToMove()
