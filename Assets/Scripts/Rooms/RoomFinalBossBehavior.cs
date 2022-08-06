@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomFinalBossBehavior : MonoBehaviour
 {
+    [SerializeField] GameObject bossEnemy;
+    [Space(10)]
     [SerializeField] List<GameObject> spawnedEnemies;
 
     private Vector3 doorDefaultScale;
@@ -42,6 +44,7 @@ public class RoomFinalBossBehavior : MonoBehaviour
         {
             colliderA.enabled = false;
 
+            bossEnemy.GetComponent<BossBehavior>().StartBossRoom();
             AnimateDoorClosed(doorBottom);
         }
     }

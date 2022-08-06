@@ -24,7 +24,7 @@ public class RoomWithItemsBehavior : MonoBehaviour
     private Collider colliderA;
 
     //private bool unenteredRoom = true;
-    private bool waitingForPlayerToPickAnItem;
+    //private bool waitingForPlayerToPickAnItem;
     private bool didPlayerTakeAnItem;
 
     public Vector3 pub_playerStartPos
@@ -140,7 +140,7 @@ public class RoomWithItemsBehavior : MonoBehaviour
         {
             colliderA.enabled = false;
             EnableUpgradeItems();
-            waitingForPlayerToPickAnItem = true;
+            //waitingForPlayerToPickAnItem = true;
 
             AnimateDoorClosed(doorBottom);
         }
