@@ -58,6 +58,7 @@ public class RoomWithItemsBehavior : MonoBehaviour
         door.transform.localScale -= (Vector3.one * 0.01f);
     }
 
+    /*
     private void Update()
     {
         if (waitingForPlayerToPickAnItem)
@@ -69,7 +70,7 @@ public class RoomWithItemsBehavior : MonoBehaviour
 
             }
         }
-    }
+    } */
 
     void InitializeUpgradeItems()
     {
