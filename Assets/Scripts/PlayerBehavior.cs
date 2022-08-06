@@ -297,24 +297,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Room"))
         {
-            PlayerHitsRoomEnterTrigger(other);
-
-            if (other.gameObject.GetComponent<RoomBehavior>() != null && currentRoomTypeMusic != "Hostile") //regular hostile room
-            {
-                currentRoomTypeMusic = "Hostile";
-                MusicManager.instance.SwapTrack(musicTracks[0]);
-            }
-            else if ((other.gameObject.GetComponent<RoomWithItemsBehavior>() != null || other.gameObject.GetComponent<RoomShopBehavior>() != null)
-                && currentRoomTypeMusic != "Friendly") //item room OR shop room
-            {
-                currentRoomTypeMusic = "Friendly";
-                MusicManager.instance.SwapTrack(musicTracks[1]);
-            }
-            else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null) //boss room
-            {
-                currentRoomTypeMusic = "Boss";
-                MusicManager.instance.SwapTrack(musicTracks[2]);
-            }
+            PlayerEntersRoom(other);
         }
 
         if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
@@ -323,35 +306,54 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    private void PlayerHitsRoomEnterTrigger(Collider other)
+    private void PlayerEntersRoom(Collider other)
     {
         canPlayerMove = false;
 
         pub_currentRoomIndex++;
         playerRB.velocity = Vector3.zero;
         playerRB.angularVelocity = Vector3.zero;
-        if (other.gameObject.GetComponent<RoomBehavior>() != null)
+
+        if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
         {
+            if (currentRoomTypeMusic != "Hostile")
+            {
+                currentRoomTypeMusic = "Hostile";
+                MusicManager.instance.SwapTrack(musicTracks[0]);
+            } //change music
             transform.position = other.gameObject.GetComponent<RoomBehavior>().pub_playerStartPos;
             Invoke("AllowPlayerToMove", 0.65f);
+
         }
-        else if (other.gameObject.GetComponent<RoomWithItemsBehavior>() != null)
+        else if ((other.gameObject.GetComponent<RoomWithItemsBehavior>() != null)) //item room
         {
+            if (currentRoomTypeMusic != "Friendly")
+            {
+                currentRoomTypeMusic = "Friendly";
+                MusicManager.instance.SwapTrack(musicTracks[1]);
+            } //change music
             transform.position = other.gameObject.GetComponent<RoomWithItemsBehavior>().pub_playerStartPos;
             Invoke("AllowPlayerToMove", 0.65f);
+
         }
-        else if (other.gameObject.GetComponent<RoomShopBehavior>() != null)
+        else if (other.gameObject.GetComponent<RoomShopBehavior>() != null) //shop
         {
+            if (currentRoomTypeMusic != "Friendly")
+            {
+                currentRoomTypeMusic = "Friendly";
+                MusicManager.instance.SwapTrack(musicTracks[1]);
+            } //change music
             transform.position = other.gameObject.GetComponent<RoomShopBehavior>().pub_playerStartPos;
             Invoke("AllowPlayerToMove", 0.65f);
+
         }
-        else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null)
+        else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null) //boss room
         {
+            currentRoomTypeMusic = "Boss";
+            MusicManager.instance.SwapTrack(musicTracks[2]);
             transform.position = other.gameObject.GetComponent<RoomFinalBossBehavior>().pub_playerStartPos;
             Invoke("AllowPlayerToMove", 2f);
         }
-
-        
     }
 
     private void AllowPlayerToMove()
