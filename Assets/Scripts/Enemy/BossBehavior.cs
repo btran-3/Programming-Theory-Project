@@ -10,15 +10,56 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] Collider colliderA;
     [SerializeField] TextMeshPro currentStateText;
 
-    private float xMoveRange = 6f;
-    private float roamSpeed = 2f;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip hitSound;
+    [SerializeField] PlayerBehavior playerBehavior;
+
+    //Fixed variables
+    private float xMoveRange;
+    private float maxRoamTightness;
+
+    private float maxBossHealth = 10f;
+    private int contactDamage = 2;
+
+
+    //CHANGE THESE VALUES AFTER MIDWAY POINT
+    private float roamSpeed;
+
+
+    //Dynamic variables
+    private float roamTightness;
+    private float currentBossHealth;
+
+    //GET AND SET
+    public int pub_contactDamage
+    {
+        get { return contactDamage; }
+    }
+
+    public float pub_currentBossHealth
+    {
+        get { return currentBossHealth; }
+        private set { currentBossHealth = value;
+            Debug.Log(currentBossHealth);
+            if (currentBossHealth <= 0)
+            {
+                SwitchState(State.DEATH);
+            }
+        
+        }
+    }
+
 
     enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, DEATH }
     State _state; //our current state
 
+
     void Start()
     {
-        
+        xMoveRange = 6f;
+        roamSpeed = 1f;
+        maxRoamTightness = 10f;
+        currentBossHealth = maxBossHealth;
     }
 
 
@@ -44,6 +85,7 @@ public class BossBehavior : MonoBehaviour
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 0.75f));
                 break;
             case State.ROAMING:
+                LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreateRoamTightness);
                 break;
             case State.FOLLOW:
                 break;
@@ -52,6 +94,7 @@ public class BossBehavior : MonoBehaviour
             case State.SPAWNENEMY:
                 break;
             case State.DEATH:
+                gameObject.SetActive(false);
                 break;
         }
     }
@@ -63,13 +106,9 @@ public class BossBehavior : MonoBehaviour
             case State.BEGIN:
                 break;
             case State.ROAMING:
-
-                float offset = 0f;
-                float posDamp = 1f; //higher is tighter
-                float targetX = Mathf.Sin(Time.time * roamSpeed + offset) * xMoveRange;
+                float targetX = Mathf.Sin(Time.time * roamSpeed) * xMoveRange;
                 Vector3 targetPos = new Vector3(targetX, 0, 3.75f);
-
-                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * posDamp);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * roamTightness);
                 break;
             case State.FOLLOW:
                 break;
@@ -101,10 +140,40 @@ public class BossBehavior : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PlayerProjectile"))
+        {
+            //play hit sound before potential death update
+            if (this.gameObject.activeInHierarchy)
+            {
+                audioSource.PlayOneShot(hitSound);
+            }
+
+            
+            pub_currentBossHealth -= playerBehavior.pub_playerDamage;
+
+            /*
+            if (enemyRenderer != null)
+            {
+                LeanTween.cancel(gameObject);
+                enemyRenderer.material.color = Color.red;
+                LeanTween.color(this.gameObject, defaultColor, 0.25f).setDelay(0.05f)
+                    .setEase(LeanTweenType.easeOutCubic);
+            } */
+        }
+    }
+
     IEnumerator DelayStateSwitch(State newState, float delay)
     {
         yield return new WaitForSeconds(delay);
         SwitchState(newState);
+    }
+
+    void IncreateRoamTightness(float value)
+    {
+        roamTightness = value;
+        //Debug.Log(value);
     }
 
 }

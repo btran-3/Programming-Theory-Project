@@ -673,9 +673,11 @@ GameObject:
   m_Component:
   - component: {fileID: 636391159}
   - component: {fileID: 636391160}
+  - component: {fileID: 636391161}
+  - component: {fileID: 636391162}
   m_Layer: 0
   m_Name: Boss Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -709,8 +711,120 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b54d44445b21b4f98007aa52955b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderA: {fileID: 1514027473}
+  colliderA: {fileID: 636391161}
   currentStateText: {fileID: 1258739133}
+  audioSource: {fileID: 636391162}
+  hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
+  playerBehavior: {fileID: 1585987111}
+--- !u!65 &636391161
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636391158}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 2, z: 1.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &636391162
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636391158}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &654898083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8630367374752303179, guid: b7e50afda81077e449bcfe82f2e3c802, type: 3}
@@ -2678,7 +2792,7 @@ BoxCollider:
   m_GameObject: {fileID: 1514027471}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5285,8 +5399,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1871022198360278920}
   - component: {fileID: 1871022198360278926}
-  - component: {fileID: 2430258733783670945}
   - component: {fileID: 2430258733783670946}
+  - component: {fileID: 2430258733783670947}
   m_Layer: 0
   m_Name: Room Final Boss
   m_TagString: Room
@@ -5541,7 +5655,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871022199435271426}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!82 &2430258733783670945
+--- !u!114 &2430258733783670946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871022198360278921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae0304897209414d81ae8319243ba51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossEnemy: {fileID: 636391158}
+  spawnedEnemies: []
+  doorBottom: {fileID: 3940896539234517171}
+  playerStartPos: {fileID: 7885679244565393556}
+--- !u!82 &2430258733783670947
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5637,22 +5767,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2430258733783670946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871022198360278921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eae0304897209414d81ae8319243ba51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossEnemy: {fileID: 636391158}
-  spawnedEnemies: []
-  doorBottom: {fileID: 3940896539234517171}
-  playerStartPos: {fileID: 7885679244565393556}
 --- !u!4 &2438386941148832536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6039749015360663865, guid: 1efd76cc0a905954db966da12fcb9c95, type: 3}

@@ -224,8 +224,17 @@ public class PlayerBehavior : MonoBehaviour
     private void TakeDamageFromEnemy(Collision collision) //onCollisionStay - enemy contact damage
     {
         audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
-        int dmg = collision.gameObject.GetComponent<EnemyBase>().pub_enemyDamage;
-        PlayerTakeDamage(dmg);
+        if (collision.gameObject.GetComponent<EnemyBase>() != null)
+        {
+            int dmg = collision.gameObject.GetComponent<EnemyBase>().pub_enemyDamage;
+            PlayerTakeDamage(dmg);
+        }
+        else if (collision.gameObject.GetComponent<BossBehavior>() != null)
+        {
+            int dmg = collision.gameObject.GetComponent<BossBehavior>().pub_contactDamage;
+            PlayerTakeDamage(dmg);
+        }
+        
     }
 
     private void TakeDamageFromEnemy(Collider other) //onTriggerEnter - enemy projectile damage
