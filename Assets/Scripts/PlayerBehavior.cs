@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Rewired;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class PlayerBehavior : MonoBehaviour
     //private bool didPlayerEnterRoom;
     private bool canPlayerMove = true;
 
-    Vector3 velocity, desiredVelocity;
+    Vector3 velocity, desiredVelocity, rewiredDesiredVelocity;
     private int currentRoomIndex = 0;
 
     private string currentRoomTypeMusic;
@@ -150,12 +151,18 @@ public class PlayerBehavior : MonoBehaviour
     Rigidbody playerRB; //https://catlikecoding.com/unity/tutorials/movement/physics/
     AudioSource audioSource;
     private Color defaultColor;
+
+    private int playerId = 0;
+    private Player player;
+    private Vector3 rewiredMoveVector;
     #endregion
 
     void Awake()
     {
         playerRB = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+
+        player = ReInput.players.GetPlayer(playerId);
     }
 
     private void Start()
@@ -181,7 +188,12 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
-        GetPlayerInput();
+        rewiredMoveVector.x = player.GetAxis("Move Horizontal");
+        rewiredMoveVector.z = player.GetAxis("Move Vertical");
+        rewiredMoveVector = Vector3.ClampMagnitude(rewiredMoveVector, 1f);
+        rewiredDesiredVelocity = new Vector3(rewiredMoveVector.x, 0f, rewiredMoveVector.z) * pub_playerSpeed;
+
+        //GetPlayerInput();
         FireProjectiles();
         UseBlank();
     }
@@ -206,6 +218,7 @@ public class PlayerBehavior : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayerRigidbody();
+        RewiredMovePlayerRigidBody();
     }
 
     private void OnCollisionStay(Collision collision)
@@ -392,6 +405,18 @@ public class PlayerBehavior : MonoBehaviour
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
         playerRB.velocity = velocity;
+    }
+
+    private void RewiredMovePlayerRigidBody()
+    {
+        velocity = playerRB.velocity;
+        float maxSpeedChange = playerBaseMaxAcceleration * Time.fixedDeltaTime;
+        if (rewiredMoveVector.x != 0f || rewiredMoveVector.z != 0f)
+        {
+            velocity.x = Mathf.MoveTowards(velocity.x, rewiredDesiredVelocity.x, maxSpeedChange);
+            velocity.z = Mathf.MoveTowards(velocity.z, rewiredDesiredVelocity.z, maxSpeedChange);
+            playerRB.velocity = velocity;
+        }
     }
 
     private void FireProjectiles()
