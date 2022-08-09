@@ -439,16 +439,36 @@ public class PlayerBehavior : MonoBehaviour
 
             if (shootingVector.x < 0)
             {
+                //THANKS https://answers.unity.com/questions/446540/calculating-the-angle-of-a-vector2-from-zero.html
                 angleFromVector2 = 360 - (Mathf.Atan2(shootingVector.x, shootingVector.y) * Mathf.Rad2Deg * -1);
             }
             else
             {
                 angleFromVector2 = Mathf.Atan2(shootingVector.x, shootingVector.y) * Mathf.Rad2Deg;
             }
+            int roundedDirection = Mathf.RoundToInt(angleFromVector2/90);
 
-            Debug.Log(angleFromVector2);
+            Debug.Log(roundedDirection);
+
+            switch (roundedDirection)
+            {
+                case 0:
+                case 4:
+                    ShootThisDirection(Vector3.forward);
+                    break;
+                case 1:
+                    ShootThisDirection(Vector3.right);
+                    break;
+                case 2:
+                    ShootThisDirection(Vector3.back);
+                    break;
+                case 3:
+                    ShootThisDirection(Vector3.left);
+                    break;
+            }
         }
 
+        /*
         if (Input.GetAxis("Fire1") < 0 && canPlayerMove)
         {
             //left
@@ -468,7 +488,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             //up
             ShootThisDirection(Vector3.forward);
-        }
+        }*/
     }
 
     private void ShootThisDirection(Vector3 shootDirection)
