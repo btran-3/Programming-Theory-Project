@@ -97,7 +97,7 @@ public class BossBehavior : MonoBehaviour
                 playerXPos = playerBehavior.transform.position.x;
                 LeanTween.moveX(gameObject, playerXPos, 1f).setEaseOutCubic();
 
-                int rand = Random.Range(0, 4); //randomly decide which state to go to next
+                int rand = Random.Range(0, 5); //randomly decide which state to go to next
                 switch (rand)
                 {
                     case 0:
@@ -110,6 +110,7 @@ public class BossBehavior : MonoBehaviour
                         StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
                         break;
                     case 3:
+                    case 4:
                         Debug.Log("Insert follow state here");
                         StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
                         break;
@@ -141,13 +142,17 @@ public class BossBehavior : MonoBehaviour
                 {
                     SwitchState(State.ZOOM);
                 }
+                else if (timerForEvents >= 6f)
+                {
+                    SwitchState(State.FOLLOW);
+                }
                 break;
             case State.FOLLOW:
                 float playerTargetX = playerBehavior.transform.position.x;
                 Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
                 transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 4);
 
-                //switch to roaming after ranndom time
+                //switch to roaming after random time
                 timerForEvents += Time.deltaTime;
                 float rand = Random.Range(4, 9);
                 if (timerForEvents >= rand)
