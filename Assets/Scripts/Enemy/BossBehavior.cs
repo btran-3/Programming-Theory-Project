@@ -148,9 +148,43 @@ public class BossBehavior : MonoBehaviour
                 }
                 break;
             case State.FOLLOW:
+                //moved to LateUpdate
+                /*
                 float playerTargetX = playerBehavior.transform.position.x;
                 Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
-                transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 4);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 2);
+
+                //switch to roaming after random time
+                timerForEvents += Time.deltaTime;
+                float rand = Random.Range(4, 9);
+                if (timerForEvents >= rand)
+                {
+                    SwitchState(State.ROAMING);
+                }
+                */
+                break;
+            case State.ZOOM:
+                break;
+            case State.SPAWNENEMY:
+                break;
+            case State.DEATH:
+                break;
+        }
+        //Debug.Log(timerForEvents);
+    }
+
+    private void LateUpdate()
+    {
+        switch (_state) //looks at current state
+        {
+            case State.BEGIN:
+                break;
+            case State.ROAMING:
+                break;
+            case State.FOLLOW:
+                float playerTargetX = playerBehavior.transform.position.x;
+                Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 2);
 
                 //switch to roaming after random time
                 timerForEvents += Time.deltaTime;
@@ -161,14 +195,12 @@ public class BossBehavior : MonoBehaviour
                 }
                 break;
             case State.ZOOM:
-
                 break;
             case State.SPAWNENEMY:
                 break;
             case State.DEATH:
                 break;
         }
-        //Debug.Log(timerForEvents);
     }
 
     void EndState() //acts like OnDestroy() for the current state
