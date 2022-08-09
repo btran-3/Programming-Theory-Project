@@ -448,7 +448,7 @@ public class PlayerBehavior : MonoBehaviour
             }
             int roundedDirection = Mathf.RoundToInt(angleFromVector2/90);
 
-            Debug.Log(roundedDirection);
+            //Debug.Log(roundedDirection);
 
             switch (roundedDirection)
             {
