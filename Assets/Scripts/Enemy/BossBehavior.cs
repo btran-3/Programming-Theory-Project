@@ -14,28 +14,41 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] AudioClip hitSound;
     [SerializeField] PlayerBehavior playerBehavior;
 
-    //Fixed variables
-    private float xMoveRange;
-    private float maxRoamTightness;
+    [SerializeField] GameObject enemyProjectile;
 
+    //Fixed variables
+    private float xMoveRange = 6f;
+    private float maxRoamTightness = 10f;
     private float maxBossHealth = 10f;
     private int contactDamage = 2;
+    private float projectileRange = 1.5f;
 
 
     //CHANGE THESE VALUES AFTER MIDWAY POINT
     private float roamSpeed;
-
+    private float minShootingCooldown, maxShootingCooldown;
+    private float followShootingCooldown;
+    private float projectileSpeed;
+    int roamingProjectilesToShoot;
 
     //Dynamic variables
     private float roamTightness;
     private float currentBossHealth;
-    private float timerForEvents;
+    private float timerForSwitchStateEvents;
+    private float randomShootingCooldown;
+    private float currentShootingCooldown;
+
     private float playerXPos;
 
     //GET AND SET
     public int pub_contactDamage
     {
         get { return contactDamage; }
+    }
+    public float pub_projectileSpeed
+    {
+        get { return projectileSpeed; }
+        private set { projectileSpeed = value; }
     }
 
     public float pub_currentBossHealth
@@ -58,10 +71,15 @@ public class BossBehavior : MonoBehaviour
 
     void Start()
     {
-        xMoveRange = 6f;
-        roamSpeed = 1f;
-        maxRoamTightness = 10f;
         currentBossHealth = maxBossHealth;
+
+        //the following will all change in phase 2
+        roamSpeed = 1f;
+        minShootingCooldown = 1.25f;
+        maxShootingCooldown = 2f;
+        followShootingCooldown = 0.9f;
+        pub_projectileSpeed = 9f;
+        roamingProjectilesToShoot = 2;
     }
 
 
@@ -81,17 +99,23 @@ public class BossBehavior : MonoBehaviour
     void BeginState(State newState) //acts like Start()
     {
         currentStateText.SetText(newState.ToString());
-        timerForEvents = 0;
+
+        timerForSwitchStateEvents = 0;
+        roamTightness = 0; //reset tightness
+        currentShootingCooldown = 0; //reset shooting cooldown
+        randomShootingCooldown = Random.Range(minShootingCooldown, maxShootingCooldown); //generate random initial shooting cooldown
+
         switch (newState)
         {
             case State.BEGIN: //stay still at beginning
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 0.75f));
                 break;
             case State.ROAMING:
-                roamTightness = 0; //reset tightness
+                Debug.Log("Starting shooting cooldown is " + randomShootingCooldown);
                 LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreaseRoamTightness); //gradually catch up to sine movement target
                 break;
             case State.FOLLOW:
+                ShootAtPlayer();
                 break;
             case State.ZOOM:
                 playerXPos = playerBehavior.transform.position.x;
@@ -132,36 +156,45 @@ public class BossBehavior : MonoBehaviour
             case State.BEGIN:
                 break;
             case State.ROAMING:
+                //Roaming position
                 float sinTargetX = Mathf.Sin(Time.time * roamSpeed) * xMoveRange;
                 Vector3 targetPos = new Vector3(sinTargetX, 0, 3.75f);
                 transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * roamTightness);
 
-                timerForEvents += Time.deltaTime;
+                //Shooting
+                currentShootingCooldown += Time.deltaTime;
+                if (currentShootingCooldown >= randomShootingCooldown)
+                {
+                    for (int i = 0; i < roamingProjectilesToShoot; i++)
+                    {
+                        ShootInRandomDirection();
+                    }
+                    currentShootingCooldown = 0;
+                    randomShootingCooldown = Random.Range(minShootingCooldown, maxShootingCooldown);
+                }
+
+                //Switching state conditions
+                timerForSwitchStateEvents += Time.deltaTime;
                 float bottomBoundZPos = transform.position.z - colliderA.bounds.extents.z;
-                if (timerForEvents >= 3f && playerBehavior.transform.position.z >= bottomBoundZPos)
+                if (timerForSwitchStateEvents >= 3f && playerBehavior.transform.position.z >= bottomBoundZPos)
                 {
                     SwitchState(State.ZOOM);
                 }
-                else if (timerForEvents >= 6f)
+                else if (timerForSwitchStateEvents >= 7f)
                 {
                     SwitchState(State.FOLLOW);
                 }
                 break;
             case State.FOLLOW:
-                //moved to LateUpdate
-                /*
-                float playerTargetX = playerBehavior.transform.position.x;
-                Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
-                transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 2);
 
-                //switch to roaming after random time
-                timerForEvents += Time.deltaTime;
-                float rand = Random.Range(4, 9);
-                if (timerForEvents >= rand)
+                //Shooting
+                currentShootingCooldown += Time.deltaTime;
+                if (currentShootingCooldown >= followShootingCooldown)
                 {
-                    SwitchState(State.ROAMING);
+                    ShootAtPlayer();
+                    currentShootingCooldown = 0;
                 }
-                */
+
                 break;
             case State.ZOOM:
                 break;
@@ -171,6 +204,24 @@ public class BossBehavior : MonoBehaviour
                 break;
         }
         //Debug.Log(timerForEvents);
+    }
+
+    private void ShootInRandomDirection()
+    {
+        Vector3 randomShootingDirection = new Vector3(Random.Range(-1.5f, 1.5f), 0, -1).normalized;
+        GameObject newProjectile = Instantiate(enemyProjectile, transform.position, transform.rotation);
+        newProjectile.SetActive(true);
+        newProjectile.GetComponent<ProjectileEnemy>()
+            .ShootProjectile(transform.position, randomShootingDirection, pub_projectileSpeed, projectileRange);
+    }
+
+    private void ShootAtPlayer()
+    {
+        Vector3 aimShootingDirection = (playerBehavior.transform.position - transform.position).normalized;
+        GameObject newProjectile = Instantiate(enemyProjectile, transform.position, transform.rotation);
+        newProjectile.SetActive(true);
+        newProjectile.GetComponent<ProjectileEnemy>()
+            .ShootProjectile(transform.position, aimShootingDirection, pub_projectileSpeed, projectileRange);
     }
 
     private void LateUpdate()
@@ -187,9 +238,9 @@ public class BossBehavior : MonoBehaviour
                 transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 2);
 
                 //switch to roaming after random time
-                timerForEvents += Time.deltaTime;
-                float rand = Random.Range(4, 9);
-                if (timerForEvents >= rand)
+                timerForSwitchStateEvents += Time.deltaTime;
+                float rand = Random.Range(6, 12);
+                if (timerForSwitchStateEvents >= rand)
                 {
                     SwitchState(State.ROAMING);
                 }
