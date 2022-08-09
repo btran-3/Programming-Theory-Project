@@ -29,6 +29,8 @@ public class BossBehavior : MonoBehaviour
     //Dynamic variables
     private float roamTightness;
     private float currentBossHealth;
+    private float timerForEvents;
+    private float playerXPos;
 
     //GET AND SET
     public int pub_contactDamage
@@ -79,17 +81,40 @@ public class BossBehavior : MonoBehaviour
     void BeginState(State newState) //acts like Start()
     {
         currentStateText.SetText(newState.ToString());
+        timerForEvents = 0;
         switch (newState)
         {
             case State.BEGIN: //stay still at beginning
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 0.75f));
                 break;
             case State.ROAMING:
-                LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreateRoamTightness);
+                roamTightness = 0; //reset tightness
+                LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreaseRoamTightness); //gradually catch up to sine movement target
                 break;
             case State.FOLLOW:
                 break;
             case State.ZOOM:
+                playerXPos = playerBehavior.transform.position.x;
+                LeanTween.moveX(gameObject, playerXPos, 1f).setEaseOutCubic();
+
+                int rand = Random.Range(0, 4); //randomly decide which state to go to next
+                switch (rand)
+                {
+                    case 0:
+                    case 1:
+                        Debug.Log("Back to roaming state");
+                        StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
+                        break;
+                    case 2:
+                        Debug.Log("Insert spawn enemy state here");
+                        StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
+                        break;
+                    case 3:
+                        Debug.Log("Insert follow state here");
+                        StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
+                        break;
+                }
+
                 break;
             case State.SPAWNENEMY:
                 break;
@@ -106,19 +131,39 @@ public class BossBehavior : MonoBehaviour
             case State.BEGIN:
                 break;
             case State.ROAMING:
-                float targetX = Mathf.Sin(Time.time * roamSpeed) * xMoveRange;
-                Vector3 targetPos = new Vector3(targetX, 0, 3.75f);
+                float sinTargetX = Mathf.Sin(Time.time * roamSpeed) * xMoveRange;
+                Vector3 targetPos = new Vector3(sinTargetX, 0, 3.75f);
                 transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * roamTightness);
+
+                timerForEvents += Time.deltaTime;
+                float bottomBoundZPos = transform.position.z - colliderA.bounds.extents.z;
+                if (timerForEvents >= 3f && playerBehavior.transform.position.z >= bottomBoundZPos)
+                {
+                    SwitchState(State.ZOOM);
+                }
                 break;
             case State.FOLLOW:
+                float playerTargetX = playerBehavior.transform.position.x;
+                Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 4);
+
+                //switch to roaming after ranndom time
+                timerForEvents += Time.deltaTime;
+                float rand = Random.Range(4, 9);
+                if (timerForEvents >= rand)
+                {
+                    SwitchState(State.ROAMING);
+                }
                 break;
             case State.ZOOM:
+
                 break;
             case State.SPAWNENEMY:
                 break;
             case State.DEATH:
                 break;
         }
+        //Debug.Log(timerForEvents);
     }
 
     void EndState() //acts like OnDestroy() for the current state
@@ -170,7 +215,7 @@ public class BossBehavior : MonoBehaviour
         SwitchState(newState);
     }
 
-    void IncreateRoamTightness(float value)
+    void IncreaseRoamTightness(float value)
     {
         roamTightness = value;
         //Debug.Log(value);
