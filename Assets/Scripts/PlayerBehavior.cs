@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
     private int playerBaseHealth = 6;
-    private int playerBaseBlanks = 0;
+    private int playerBaseBlanks = 3;
     private int playerBaseMoney = 0;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
@@ -24,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour
     private int currentPlayerHealth;
     private int currentPlayerMoney;
     private int currentPlayerBlanks;
+    private bool isPlayerHoldingFireButton;
     private bool doesPlayerHaveIFrames;
     private float canPlayerFire;
     private bool canPlayerUseBlanks = true;
@@ -213,6 +214,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             desiredVelocity = Vector3.zero;
         }
+
     }
 
     private void FixedUpdate()
@@ -421,6 +423,32 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FireProjectiles()
     {
+        if (player.GetAxis("Fire Horizontal") != 0 || player.GetAxis("Fire Vertical") != 0)
+        {
+            isPlayerHoldingFireButton = true;
+        }
+        else
+        {
+            isPlayerHoldingFireButton = false;
+        }
+
+        if (isPlayerHoldingFireButton && canPlayerMove)
+        {
+            Vector2 shootingVector = new Vector2(player.GetAxis("Fire Horizontal"), player.GetAxis("Fire Vertical")).normalized;
+            float angleFromVector2;
+
+            if (shootingVector.x < 0)
+            {
+                angleFromVector2 = 360 - (Mathf.Atan2(shootingVector.x, shootingVector.y) * Mathf.Rad2Deg * -1);
+            }
+            else
+            {
+                angleFromVector2 = Mathf.Atan2(shootingVector.x, shootingVector.y) * Mathf.Rad2Deg;
+            }
+
+            Debug.Log(angleFromVector2);
+        }
+
         if (Input.GetAxis("Fire1") < 0 && canPlayerMove)
         {
             //left
@@ -495,7 +523,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void UseBlank()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks)
+        if ((Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks) ||
+            (player.GetButtonDown("Use Pulse") && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks))
         {
             pub_currentPlayerBlanks--;
             canPlayerUseBlanks = false;
