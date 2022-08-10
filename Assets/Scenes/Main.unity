@@ -716,6 +716,7 @@ MonoBehaviour:
   audioSource: {fileID: 636391162}
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   playerBehavior: {fileID: 1585987111}
+  globalOnDestroySounds: {fileID: 2112454242}
   enemyProjectile: {fileID: 2135093715}
   bossFace: {fileID: 1848620447}
   eyebrowLeft: {fileID: 2074473861}

@@ -27,23 +27,30 @@ public class GlobalOnDestroySounds : MonoBehaviour
 
     public void PlayEnemyDeathSound(string enemyType)
     {
-        if (enemyType == "normal")
+        switch (enemyType)
         {
-            audioSource.PlayOneShot(enemyDeathSounds[0]);
-        }
-        else if (enemyType == "normalBigger")
-        {
-            audioSource.PlayOneShot(enemyDeathSounds[1]);
-        }
-        else if (enemyType == "flying")
-        {
+            case "normal":
+                audioSource.PlayOneShot(enemyDeathSounds[0]);
+                break;
+            case "normalBigger":
+                audioSource.PlayOneShot(enemyDeathSounds[1]);
+                break;
+            case "flying":
             audioSource.PlayOneShot(enemyDeathSounds[0]);
             Debug.Log("assign custom death sound for flying");
-        }
-        else if (enemyType == "shooting")
-        {
+                break;
+            case "shooting":
             audioSource.PlayOneShot(enemyDeathSounds[0]);
             Debug.Log("assign custom death sound for shooting");
+                break;
+            case "boss":
+            audioSource.PlayOneShot(enemyDeathSounds[1]);
+            Debug.Log("assign custom death sound for boss");
+                break;
+            default:
+                Debug.LogWarning("enemy string passed not valid");
+                break;
+
         }
     }
 

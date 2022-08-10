@@ -13,6 +13,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip hitSound;
     [SerializeField] PlayerBehavior playerBehavior;
+    [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
 
     [SerializeField] GameObject enemyProjectile;
     [Space (10)]
@@ -150,6 +151,7 @@ public class BossBehavior : MonoBehaviour
             case State.SPAWNENEMY:
                 break;
             case State.DEATH:
+                globalOnDestroySounds.PlayEnemyDeathSound("boss");
                 gameObject.SetActive(false);
                 break;
         }
