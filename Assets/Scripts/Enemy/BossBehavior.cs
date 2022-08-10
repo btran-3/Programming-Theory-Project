@@ -43,6 +43,7 @@ public class BossBehavior : MonoBehaviour
     private float timerForSwitchStateEvents;
     private float randomShootingCooldown;
     private float currentShootingCooldown;
+    private bool canBossTakeDamage;
 
     private float playerXPos;
 
@@ -79,6 +80,7 @@ public class BossBehavior : MonoBehaviour
     {
         currentBossHealth = maxBossHealth;
         faceStartingPos = transform.localPosition;
+        canBossTakeDamage = true;
 
         //the following will all change in phase 2
         roamSpeed = 1f;
@@ -118,11 +120,9 @@ public class BossBehavior : MonoBehaviour
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 0.75f));
                 break;
             case State.ROAMING:
-                Debug.Log("Starting shooting cooldown is " + randomShootingCooldown);
                 LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreaseRoamTightness); //gradually catch up to sine movement target
                 break;
             case State.FOLLOW:
-                //ShootAtPlayer();
                 break;
             case State.ZOOM:
                 playerXPos = playerBehavior.transform.position.x;
@@ -150,7 +150,8 @@ public class BossBehavior : MonoBehaviour
                 break;
             case State.SPAWNENEMY:
                 break;
-            case State.NEWPHASE:
+            case State.NEWPHASE: //boss does not take damage during anger animation
+                canBossTakeDamage = false;
                 break;
             case State.DEATH:
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
@@ -211,6 +212,7 @@ public class BossBehavior : MonoBehaviour
             case State.SPAWNENEMY:
                 break;
             case State.NEWPHASE:
+
                 break;
             case State.DEATH:
                 break;
@@ -286,6 +288,9 @@ public class BossBehavior : MonoBehaviour
             case State.ZOOM:
                 break;
             case State.SPAWNENEMY:
+                break;
+            case State.NEWPHASE:
+                canBossTakeDamage = true; //allow boss to take damage again
                 break;
             case State.DEATH:
                 break;
