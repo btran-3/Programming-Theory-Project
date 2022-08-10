@@ -29,11 +29,10 @@ public class BossBehavior : MonoBehaviour
     //Fixed variables
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
-    private float maxBossHealth = 10f;
+    private float maxBossHealth = 40f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
-    //private Vector3 faceStartingPos;
-    //private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
+    private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
     private Color angerFaceColor = new Color(164, 11, 14, 360) / 255;
 
 
@@ -104,7 +103,7 @@ public class BossBehavior : MonoBehaviour
         currentBossHealth = maxBossHealth;
         healthSlider.maxValue = maxBossHealth;
         healthSlider.value = maxBossHealth;
-        //faceStartingPos = transform.localPosition;
+        bossCubeRenderer.GetComponent<Renderer>().material.color = startingFaceColor;
         canBossTakeDamage = true;
 
         //the following will all change in phase 2
@@ -160,7 +159,6 @@ public class BossBehavior : MonoBehaviour
                 {
                     case 0:
                     case 1:
-                        Debug.Log("Back to roaming state");
                         StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
                         break;
                     case 2:
@@ -169,8 +167,7 @@ public class BossBehavior : MonoBehaviour
                         break;
                     case 3:
                     case 4:
-                        //StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
-                        StartCoroutine(DelayStateSwitch(State.SPAWNENEMY, 1f));
+                        StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
                         break;
                 }
 
@@ -250,10 +247,17 @@ public class BossBehavior : MonoBehaviour
                 {
                     SwitchState(State.ZOOM);
                 }
-                else if (timerForSwitchStateEvents >= 7f)
+                else if (timerForSwitchStateEvents >= 6f)
                 {
-                    //SwitchState(State.FOLLOW);
-                    SwitchState(State.SPAWNENEMY);
+                    int rand = Random.Range(0, 2);
+                    if (rand == 0)
+                    {
+                        SwitchState(State.FOLLOW);
+                    }
+                    else if (rand == 1)
+                    {
+                        SwitchState(State.SPAWNENEMY);
+                    }
                 }
                 break;
             case State.FOLLOW:
@@ -315,10 +319,10 @@ public class BossBehavior : MonoBehaviour
                 Vector3 playerTargetPos = new Vector3(playerTargetX, 0, 3.75f);
                 transform.localPosition = Vector3.Lerp(transform.localPosition, playerTargetPos, Time.deltaTime * 2);
 
-                //switch to roaming after random time
+                //switch to another state after random time
                 timerForSwitchStateEvents += Time.deltaTime;
-                float randTime = Random.Range(6, 12);
-                int rand = Random.Range(0, 2);
+                float randTime = Random.Range(4, 9);
+                int rand = Random.Range(0, 3);
                 if (timerForSwitchStateEvents >= randTime)
                 {
                     switch (rand)
@@ -327,8 +331,8 @@ public class BossBehavior : MonoBehaviour
                             SwitchState(State.ROAMING);
                             break;
                         case 1:
-                            Debug.Log("Spawn enemy here instead of roaming");
-                            SwitchState(State.ROAMING);
+                        case 2:
+                            SwitchState(State.SPAWNENEMY);
                             break;
                         default:
                             break;
