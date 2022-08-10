@@ -15,10 +15,12 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] AudioClip hitSound;
     [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
-
+    [Space(10)]
     [SerializeField] GameObject enemyProjectile;
+    [SerializeField] List<GameObject> enemyPool;
     [Space (10)]
     [SerializeField] GameObject bossFace;
+    [SerializeField] Renderer bossCubeRenderer;
     [SerializeField] GameObject eyebrowLeft;
     [SerializeField] GameObject eyebrowRight;
 
@@ -28,7 +30,9 @@ public class BossBehavior : MonoBehaviour
     private float maxBossHealth = 10f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
-    private Vector3 faceStartingPos;
+    //private Vector3 faceStartingPos;
+    //private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
+    private Color angerFaceColor = new Color(164, 11, 14, 360) / 255;
 
 
     //CHANGE THESE VALUES AFTER MIDWAY POINT
@@ -37,6 +41,7 @@ public class BossBehavior : MonoBehaviour
     private float followShootingCooldown;
     private float projectileSpeed;
     int roamingProjectilesToShoot;
+    private int minEnemyIndex, maxEnemyIndex;
 
     //Dynamic variables
     private float roamTightness;
@@ -45,6 +50,7 @@ public class BossBehavior : MonoBehaviour
     private float randomShootingCooldown;
     private float currentShootingCooldown;
     private bool canBossTakeDamage;
+    private bool isBossInSecondPhase;
 
     private float playerXPos;
 
@@ -65,6 +71,12 @@ public class BossBehavior : MonoBehaviour
         private set { currentBossHealth = value;
             healthSlider.value = currentBossHealth;
             Debug.Log(currentBossHealth);
+            if (currentBossHealth <= (maxBossHealth/2) && !isBossInSecondPhase)
+            {
+                isBossInSecondPhase = true;
+                SwitchState(State.NEWPHASE);
+            }
+
             if (currentBossHealth <= 0)
             {
                 SwitchState(State.DEATH);
@@ -74,7 +86,7 @@ public class BossBehavior : MonoBehaviour
     }
 
 
-    enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, NEWPHASE, DEATH }
+    enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, NEWPHASE, KILLEDPLAYER, DEATH }
     State _state; //our current state
 
 
@@ -83,7 +95,7 @@ public class BossBehavior : MonoBehaviour
         currentBossHealth = maxBossHealth;
         healthSlider.maxValue = maxBossHealth;
         healthSlider.value = maxBossHealth;
-        faceStartingPos = transform.localPosition;
+        //faceStartingPos = transform.localPosition;
         canBossTakeDamage = true;
 
         //the following will all change in phase 2
@@ -93,6 +105,8 @@ public class BossBehavior : MonoBehaviour
         followShootingCooldown = 0.9f;
         pub_projectileSpeed = 7.5f;
         roamingProjectilesToShoot = 2;
+        minEnemyIndex = 0;
+        maxEnemyIndex = 2; //not inclusive, so must be 2. change to 2 and 4 for harder phase
     }
 
 
@@ -142,21 +156,38 @@ public class BossBehavior : MonoBehaviour
                         break;
                     case 2:
                         Debug.Log("Insert spawn enemy state here");
-                        StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
+                        StartCoroutine(DelayStateSwitch(State.SPAWNENEMY, 1f));
                         break;
                     case 3:
                     case 4:
-                        Debug.Log("Insert follow state here");
-                        StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
+                        //StartCoroutine(DelayStateSwitch(State.FOLLOW, 1f));
+                        StartCoroutine(DelayStateSwitch(State.SPAWNENEMY, 1f));
                         break;
                 }
 
                 break;
             case State.SPAWNENEMY:
+                int randInt = Random.Range(minEnemyIndex, maxEnemyIndex);
+                GameObject spawnedEnemy = Instantiate((enemyPool[randInt]), (transform.position + new Vector3(0, 0, -1.5f)), Quaternion.identity);
+                spawnedEnemy.SetActive(true);
+                spawnedEnemy.GetComponent<EnemyBase>().EnableEnemy();
+
+                StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
                 break;
             case State.NEWPHASE: //boss does not take damage during anger animation
                 canBossTakeDamage = false;
 
+
+                //UPGRADE ALL STATS HERE
+
+
+
+                LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();
+                LeanTween.color(bossCubeRenderer.gameObject, angerFaceColor, 0.75f).setEaseInOutSine().setDelay(0.5f);
+                StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
+                //bossCubeRenderer.material.color
+                break;
+            case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
                 LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
@@ -168,6 +199,11 @@ public class BossBehavior : MonoBehaviour
     
     void Update() //Update for each state
     {
+        if (!playerBehavior.gameObject.activeInHierarchy)
+        {
+            SwitchState(State.KILLEDPLAYER);
+        }
+
         switch (_state) //looks at current state
         {
             case State.BEGIN:
@@ -199,11 +235,11 @@ public class BossBehavior : MonoBehaviour
                 }
                 else if (timerForSwitchStateEvents >= 7f)
                 {
-                    SwitchState(State.FOLLOW);
+                    //SwitchState(State.FOLLOW);
+                    SwitchState(State.SPAWNENEMY);
                 }
                 break;
             case State.FOLLOW:
-
                 //Shooting
                 currentShootingCooldown += Time.deltaTime;
                 if (currentShootingCooldown >= followShootingCooldown)
@@ -211,14 +247,14 @@ public class BossBehavior : MonoBehaviour
                     ShootAtPlayer();
                     currentShootingCooldown = 0;
                 }
-
                 break;
             case State.ZOOM:
                 break;
             case State.SPAWNENEMY:
                 break;
             case State.NEWPHASE:
-
+                break;
+            case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
                 break;
@@ -288,6 +324,8 @@ public class BossBehavior : MonoBehaviour
                 break;
             case State.NEWPHASE:
                 break;
+            case State.KILLEDPLAYER:
+                break;
             case State.DEATH:
                 break;
         }
@@ -310,6 +348,8 @@ public class BossBehavior : MonoBehaviour
             case State.NEWPHASE:
                 canBossTakeDamage = true; //allow boss to take damage again
                 break;
+            case State.KILLEDPLAYER:
+                break;
             case State.DEATH:
                 break;
         }
@@ -317,7 +357,7 @@ public class BossBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerProjectile"))
+        if (other.gameObject.CompareTag("PlayerProjectile") && canBossTakeDamage)
         {
             //play hit sound before potential death update
             if (this.gameObject.activeInHierarchy)
