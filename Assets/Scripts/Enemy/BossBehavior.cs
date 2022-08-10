@@ -15,6 +15,10 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] PlayerBehavior playerBehavior;
 
     [SerializeField] GameObject enemyProjectile;
+    [Space (10)]
+    [SerializeField] GameObject bossFace;
+    [SerializeField] GameObject eyebrowLeft;
+    [SerializeField] GameObject eyebrowRight;
 
     //Fixed variables
     private float xMoveRange = 6f;
@@ -22,6 +26,7 @@ public class BossBehavior : MonoBehaviour
     private float maxBossHealth = 10f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
+    private Vector3 faceStartingPos;
 
 
     //CHANGE THESE VALUES AFTER MIDWAY POINT
@@ -72,6 +77,7 @@ public class BossBehavior : MonoBehaviour
     void Start()
     {
         currentBossHealth = maxBossHealth;
+        faceStartingPos = transform.localPosition;
 
         //the following will all change in phase 2
         roamSpeed = 1f;
@@ -226,6 +232,11 @@ public class BossBehavior : MonoBehaviour
 
     private void LateUpdate()
     {
+        Vector3 lookAtPlayer = (playerBehavior.transform.position - transform.position).normalized;
+
+        Vector3 faceLookAtPlayer = new Vector3(lookAtPlayer.x/2.5f, lookAtPlayer.y, lookAtPlayer.z/4);
+        bossFace.transform.localPosition = new Vector3(0, 1, 0.1f) + faceLookAtPlayer;
+
         switch (_state) //looks at current state
         {
             case State.BEGIN:

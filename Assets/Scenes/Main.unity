@@ -717,6 +717,9 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   playerBehavior: {fileID: 1585987111}
   enemyProjectile: {fileID: 2135093715}
+  bossFace: {fileID: 1848620447}
+  eyebrowLeft: {fileID: 2074473861}
+  eyebrowRight: {fileID: 1745237984}
 --- !u!65 &636391161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2417,7 +2420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223508562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: -0.25}
+  m_LocalPosition: {x: 0.5, y: 0, z: -0.2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4716,7 +4719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035616320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: -0.25}
+  m_LocalPosition: {x: -0.5, y: 0, z: -0.2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
