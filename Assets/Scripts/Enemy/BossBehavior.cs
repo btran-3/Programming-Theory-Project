@@ -176,10 +176,11 @@ public class BossBehavior : MonoBehaviour
                 break;
             case State.NEWPHASE: //boss does not take damage during anger animation
                 canBossTakeDamage = false;
+                LeanTween.rotateAroundLocal(eyebrowLeft, Vector3.forward, -15, 0.75f).setEaseInOutSine().setDelay(0.5f);
+                LeanTween.rotateAroundLocal(eyebrowRight, Vector3.forward, 15, 0.75f).setEaseInOutSine().setDelay(0.5f);
 
 
                 //UPGRADE ALL STATS HERE
-
 
 
                 LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();
@@ -190,7 +191,7 @@ public class BossBehavior : MonoBehaviour
             case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
-                LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
+                LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setDelay(0.25f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
                 gameObject.SetActive(false);
                 break;
