@@ -189,32 +189,25 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
-        rewiredMoveVector.x = player.GetAxis("Move Horizontal");
-        rewiredMoveVector.z = player.GetAxis("Move Vertical");
-        rewiredMoveVector = Vector3.ClampMagnitude(rewiredMoveVector, 1f);
-        rewiredDesiredVelocity = new Vector3(rewiredMoveVector.x, 0f, rewiredMoveVector.z) * pub_playerSpeed;
+        RewiredGetPlayerInput();
 
-        //GetPlayerInput();
         FireProjectiles();
         UseBlank();
     }
 
-    private void GetPlayerInput()
+    private void RewiredGetPlayerInput()
     {
         if (canPlayerMove)
         {
-            Vector2 playerInput;
-            playerInput.x = Input.GetAxis("Horizontal");
-            playerInput.y = Input.GetAxis("Vertical");
-            playerInput = Vector2.ClampMagnitude(playerInput, 1f);
-
-            desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * pub_playerSpeed;
+            rewiredMoveVector.x = player.GetAxis("Move Horizontal");
+            rewiredMoveVector.z = player.GetAxis("Move Vertical");
+            rewiredMoveVector = Vector3.ClampMagnitude(rewiredMoveVector, 1f);
+            rewiredDesiredVelocity = new Vector3(rewiredMoveVector.x, 0f, rewiredMoveVector.z) * pub_playerSpeed;
         }
         else
         {
-            desiredVelocity = Vector3.zero;
+            rewiredDesiredVelocity = Vector3.zero;
         }
-
     }
 
     private void FixedUpdate()
@@ -332,6 +325,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerEntersRoom(Collider other)
     {
+        Debug.Log("entered a room");
         canPlayerMove = false;
 
         pub_currentRoomIndex++;
