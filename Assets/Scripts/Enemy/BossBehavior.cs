@@ -71,7 +71,7 @@ public class BossBehavior : MonoBehaviour
     }
 
 
-    enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, DEATH }
+    enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, NEWPHASE, DEATH }
     State _state; //our current state
 
 
@@ -85,7 +85,7 @@ public class BossBehavior : MonoBehaviour
         minShootingCooldown = 1.25f;
         maxShootingCooldown = 2f;
         followShootingCooldown = 0.9f;
-        pub_projectileSpeed = 9f;
+        pub_projectileSpeed = 7.5f;
         roamingProjectilesToShoot = 2;
     }
 
@@ -122,7 +122,7 @@ public class BossBehavior : MonoBehaviour
                 LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreaseRoamTightness); //gradually catch up to sine movement target
                 break;
             case State.FOLLOW:
-                ShootAtPlayer();
+                //ShootAtPlayer();
                 break;
             case State.ZOOM:
                 playerXPos = playerBehavior.transform.position.x;
@@ -149,6 +149,8 @@ public class BossBehavior : MonoBehaviour
 
                 break;
             case State.SPAWNENEMY:
+                break;
+            case State.NEWPHASE:
                 break;
             case State.DEATH:
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
@@ -208,6 +210,8 @@ public class BossBehavior : MonoBehaviour
                 break;
             case State.SPAWNENEMY:
                 break;
+            case State.NEWPHASE:
+                break;
             case State.DEATH:
                 break;
         }
@@ -261,6 +265,8 @@ public class BossBehavior : MonoBehaviour
             case State.ZOOM:
                 break;
             case State.SPAWNENEMY:
+                break;
+            case State.NEWPHASE:
                 break;
             case State.DEATH:
                 break;
