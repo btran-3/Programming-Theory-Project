@@ -258,10 +258,22 @@ public class BossBehavior : MonoBehaviour
 
                 //switch to roaming after random time
                 timerForSwitchStateEvents += Time.deltaTime;
-                float rand = Random.Range(6, 12);
-                if (timerForSwitchStateEvents >= rand)
+                float randTime = Random.Range(6, 12);
+                int rand = Random.Range(0, 2);
+                if (timerForSwitchStateEvents >= randTime)
                 {
-                    SwitchState(State.ROAMING);
+                    switch (rand)
+                    {
+                        case 0:
+                            SwitchState(State.ROAMING);
+                            break;
+                        case 1:
+                            Debug.Log("Spawn enemy here instead of roaming");
+                            SwitchState(State.ROAMING);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             case State.ZOOM:
