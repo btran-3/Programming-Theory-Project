@@ -892,6 +892,37 @@ Transform:
   m_Father: {fileID: 1871022198360278920}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &620206624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620206625}
+  m_Layer: 0
+  m_Name: Active Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620206625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620206624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871022198360278920}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &636391158
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +957,7 @@ Transform:
   - {fileID: 1514027472}
   - {fileID: 1848620448}
   m_Father: {fileID: 1871022198360278920}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &636391160
 MonoBehaviour:
@@ -947,6 +978,8 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   playerBehavior: {fileID: 1585987111}
   globalOnDestroySounds: {fileID: 2112454242}
+  roomFinalBossBehavior: {fileID: 2430258733783670946}
+  activeEnemiesParent: {fileID: 620206624}
   enemyProjectile: {fileID: 2135093715}
   enemyPool:
   - {fileID: 1043361682}
@@ -6877,6 +6910,7 @@ Transform:
   - {fileID: 1697471445}
   - {fileID: 1258739132}
   - {fileID: 466464822}
+  - {fileID: 620206625}
   - {fileID: 636391159}
   m_Father: {fileID: 666391495}
   m_RootOrder: 7
@@ -7160,7 +7194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossEnemy: {fileID: 636391158}
-  spawnedEnemies: []
+  activeEnemiesParent: {fileID: 620206624}
+  enemiesInRoom: []
   doorBottom: {fileID: 3940896539234517171}
   playerStartPos: {fileID: 7885679244565393556}
 --- !u!82 &2430258733783670947

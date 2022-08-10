@@ -15,6 +15,8 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] AudioClip hitSound;
     [SerializeField] PlayerBehavior playerBehavior;
     [SerializeField] GlobalOnDestroySounds globalOnDestroySounds;
+    [SerializeField] RoomFinalBossBehavior roomFinalBossBehavior;
+    [SerializeField] GameObject activeEnemiesParent;
     [Space(10)]
     [SerializeField] GameObject enemyProjectile;
     [SerializeField] List<GameObject> enemyPool;
@@ -51,6 +53,7 @@ public class BossBehavior : MonoBehaviour
     private float currentShootingCooldown;
     private bool canBossTakeDamage;
     private bool isBossInSecondPhase;
+    private bool isBossDead;
 
     private float playerXPos;
 
@@ -83,6 +86,12 @@ public class BossBehavior : MonoBehaviour
             }
         
         }
+    }
+    
+    public bool pub_isBossDead
+    {
+        get { return isBossDead; }
+        private set { isBossDead = value; }
     }
 
 
@@ -171,28 +180,35 @@ public class BossBehavior : MonoBehaviour
                 GameObject spawnedEnemy = Instantiate((enemyPool[randInt]), (transform.position + new Vector3(0, 0, -1.5f)), Quaternion.identity);
                 spawnedEnemy.SetActive(true);
                 spawnedEnemy.GetComponent<EnemyBase>().EnableEnemy();
+                spawnedEnemy.transform.SetParent(activeEnemiesParent.transform);
 
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
                 break;
-            case State.NEWPHASE: //boss does not take damage during anger animation
+            case State.NEWPHASE:
                 canBossTakeDamage = false;
+                LeanTween.cancelAll();
+                LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();
                 LeanTween.rotateAroundLocal(eyebrowLeft, Vector3.forward, -15, 0.75f).setEaseInOutSine().setDelay(0.5f);
                 LeanTween.rotateAroundLocal(eyebrowRight, Vector3.forward, 15, 0.75f).setEaseInOutSine().setDelay(0.5f);
-
-
-                //UPGRADE ALL STATS HERE
-
-
-                LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();
                 LeanTween.color(bossCubeRenderer.gameObject, angerFaceColor, 0.75f).setEaseInOutSine().setDelay(0.5f);
+
+                roamSpeed = 1.2f;
+                minShootingCooldown = 1f;
+                maxShootingCooldown = 1.75f;
+                followShootingCooldown = 0.6f;
+                pub_projectileSpeed = 9f;
+                roamingProjectilesToShoot = 3;
+                minEnemyIndex = 2;
+                maxEnemyIndex = 4;
+
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
-                //bossCubeRenderer.material.color
                 break;
             case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
                 LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setDelay(0.25f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
+                pub_isBossDead = true;
                 gameObject.SetActive(false);
                 break;
         }

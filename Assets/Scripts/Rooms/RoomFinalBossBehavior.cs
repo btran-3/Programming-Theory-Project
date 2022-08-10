@@ -5,8 +5,9 @@ using UnityEngine;
 public class RoomFinalBossBehavior : MonoBehaviour
 {
     [SerializeField] GameObject bossEnemy;
+    private BossBehavior bossBehavior;
     [Space(10)]
-    [SerializeField] List<GameObject> spawnedEnemies;
+    [SerializeField] GameObject activeEnemiesParent;
 
     private Vector3 doorDefaultScale;
     //[SerializeField] GameObject doorTop;
@@ -16,6 +17,8 @@ public class RoomFinalBossBehavior : MonoBehaviour
     [Space(10)]
 
     private Collider colliderA;
+
+    private bool didPlayerWin;
 
     public Vector3 pub_playerStartPos
     {
@@ -31,11 +34,24 @@ public class RoomFinalBossBehavior : MonoBehaviour
         doorDefaultScale = doorBottom.transform.localScale;
 
         StartDoorAsOpen(doorBottom);
+
+        if (bossEnemy.GetComponent<BossBehavior>() != null)
+        {
+            bossBehavior = bossEnemy.GetComponent<BossBehavior>();
+        }
+        else
+        {
+            Debug.LogWarning("No bossHeavior script found on boss");
+        }
     }
 
     void Update()
     {
-        
+        if (bossBehavior.pub_isBossDead && activeEnemiesParent.transform.childCount <= 0 && !didPlayerWin)
+        {
+            didPlayerWin = true;
+            Debug.Log("You won!!!!!");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
