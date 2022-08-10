@@ -9,7 +9,8 @@ public class BossBehavior : MonoBehaviour
 
     [SerializeField] Collider colliderA;
     [SerializeField] TextMeshPro currentStateText;
-
+    [SerializeField] Slider healthSlider;
+    [Space (10)]
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip hitSound;
     [SerializeField] PlayerBehavior playerBehavior;
@@ -62,6 +63,7 @@ public class BossBehavior : MonoBehaviour
     {
         get { return currentBossHealth; }
         private set { currentBossHealth = value;
+            healthSlider.value = currentBossHealth;
             Debug.Log(currentBossHealth);
             if (currentBossHealth <= 0)
             {
@@ -79,6 +81,8 @@ public class BossBehavior : MonoBehaviour
     void Start()
     {
         currentBossHealth = maxBossHealth;
+        healthSlider.maxValue = maxBossHealth;
+        healthSlider.value = maxBossHealth;
         faceStartingPos = transform.localPosition;
         canBossTakeDamage = true;
 
@@ -152,8 +156,10 @@ public class BossBehavior : MonoBehaviour
                 break;
             case State.NEWPHASE: //boss does not take damage during anger animation
                 canBossTakeDamage = false;
+
                 break;
             case State.DEATH:
+                LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
                 gameObject.SetActive(false);
                 break;
@@ -343,6 +349,11 @@ public class BossBehavior : MonoBehaviour
     {
         roamTightness = value;
         //Debug.Log(value);
+    }
+
+    void SetHealthBarInactive()
+    {
+        healthSlider.gameObject.SetActive(false);
     }
 
 }
