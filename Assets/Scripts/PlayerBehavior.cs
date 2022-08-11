@@ -33,6 +33,8 @@ public class PlayerBehavior : MonoBehaviour
     private bool canPlayerMove = true;
 
     Vector3 velocity, desiredVelocity, rewiredDesiredVelocity;
+    private Vector3 rewiredMoveVector;
+
     private int currentRoomIndex = 0;
 
     private string currentRoomTypeMusic;
@@ -155,7 +157,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private int playerId = 0;
     private Player player;
-    private Vector3 rewiredMoveVector;
+    
     #endregion
 
     void Awake()
@@ -492,29 +494,8 @@ public class PlayerBehavior : MonoBehaviour
                     break;
             }
         }
-
-        /*
-        if (Input.GetAxis("Fire1") < 0 && canPlayerMove)
-        {
-            //left
-            ShootThisDirection(Vector3.left);
-        }
-        else if (Input.GetAxis("Fire1") > 0 && canPlayerMove)
-        {
-            //right
-            ShootThisDirection(Vector3.right);
-        }
-        else if (Input.GetAxis("Fire2") < 0 && canPlayerMove)
-        {
-            //down
-            ShootThisDirection(Vector3.back);
-        }
-        else if (Input.GetAxis("Fire2") > 0 && canPlayerMove)
-        {
-            //up
-            ShootThisDirection(Vector3.forward);
-        }*/
     }
+
 
     private void ShootThisDirection(Vector3 shootDirection)
     {
