@@ -44,6 +44,11 @@ public class UpgradeItemBehavior : MonoBehaviour
     {
         get { return firerateUpAmt; }
     }
+
+    public bool pub_isItemFree
+    {
+        get { return isItemFree; }
+    }
     #endregion
 
     [SerializeField] PlayerBehavior playerBehavior;

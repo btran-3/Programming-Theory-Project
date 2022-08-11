@@ -196,7 +196,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void RewiredGetPlayerInput()
     {
-        if (canPlayerMove)
+        if (canPlayerMove && !uiManager.pub_isGamePaused)
         {
             rewiredMoveVector.x = player.GetAxis("Move Horizontal");
             rewiredMoveVector.z = player.GetAxis("Move Vertical");
@@ -302,7 +302,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             audioSource.PlayOneShot(negativeSound);
         }
-        else if (collision.gameObject.CompareTag("UpgradeItem")
+        else if (collision.gameObject.CompareTag("UpgradeItem") && !collision.gameObject.GetComponent<UpgradeItemBehavior>().pub_isItemFree
             && collision.gameObject.GetComponent<UpgradeItemBehavior>().pub_price > currentPlayerMoney)
         {
             audioSource.PlayOneShot(negativeSound);
@@ -568,8 +568,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void UseBlank()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks) ||
-            (player.GetButtonDown("Use Pulse") && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks))
+        if (player.GetButtonDown("Use Pulse") && pub_currentPlayerBlanks > 0 && canPlayerUseBlanks && !uiManager.pub_isGamePaused)
         {
             pub_currentPlayerBlanks--;
             canPlayerUseBlanks = false;

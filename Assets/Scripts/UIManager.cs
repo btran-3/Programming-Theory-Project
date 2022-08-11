@@ -34,6 +34,12 @@ public class UIManager : MonoBehaviour
 
     private bool isGamePaused;
 
+    public bool pub_isGamePaused
+    {
+        get { return isGamePaused; }
+        set { isGamePaused = value; }
+    }
+
 
     void Start()
     {
@@ -62,15 +68,15 @@ public class UIManager : MonoBehaviour
 
     private void PauseUnpause()
     {
-        if (player.GetButtonDown("Pause") && !isGamePaused)
+        if (player.GetButtonDown("Pause") && !pub_isGamePaused)
         {
-            isGamePaused = true;
+            pub_isGamePaused = true;
             pauseScreen.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
-        else if (player.GetButtonDown("Pause") && isGamePaused)
+        else if (player.GetButtonDown("Pause") && pub_isGamePaused)
         {
-            isGamePaused = false;
+            pub_isGamePaused = false;
             pauseScreen.gameObject.SetActive(false);
             Time.timeScale = 1f;
         }
