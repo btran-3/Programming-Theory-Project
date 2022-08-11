@@ -9,6 +9,12 @@ public class RoomFinalBossBehavior : MonoBehaviour
     [Space(10)]
     [SerializeField] GameObject activeEnemiesParent;
 
+    [Space(10)]
+    [SerializeField] MusicManager musicManager;
+    [SerializeField] AudioClip winJingle;
+    [SerializeField] AudioClip hostileMusic;
+
+    [Space(10)]
     private Vector3 doorDefaultScale;
     //[SerializeField] GameObject doorTop;
     [SerializeField] GameObject doorBottom;
@@ -41,7 +47,7 @@ public class RoomFinalBossBehavior : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No bossHeavior script found on boss");
+            Debug.LogWarning("No bossBehavior script found on boss");
         }
     }
 
@@ -51,6 +57,11 @@ public class RoomFinalBossBehavior : MonoBehaviour
         {
             didPlayerWin = true;
             Debug.Log("You won!!!!!");
+
+            musicManager.track01.loop = false;
+            musicManager.track02.loop = false;
+            musicManager.SwapTrack(winJingle);
+            StartCoroutine(musicManager.DelaySwapTrack(hostileMusic, 3f));
         }
     }
 

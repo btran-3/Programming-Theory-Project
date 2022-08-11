@@ -25,11 +25,12 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] Renderer bossCubeRenderer;
     [SerializeField] GameObject eyebrowLeft;
     [SerializeField] GameObject eyebrowRight;
+    [SerializeField] AudioClip bossAngrySound;
 
     //Fixed variables
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
-    private float maxBossHealth = 40f;
+    private float maxBossHealth = 10f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
     private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
@@ -182,6 +183,8 @@ public class BossBehavior : MonoBehaviour
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
                 break;
             case State.NEWPHASE:
+                audioSource.PlayOneShot(bossAngrySound);
+
                 canBossTakeDamage = false;
                 LeanTween.cancelAll();
                 LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();

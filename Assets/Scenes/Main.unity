@@ -665,6 +665,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAmbience: {fileID: 8300000, guid: 626d801dca5c66d47afd4394cb1bdbfd, type: 3}
+  track01: {fileID: 0}
+  track02: {fileID: 0}
 --- !u!4 &414889261
 Transform:
   m_ObjectHideFlags: 0
@@ -989,6 +991,7 @@ MonoBehaviour:
   bossCubeRenderer: {fileID: 1514027474}
   eyebrowLeft: {fileID: 2074473861}
   eyebrowRight: {fileID: 1745237984}
+  bossAngrySound: {fileID: 8300000, guid: ef01221945c72804fae781e57e179509, type: 3}
 --- !u!65 &636391161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6297,6 +6300,9 @@ MonoBehaviour:
   enemyDeathSounds:
   - {fileID: 8300000, guid: 2f94b4fb3e214ed4b89cdcea58872175, type: 3}
   - {fileID: 8300000, guid: 2754ea16e19022840be667ed4b2fa96b, type: 3}
+  - {fileID: 8300000, guid: 4cc44a4dd83d73444b257e53b38cd39a, type: 3}
+  - {fileID: 8300000, guid: 0b8fafb6baaf12643b8013b687c31b2c, type: 3}
+  - {fileID: 8300000, guid: c9dc32a20e5bf8b44b3de0986226d8f1, type: 3}
   projectileHitObstacleSound: {fileID: 8300000, guid: cb92707ccc213044382f3afe19dcc361, type: 3}
   upgradeItemSound: {fileID: 8300000, guid: 42a286425d22a2d489a1e2390a886129, type: 3}
   halfHeartPickupSound: {fileID: 8300000, guid: 63d5e2e4e9fec374e9e5356d638f7460, type: 3}
@@ -7555,6 +7561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossEnemy: {fileID: 636391158}
   activeEnemiesParent: {fileID: 620206624}
+  musicManager: {fileID: 414889260}
+  winJingle: {fileID: 8300000, guid: abaed49467bbef84292b3c6a4e0a46b1, type: 3}
+  hostileMusic: {fileID: 8300000, guid: b7dce641143804548991e28977e2303e, type: 3}
   doorBottom: {fileID: 3940896539234517171}
   playerStartPos: {fileID: 7885679244565393556}
 --- !u!82 &2430258733783670947

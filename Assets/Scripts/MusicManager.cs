@@ -11,7 +11,7 @@ public class MusicManager : MonoBehaviour
 
     [SerializeField] AudioClip defaultAmbience;
 
-    private AudioSource track01, track02;
+    public AudioSource track01, track02;
     private bool isPlayingTrack01;
     public static MusicManager instance;
 
@@ -44,6 +44,14 @@ public class MusicManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeTrack(newClip));
         isPlayingTrack01 = !isPlayingTrack01;
+    }
+
+    public IEnumerator DelaySwapTrack(AudioClip audioClip, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        track01.loop = true;
+        track02.loop = true;
+        SwapTrack(audioClip);
     }
 
     public void ReturnToDefault()

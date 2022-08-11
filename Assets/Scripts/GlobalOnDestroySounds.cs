@@ -36,16 +36,13 @@ public class GlobalOnDestroySounds : MonoBehaviour
                 audioSource.PlayOneShot(enemyDeathSounds[1]);
                 break;
             case "flying":
-            audioSource.PlayOneShot(enemyDeathSounds[0]);
-            Debug.Log("assign custom death sound for flying");
+            audioSource.PlayOneShot(enemyDeathSounds[2]);
                 break;
             case "shooting":
-            audioSource.PlayOneShot(enemyDeathSounds[0]);
-            Debug.Log("assign custom death sound for shooting");
+            audioSource.PlayOneShot(enemyDeathSounds[3]);
                 break;
             case "boss":
-            audioSource.PlayOneShot(enemyDeathSounds[1]);
-            Debug.Log("assign custom death sound for boss");
+            audioSource.PlayOneShot(enemyDeathSounds[4]);
                 break;
             default:
                 Debug.LogWarning("enemy string passed not valid");
