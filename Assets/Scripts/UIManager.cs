@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Rewired;
 
 
 // Sets the script to be executed later than all default scripts
@@ -14,7 +15,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] PlayerBehavior playerBehavior;
 
     [Space(10)]
-
+    
+    [SerializeField] private Image blackFade;
+    [SerializeField] private Image pauseScreen;
+    [Space(10)]
     [SerializeField] GameObject heartPrefab;
     [SerializeField] GameObject healthBarUI;
     List<UIHealthHeart> hearts = new List<UIHealthHeart>();
@@ -24,20 +28,52 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI blanksText;
 
+    [Space (10)] //Rewired stuff
+    private int playerId = 0;
+    private Player player;
+
+    private bool isGamePaused;
+
+
     void Start()
     {
+        player = ReInput.players.GetPlayer(playerId);
+
         DrawHearts();
 
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
             playerBehavior.pub_maxPlayerHealth);
         moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
         blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
+
+        pauseScreen.gameObject.SetActive(false);
+
+        blackFade.gameObject.SetActive(true);
+        LeanTween.alpha(blackFade.gameObject, 0, 1f).setEaseInOutSine();
+        LeanTween.value(1, 0, 1f).setOnUpdate(UpdateFadeAlpha);
+        StartCoroutine(DisableObject(blackFade.gameObject, 1f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        PauseUnpause();
+    }
+
+    private void PauseUnpause()
+    {
+        if (player.GetButtonDown("Pause") && !isGamePaused)
+        {
+            isGamePaused = true;
+            pauseScreen.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (player.GetButtonDown("Pause") && isGamePaused)
+        {
+            isGamePaused = false;
+            pauseScreen.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+        }
     }
 
     public void CreateEmptyHeart()
@@ -96,4 +132,16 @@ public class UIManager : MonoBehaviour
     {
         blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
     }
+
+    void UpdateFadeAlpha(float alphaChange)
+    {
+        blackFade.color =  new Color(0, 0, 0, alphaChange);
+    }
+
+    IEnumerator DisableObject(GameObject disableThis, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        disableThis.SetActive(false);
+    }
+
 }

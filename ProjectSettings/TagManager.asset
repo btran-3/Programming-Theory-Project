@@ -14,6 +14,7 @@ TagManager:
   - EnemyProjectile
   - UpgradeItem
   - Dispenser
+  - StartingRoom
   layers:
   - Default
   - TransparentFX

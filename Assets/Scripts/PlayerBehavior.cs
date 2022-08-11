@@ -168,7 +168,6 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
-        currentRoomTypeMusic = "Hostile";
 
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);
@@ -316,10 +315,34 @@ public class PlayerBehavior : MonoBehaviour
         {
             PlayerEntersRoom(other);
         }
+        else if (other.gameObject.CompareTag("StartingRoom"))
+        {
+            PlayerEntersStartingRoom(other);
+        }
 
         if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
             TakeDamageFromEnemy(other);
+        }
+    }
+    private void PlayerEntersStartingRoom(Collider other)
+    {
+        other.GetComponent<Collider>().enabled = false;
+
+        canPlayerMove = false;
+
+        playerRB.velocity = Vector3.zero;
+        playerRB.angularVelocity = Vector3.zero;
+
+        Invoke("AllowPlayerToMove", 0.65f);
+
+        if (other.gameObject.CompareTag("StartingRoom"))
+        {
+            if (currentRoomTypeMusic != "Hostile")
+            {
+                currentRoomTypeMusic = "Hostile";
+                MusicManager.instance.SwapTrack(musicTracks[0]);
+            }
         }
     }
 
@@ -334,7 +357,15 @@ public class PlayerBehavior : MonoBehaviour
 
         Invoke("AllowPlayerToMove", 0.65f);
 
-        if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
+        if (other.gameObject.CompareTag("StartingRoom"))
+        {
+            if (currentRoomTypeMusic != "Hostile")
+            {
+                currentRoomTypeMusic = "Hostile";
+                MusicManager.instance.SwapTrack(musicTracks[0]);
+            }
+        }
+        else if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
         {
             if (currentRoomTypeMusic != "Hostile")
             {
