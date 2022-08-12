@@ -10,6 +10,12 @@ public class MusicManager : MonoBehaviour
 
 
     [SerializeField] AudioClip defaultAmbience;
+    [SerializeField] AudioClip hostileMusic;
+
+    public AudioClip pub_hostileMusic
+    {
+        get { return hostileMusic; }
+    }
 
     public AudioSource track01, track02;
     private bool isPlayingTrack01;

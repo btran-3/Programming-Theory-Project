@@ -23,6 +23,9 @@ public class MainMenuBackground : MonoBehaviour
         spotLight.intensity = value;
     }
 
-
+    private void OnDestroy()
+    {
+        LeanTween.cancelAll();
+    }
 
 }

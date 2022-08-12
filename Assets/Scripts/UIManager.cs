@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Rewired;
+using UnityEngine.EventSystems;
 
 
 // Sets the script to be executed later than all default scripts
@@ -54,10 +55,11 @@ public class UIManager : MonoBehaviour
 
         pauseScreen.gameObject.SetActive(false);
 
+        /*
         blackFade.gameObject.SetActive(true);
-        LeanTween.alpha(blackFade.gameObject, 0, 1f).setEaseInOutSine();
         LeanTween.value(1, 0, 1f).setOnUpdate(UpdateFadeAlpha);
         StartCoroutine(DisableObject(blackFade.gameObject, 1f));
+        */
     }
 
     // Update is called once per frame
