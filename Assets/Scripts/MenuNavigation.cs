@@ -4,28 +4,49 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Sets the script to be executed later than all default scripts
+// This is helpful for UI, since other things may need to be initialized before setting the UI
+[DefaultExecutionOrder(500)]
 public class MenuNavigation : MonoBehaviour
 {
     public static MenuNavigation instance;
     [SerializeField] Image blackFade;
-    [SerializeField] MusicManager musicManager;
 
     private void Awake()
     {
-        if (instance != null) //if an instance exists already
+        //this allows retaining references to the original instances in each scene rather than destroying originals
+
+        if (instance == null) //keep this first instance
         {
-            Destroy(gameObject);
-            return;
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        else if (instance != this) //this instance is not the same as existing one, destroy the old one and use new one
+        {
+            Destroy(instance.gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
     }
 
     private void Start()
     {
+        Time.timeScale = 1;
+
         blackFade.gameObject.SetActive(true);
-        LeanTween.value(0, 1, 1f).setOnComplete(FadeFromBlack); //delay fading out
-        //FadeFromBlack();
+        LeanTween.value(1, 0, 1f).setDelay(1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
+
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (sceneIndex == 0)
+        {
+            MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
+        }
+        else if (sceneIndex == 1)
+        {
+            MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
+        }
+
     }
 
     public void LoadThisScene(int sceneIndex)
@@ -34,13 +55,11 @@ public class MenuNavigation : MonoBehaviour
         {
             FadeToBlack();
             StartCoroutine(DelaySwitchScene(sceneIndex, 1));
-            StartCoroutine(SwitchMusic(sceneIndex, 1));
         }
         else if (sceneIndex == 1) //go to Main game
         {
             FadeToBlack();
             StartCoroutine(DelaySwitchScene(sceneIndex, 1));
-            StartCoroutine(SwitchMusic(sceneIndex, 1));
         }
     }
 
@@ -60,7 +79,7 @@ public class MenuNavigation : MonoBehaviour
         blackFade.color = new Color(0, 0, 0, 1); //100% opacity
 
         LeanTween.value(1, 0, 1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
-        Debug.Log("Should start fading out now");
+        //Debug.Log("Should start fading out now");
     }
 
     IEnumerator DelaySwitchScene(int sceneIndex, float waitTime)
@@ -68,34 +87,21 @@ public class MenuNavigation : MonoBehaviour
         yield return new WaitForSecondsRealtime(waitTime);
         FadeFromBlack();
         SceneManager.LoadScene(sceneIndex);
-    }
 
-    IEnumerator SwitchMusic(int sceneIndex, float waitTime)
-    {
-        if (sceneIndex == 0)
-        {
-            yield return new WaitForSecondsRealtime(waitTime);
-            musicManager.ReturnToDefault();
-        }
-
-        if (sceneIndex == 1) //if main game
-        {
-            yield return new WaitForSecondsRealtime(waitTime);
-            musicManager.SwapTrack(musicManager.pub_hostileMusic);
-        }
-
+        
     }
 
     void UpdateBlackFadeAlpha(float alphaChange)
     {
-        blackFade.color = new Color(0, 0, 0, alphaChange);
-        Debug.Log("fading to " + alphaChange + " now");
-    }
-
-    IEnumerator DisableObject(GameObject disableThis, float waitTime)
-    {
-        yield return new WaitForSecondsRealtime(waitTime);
-        disableThis.SetActive(false);
+        if (blackFade != null)
+        {
+            blackFade.color = new Color(0, 0, 0, alphaChange);
+            //Debug.Log("fading to " + alphaChange + " now");
+        }
+        else
+        {
+            //Debug.LogWarning("backFade doesn't exist or something");
+        }
     }
 
 }

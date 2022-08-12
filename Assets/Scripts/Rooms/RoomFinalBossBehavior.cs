@@ -10,7 +10,6 @@ public class RoomFinalBossBehavior : MonoBehaviour
     [SerializeField] GameObject activeEnemiesParent;
 
     [Space(10)]
-    [SerializeField] MusicManager musicManager;
     [SerializeField] AudioClip winJingle;
     [SerializeField] AudioClip hostileMusic;
 
@@ -58,10 +57,11 @@ public class RoomFinalBossBehavior : MonoBehaviour
             didPlayerWin = true;
             Debug.Log("You won!!!!!");
 
-            musicManager.track01.loop = false;
-            musicManager.track02.loop = false;
-            musicManager.SwapTrack(winJingle);
-            StartCoroutine(musicManager.DelaySwapTrack(hostileMusic, 3f));
+            MusicManager.instance.track01.loop = false;
+            MusicManager.instance.track02.loop = false;
+            MusicManager.instance.SwapTrack(winJingle);
+            StartCoroutine(MusicManager.instance.DelaySwapTrack(hostileMusic, 3f));
+
         }
     }
 

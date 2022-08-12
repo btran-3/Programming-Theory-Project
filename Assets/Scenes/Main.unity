@@ -370,14 +370,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159495777}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1315161774}
-  m_Father: {fileID: 1955437390}
-  m_RootOrder: 0
+  m_Father: {fileID: 1692000110}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -767,7 +767,7 @@ Transform:
   - {fileID: 1265651320}
   - {fileID: 1268542048852873084}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &414889260 stripped
 MonoBehaviour:
@@ -1270,7 +1270,7 @@ Transform:
   - {fileID: 2604635426833153813}
   - {fileID: 1871022198360278920}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -1365,7 +1365,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 80.819, y: -38, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -1429,7 +1429,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &753330075
 PrefabInstance:
@@ -1807,7 +1807,7 @@ Transform:
   - {fileID: 320745648}
   - {fileID: 1678589473}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &888042526
 GameObject:
@@ -1904,7 +1904,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &930033879
 PrefabInstance:
@@ -1919,7 +1919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9b25557305ecedf448b4c43532aac32e, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9b25557305ecedf448b4c43532aac32e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2200,7 +2200,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1043361681
 PrefabInstance:
@@ -3303,6 +3303,7 @@ MonoBehaviour:
   playerBehavior: {fileID: 1585987111}
   blackFade: {fileID: 1219900799}
   pauseScreen: {fileID: 1692000111}
+  menuButton: {fileID: 159495779}
   heartPrefab: {fileID: 7193679125208128745, guid: 5ccff5e42cfaea743b6b2d3ea49748dc, type: 3}
   healthBarUI: {fileID: 24809536}
   healthText: {fileID: 2134402248}
@@ -4022,7 +4023,7 @@ Transform:
   m_Children:
   - {fileID: 1620151787}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1585987110
 Rigidbody:
@@ -4599,7 +4600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1692000110
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4614,6 +4615,7 @@ RectTransform:
   m_Children:
   - {fileID: 1955437390}
   - {fileID: 1385226479}
+  - {fileID: 159495778}
   m_Father: {fileID: 1406485784}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5188,7 +5190,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933240537
 GameObject:
@@ -5308,7 +5310,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 374386144}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1950704862
 MonoBehaviour:
@@ -5355,8 +5357,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 159495778}
+  m_Children: []
   m_Father: {fileID: 1692000110}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5847,7 +5848,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2131441811 stripped
 GameObject:
@@ -7089,7 +7090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossEnemy: {fileID: 636391158}
   activeEnemiesParent: {fileID: 620206624}
-  musicManager: {fileID: 414889260}
   winJingle: {fileID: 8300000, guid: abaed49467bbef84292b3c6a4e0a46b1, type: 3}
   hostileMusic: {fileID: 8300000, guid: b7dce641143804548991e28977e2303e, type: 3}
   doorBottom: {fileID: 3940896539234517171}
@@ -7254,7 +7254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3080331029151180415, guid: 9dbcda00343156847ba9a47e469e7c28, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3080331029151180415, guid: 9dbcda00343156847ba9a47e469e7c28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7566,7 +7566,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4969367290693348533, guid: e38dbb5de8f9fa447817df878bef21cd, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4969367290693348533, guid: e38dbb5de8f9fa447817df878bef21cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7872,7 +7872,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7189522386738211882, guid: de2ce79657099e346922dd8597550bdf, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7189522386738211882, guid: de2ce79657099e346922dd8597550bdf, type: 3}
       propertyPath: m_LocalPosition.x

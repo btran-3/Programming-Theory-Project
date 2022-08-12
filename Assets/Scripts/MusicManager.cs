@@ -12,6 +12,10 @@ public class MusicManager : MonoBehaviour
     [SerializeField] AudioClip defaultAmbience;
     [SerializeField] AudioClip hostileMusic;
 
+    public AudioClip pub_defaultAmbiance
+    {
+        get { return defaultAmbience; }
+    }
     public AudioClip pub_hostileMusic
     {
         get { return hostileMusic; }
@@ -23,15 +27,29 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+
+        //this allows menu buttons to retain references to the original instances in each scene
+        /*
+        if (instance == null) //keep this first instance
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (instance != this) //this instance is not the same as existing one, destroy the old one and use new one
+        {
+            Destroy(instance.gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }*/
+
+        if (instance != null) //if an instance exists already, use the new one
         {
             Destroy(gameObject);
+            return;
         }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
     }
 
     private void Start()
@@ -41,9 +59,7 @@ public class MusicManager : MonoBehaviour
         track02 = gameObject.AddComponent<AudioSource>();
         track02.loop = true;
         isPlayingTrack01 = true;
-
-        SwapTrack(defaultAmbience);
-}
+    }
 
     public void SwapTrack(AudioClip newClip)
     {
@@ -62,7 +78,7 @@ public class MusicManager : MonoBehaviour
 
     public void ReturnToDefault()
     {
-        SwapTrack(defaultAmbience);
+        //SwapTrack(defaultAmbience);
     }
 
     private IEnumerator FadeTrack(AudioClip newClip)

@@ -338,14 +338,6 @@ public class PlayerBehavior : MonoBehaviour
 
         Invoke("AllowPlayerToMove", 0.65f);
 
-        if (other.gameObject.CompareTag("StartingRoom"))
-        {
-            if (currentRoomTypeMusic != "Hostile")
-            {
-                currentRoomTypeMusic = "Hostile";
-                MusicManager.instance.SwapTrack(musicTracks[0]);
-            }
-        }
     }
 
     private void PlayerEntersRoom(Collider other)
