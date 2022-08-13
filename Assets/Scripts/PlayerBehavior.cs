@@ -317,16 +317,21 @@ public class PlayerBehavior : MonoBehaviour
         {
             PlayerEntersRoom(other);
         }
+        /*
         else if (other.gameObject.CompareTag("StartingRoom"))
         {
             PlayerEntersStartingRoom(other);
         }
+        */
 
         if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
             TakeDamageFromEnemy(other);
         }
     }
+
+    /* this behavior is now handled in the MenuNavigation script via Rewired
+     * 
     private void PlayerEntersStartingRoom(Collider other)
     {
         other.GetComponent<Collider>().enabled = false;
@@ -338,7 +343,7 @@ public class PlayerBehavior : MonoBehaviour
 
         Invoke("AllowPlayerToMove", 0.65f);
 
-    }
+    }*/
 
     private void PlayerEntersRoom(Collider other)
     {
@@ -351,6 +356,7 @@ public class PlayerBehavior : MonoBehaviour
 
         Invoke("AllowPlayerToMove", 0.65f);
 
+        /*
         if (other.gameObject.CompareTag("StartingRoom"))
         {
             if (currentRoomTypeMusic != "Hostile")
@@ -358,8 +364,9 @@ public class PlayerBehavior : MonoBehaviour
                 currentRoomTypeMusic = "Hostile";
                 MusicManager.instance.SwapTrack(musicTracks[0]);
             }
-        }
-        else if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
+        } */
+
+        if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
         {
             if (currentRoomTypeMusic != "Hostile")
             {

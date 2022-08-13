@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Rewired;
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
@@ -11,6 +12,9 @@ public class MenuNavigation : MonoBehaviour
 {
     public static MenuNavigation instance;
     [SerializeField] Image blackFade;
+
+    private int playerId = 0;
+    private Player rewiredPlayer;
 
     private void Awake()
     {
@@ -28,6 +32,8 @@ public class MenuNavigation : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        rewiredPlayer = ReInput.players.GetPlayer(playerId);
+
     }
 
     private void Start()
@@ -37,15 +43,27 @@ public class MenuNavigation : MonoBehaviour
         blackFade.gameObject.SetActive(true);
         LeanTween.value(1, 0, 1f).setDelay(1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
 
+
+        rewiredPlayer.controllers.maps.SetAllMapsEnabled(false); //disable all maps by default
+
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (sceneIndex == 0)
+
+        if (sceneIndex == 0) //menu scene
         {
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
+            StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, 1f)); //prevent running into existing fading animation
         }
-        else if (sceneIndex == 1)
+        else if (sceneIndex == 1) //main game
         {
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
+            StartCoroutine(ChangeRewiredInputStatus("Default", true, 2f)); //prevent running into existing fading animation
         }
+
+        /*
+        foreach (ControllerMap map in rewiredPlayer.controllers.maps.GetAllMapsInCategory("Default"))
+        {
+            Debug.Log(map);
+        } */
 
     }
 
@@ -87,8 +105,6 @@ public class MenuNavigation : MonoBehaviour
         yield return new WaitForSecondsRealtime(waitTime);
         FadeFromBlack();
         SceneManager.LoadScene(sceneIndex);
-
-        
     }
 
     void UpdateBlackFadeAlpha(float alphaChange)
@@ -97,15 +113,23 @@ public class MenuNavigation : MonoBehaviour
         {
             blackFade.color = new Color(0, 0, 0, alphaChange);
             //Debug.Log("fading to " + alphaChange + " now");
+            if (alphaChange == 0)
+            {
+                blackFade.gameObject.SetActive(false);
+            }
         }
         else
         {
             //Debug.LogWarning("backFade doesn't exist or something");
         }
-        if (alphaChange == 0)
-        {
-            blackFade.gameObject.SetActive(false);
-        }
+
+    }
+
+    IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        rewiredPlayer.controllers.maps.SetMapsEnabled(state, categoryName);
     }
 
 }

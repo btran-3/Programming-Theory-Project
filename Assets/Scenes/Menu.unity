@@ -968,6 +968,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3080331029151180412, guid: 9dbcda00343156847ba9a47e469e7c28, type: 3}
+      propertyPath: _userData.configVars.runInEditMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3080331029151180413, guid: 9dbcda00343156847ba9a47e469e7c28, type: 3}
       propertyPath: m_Name
       value: Rewired Input Manager
