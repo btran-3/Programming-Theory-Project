@@ -291,16 +291,59 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 6
+      _name: Move Selection Vertical
+      _type: 0
+      _descriptiveName: Move Selection Vertical
+      _positiveDescriptiveName: Move Selection Up
+      _negativeDescriptiveName: Move Selection Down
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
+    - _id: 7
+      _name: Move Selection Horizontal
+      _type: 0
+      _descriptiveName: Move Selection Horizontal
+      _positiveDescriptiveName: Move Selection Right
+      _negativeDescriptiveName: Move Selection Left
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
+    - _id: 8
+      _name: Confirm Selection
+      _type: 1
+      _descriptiveName: Confirm Selection
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
+    - _id: 9
+      _name: Cancel Selection
+      _type: 1
+      _descriptiveName: Cancel Selection
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 1
     actionCategories:
     - _name: Default
-      _descriptiveName: Default
+      _descriptiveName: Gameplay Actions
       _tag: 
       _id: 0
+      _userAssignable: 1
+    - _name: Menu
+      _descriptiveName: Menu Actions
+      _tag: 
+      _id: 1
       _userAssignable: 1
     actionCategoryMap:
       list:
       - categoryId: 0
         actionIds: 000000000100000002000000030000000400000005000000
+      - categoryId: 1
+        actionIds: 06000000070000000800000009000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -335,12 +378,18 @@ MonoBehaviour:
       _checkConflictsCategoryIds: 
     joystickLayouts:
     - _name: Default
-      _descriptiveName: Default
+      _descriptiveName: Gameplay Input
       _id: 0
+    - _name: Menu
+      _descriptiveName: Menu Input Controller
+      _id: 1
     keyboardLayouts:
     - _name: Default
       _descriptiveName: Default
       _id: 0
+    - _name: Menu
+      _descriptiveName: Menu Input Keyboard
+      _id: 1
     mouseLayouts:
     - _name: Default
       _descriptiveName: Default
@@ -511,6 +560,13 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
+    - id: 2
+      categoryId: 0
+      layoutId: 1
+      name: 
+      hardwareGuidString: 83b427e4-086f-47f3-bb06-be266abd1ca5
+      customControllerUid: 0
+      actionElementMaps: []
     keyboardMaps:
     - id: 0
       categoryId: 0
@@ -635,15 +691,15 @@ MonoBehaviour:
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 6
-    actionCategoryIdCounter: 1
+    actionIdCounter: 10
+    actionCategoryIdCounter: 2
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1
-    joystickLayoutIdCounter: 1
-    keyboardLayoutIdCounter: 1
+    joystickLayoutIdCounter: 2
+    keyboardLayoutIdCounter: 2
     mouseLayoutIdCounter: 1
     customControllerLayoutIdCounter: 1
-    joystickMapIdCounter: 2
+    joystickMapIdCounter: 3
     keyboardMapIdCounter: 1
     mouseMapIdCounter: 0
     customControllerMapIdCounter: 0

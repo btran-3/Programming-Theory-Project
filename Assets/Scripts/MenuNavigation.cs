@@ -102,6 +102,10 @@ public class MenuNavigation : MonoBehaviour
         {
             //Debug.LogWarning("backFade doesn't exist or something");
         }
+        if (alphaChange == 0)
+        {
+            blackFade.gameObject.SetActive(false);
+        }
     }
 
 }

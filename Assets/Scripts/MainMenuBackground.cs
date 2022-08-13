@@ -26,7 +26,7 @@ public class MainMenuBackground : MonoBehaviour
     void SpotLightOuterAngle(float value)
     {
         spotLight.spotAngle = value;
-        Debug.Log(spotLight.spotAngle);
+        //Debug.Log(spotLight.spotAngle);
     }
 
     private void OnDestroy()
