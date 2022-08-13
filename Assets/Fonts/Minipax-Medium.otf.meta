@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 355183ec0d2a6f7478f59d42b8194bea
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Minipax
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a19db1d9cd0c1ee42bd1718eb8564d3e, type: 3}
+  - {fileID: 12800000, guid: 01bbecc2ebb193348a76485bebc59636, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
