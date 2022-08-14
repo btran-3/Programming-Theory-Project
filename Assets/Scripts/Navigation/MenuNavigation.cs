@@ -16,6 +16,7 @@ public class MenuNavigation : MonoBehaviour
     private int playerId = 0;
     private Player rewiredPlayer;
 
+
     private void Awake()
     {
         //this allows retaining references to the original instances in each scene rather than destroying originals
@@ -38,11 +39,10 @@ public class MenuNavigation : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0f;
 
         blackFade.gameObject.SetActive(true);
         LeanTween.value(1, 0, 1f).setDelay(1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
-
 
         rewiredPlayer.controllers.maps.SetAllMapsEnabled(false); //disable all maps by default
 
@@ -50,24 +50,20 @@ public class MenuNavigation : MonoBehaviour
 
         if (sceneIndex == 0) //menu scene
         {
+            Time.timeScale = 1;
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
             StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, 1f)); //prevent running into existing fading animation
         }
         else if (sceneIndex == 1) //main game
         {
+            StartCoroutine(ChangeTimeScale(1f, 1f)); //change timescale to 1 after 1 second
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
             StartCoroutine(ChangeRewiredInputStatus("Default", true, 2f)); //prevent running into existing fading animation
         }
 
-        /*
-        foreach (ControllerMap map in rewiredPlayer.controllers.maps.GetAllMapsInCategory("Default"))
-        {
-            Debug.Log(map);
-        } */
-
     }
 
-    public void LoadThisScene(int sceneIndex)
+    public void LoadThisScene(int sceneIndex) //used in button
     {
         if (sceneIndex == 0) //go to main menu
         {
@@ -130,6 +126,12 @@ public class MenuNavigation : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
 
         rewiredPlayer.controllers.maps.SetMapsEnabled(state, categoryName);
+    }
+
+    IEnumerator ChangeTimeScale(float timeScale, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = timeScale;
     }
 
 }
