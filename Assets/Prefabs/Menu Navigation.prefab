@@ -223,4 +223,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackFade: {fileID: 1219900799}
-  musicManager: {fileID: 0}

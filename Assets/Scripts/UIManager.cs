@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image blackFade;
     [SerializeField] private Image pauseScreen;
     [SerializeField] private Button menuButton;
+
+    [SerializeField] GameObject mainMenuFirstButton, optionsFirstButton, optionsClosedButton;
     [Space(10)]
     [SerializeField] GameObject heartPrefab;
     [SerializeField] GameObject healthBarUI;

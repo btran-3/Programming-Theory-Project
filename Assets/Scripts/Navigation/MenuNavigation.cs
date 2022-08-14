@@ -7,11 +7,14 @@ using Rewired;
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
-[DefaultExecutionOrder(500)]
+[DefaultExecutionOrder(1500)]
 public class MenuNavigation : MonoBehaviour
 {
     public static MenuNavigation instance;
     [SerializeField] Image blackFade;
+
+    private float introDelay = 0.75f;
+    private float fadeDuration = 0.75f;
 
     private int playerId = 0;
     private Player rewiredPlayer;
@@ -42,7 +45,7 @@ public class MenuNavigation : MonoBehaviour
         Time.timeScale = 0f;
 
         blackFade.gameObject.SetActive(true);
-        LeanTween.value(1, 0, 1f).setDelay(1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
+        LeanTween.value(1, 0, fadeDuration).setDelay(introDelay).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
 
         rewiredPlayer.controllers.maps.SetAllMapsEnabled(false); //disable all maps by default
 
@@ -52,28 +55,31 @@ public class MenuNavigation : MonoBehaviour
         {
             Time.timeScale = 1;
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
-            StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, 1f)); //prevent running into existing fading animation
+            StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
         else if (sceneIndex == 1) //main game
         {
             StartCoroutine(ChangeTimeScale(1f, 1f)); //change timescale to 1 after 1 second
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
-            StartCoroutine(ChangeRewiredInputStatus("Default", true, 2f)); //prevent running into existing fading animation
+            StartCoroutine(ChangeRewiredInputStatus("Default", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
 
     }
 
     public void LoadThisScene(int sceneIndex) //used in button
     {
+        FadeToBlack();
+
+        rewiredPlayer.controllers.maps.SetAllMapsEnabled(false);
         if (sceneIndex == 0) //go to main menu
         {
-            FadeToBlack();
-            StartCoroutine(DelaySwitchScene(sceneIndex, 1));
+            //FadeToBlack();
+            StartCoroutine(DelaySwitchScene(sceneIndex, fadeDuration));
         }
         else if (sceneIndex == 1) //go to Main game
         {
-            FadeToBlack();
-            StartCoroutine(DelaySwitchScene(sceneIndex, 1));
+            //FadeToBlack();
+            StartCoroutine(DelaySwitchScene(sceneIndex, fadeDuration));
         }
     }
 
@@ -81,9 +87,10 @@ public class MenuNavigation : MonoBehaviour
     {
         blackFade.gameObject.SetActive(true);
         LeanTween.cancel(blackFade.gameObject);
-        blackFade.color = new Color(0, 0, 0, 0); //0 opacity
+        //blackFade.color = new Color(0, 0, 0, 0); //0 opacity
+        float startingOpacity = blackFade.color.a;
 
-        LeanTween.value(0, 1, 1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
+        LeanTween.value(startingOpacity, 1, fadeDuration).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
     }
 
     void FadeFromBlack()
@@ -92,7 +99,7 @@ public class MenuNavigation : MonoBehaviour
         LeanTween.cancel(blackFade.gameObject);
         blackFade.color = new Color(0, 0, 0, 1); //100% opacity
 
-        LeanTween.value(1, 0, 1f).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
+        LeanTween.value(1, 0, fadeDuration).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
         //Debug.Log("Should start fading out now");
     }
 
@@ -111,7 +118,7 @@ public class MenuNavigation : MonoBehaviour
             //Debug.Log("fading to " + alphaChange + " now");
             if (alphaChange == 0)
             {
-                blackFade.gameObject.SetActive(false);
+                //blackFade.gameObject.SetActive(false);
             }
         }
         else

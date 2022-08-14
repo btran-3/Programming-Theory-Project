@@ -11,55 +11,42 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] GameObject newGameButton, continueButton, optionsButton, exitButton;
 
+    private bool isMenuTransitioning;
+    private float menuAnimationOffset = 250f;
+    private float menuAnimationTime = 0.65f;
+
     //Rewired stuff
     private int playerId = 0;
     private Player player;
 
-    private enum ActiveMenu { MAINMENUACTIVE, OPTIONSMENUACTIVE };
-    private ActiveMenu activeMenu;
-    private enum MainMenuState { NEWGAME, CONTINUE, OPTIONS, EXIT };
-    private MainMenuState mainMenuState;
+    private enum MenuState { MAINMENU, OPTIONSMENU};
+    private MenuState menuState;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        menuState = MenuState.MAINMENU;
+
         player = ReInput.players.GetPlayer(playerId);
 
-        EventSystem.current.SetSelectedGameObject(null);
+        optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
 
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);
 
-        optionsMenu.SetActive(true);
 
-        activeMenu = ActiveMenu.MAINMENUACTIVE;
-        mainMenuState = MainMenuState.NEWGAME;
+        mainMenu.SetActive(true);
+        mainMenu.GetComponent<CanvasGroup>().alpha = 1;
+        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
+        optionsMenu.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (mainMenuState)
-        {
-            case MainMenuState.NEWGAME:
-
-
-                break;
-            case MainMenuState.CONTINUE:
-                break;
-            case MainMenuState.OPTIONS:
-                break;
-            case MainMenuState.EXIT:
-                break;
-            default:
-                break;
-        }
-
-        if (EventSystem.current == null) //if nothing is selected
-        {
-            EventSystem.current.SetSelectedGameObject(optionsFirstButton);
-        }
-
-        if (player.GetButtonDown("Cancel Selection") && optionsMenu.activeInHierarchy)
+        if (player.GetButtonDown("UICancel") && menuState == MenuState.OPTIONSMENU)
         {
             CloseOptionsMenu();
             Debug.Log("successfully closing menu using Cancel Selection button");
@@ -68,21 +55,82 @@ public class MainMenu : MonoBehaviour
 
     public void OpenOptionsMenu()
     {
+        LeanTween.cancel(mainMenu);
+        LeanTween.cancel(optionsMenu);
+
+        player.controllers.maps.SetMapsEnabled(false, "Menu Category");
+        StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, menuAnimationTime));
+        menuState = MenuState.OPTIONSMENU;
+
+        StartCoroutine(DisableThisObject(mainMenu, menuAnimationTime));
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutMainMenu);
+
         optionsMenu.SetActive(true);
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInOptionsMenu);
 
         EventSystem.current.SetSelectedGameObject(null);
-
         EventSystem.current.SetSelectedGameObject(optionsFirstButton);
     }
 
     private void CloseOptionsMenu()
     {
-        EventSystem.current.SetSelectedGameObject(null);
+        LeanTween.cancel(mainMenu);
+        LeanTween.cancel(optionsMenu);
 
+        player.controllers.maps.SetMapsEnabled(false, "Menu Category");
+        StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, menuAnimationTime));
+        menuState = MenuState.MAINMENU;
+
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsClosedButton);
 
-        optionsMenu.SetActive(false);
+        //LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        //LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
 
 
+
+        StartCoroutine(DisableThisObject(optionsMenu, menuAnimationTime));
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInMainMenu);
+
+        mainMenu.SetActive(true);
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
+
+
+        //optionsMenu.SetActive(false);
     }
+
+    IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        player.controllers.maps.SetMapsEnabled(state, categoryName);
+    }
+
+    IEnumerator DisableThisObject(GameObject disableThis, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        disableThis.SetActive(false);
+    }
+
+    void FadeOutMainMenu(float value)
+    {
+        mainMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeInOptionsMenu(float value)
+    {
+        optionsMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeInMainMenu(float value)
+    {
+        mainMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeOutOptionsMenu(float value)
+    {
+        optionsMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+
 }
