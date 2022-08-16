@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     private bool isMenuTransitioning;
     private float menuAnimationOffset = 250f;
     private float menuAnimationTime = 0.65f;
+    [SerializeField] AnimationCurve menuAnimationCurve;
 
     //private Color unselectedUIColor = new Color(0.196f, 0.196f, 0.196f, 1); //323232
     //private Color selectedUIColor = new Color(0.96f, 0.96f, 0.96f, 1); //F5F5F5
@@ -41,15 +42,20 @@ public class MainMenu : MonoBehaviour
 
         optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);
-
-
         mainMenu.SetActive(true);
         mainMenu.GetComponent<CanvasGroup>().alpha = 1;
         optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
         optionsMenu.SetActive(false);
 
+        newGameButton.GetComponent<Button>().interactable = false;
+        continueButton.GetComponent<Button>().interactable = false;
+        optionsButton.GetComponent<Button>().interactable = false;
+        exitButton.GetComponent<Button>().interactable = false;
+
+        StartCoroutine(ReenableMainMenuButtons(menuAnimationTime));
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);
     }
 
     // Update is called once per frame
@@ -97,11 +103,11 @@ public class MainMenu : MonoBehaviour
         menuState = MenuState.OPTIONSMENU;
 
         StartCoroutine(DisableThisObject(mainMenu, menuAnimationTime));
-        LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutMainMenu);
 
         optionsMenu.SetActive(true);
-        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInOptionsMenu);
 
         EventSystem.current.SetSelectedGameObject(null);
@@ -128,15 +134,24 @@ public class MainMenu : MonoBehaviour
 
 
         StartCoroutine(DisableThisObject(optionsMenu, menuAnimationTime));
-        LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInMainMenu);
 
         mainMenu.SetActive(true);
-        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
 
 
         //optionsMenu.SetActive(false);
+    }
+
+    IEnumerator ReenableMainMenuButtons(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        newGameButton.GetComponent<Button>().interactable = true;
+        continueButton.GetComponent<Button>().interactable = true;
+        optionsButton.GetComponent<Button>().interactable = true;
+        exitButton.GetComponent<Button>().interactable = true;
     }
 
     IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)

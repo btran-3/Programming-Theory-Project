@@ -73,12 +73,10 @@ public class MenuNavigation : MonoBehaviour
         rewiredPlayer.controllers.maps.SetAllMapsEnabled(false);
         if (sceneIndex == 0) //go to main menu
         {
-            //FadeToBlack();
             StartCoroutine(DelaySwitchScene(sceneIndex, fadeDuration));
         }
         else if (sceneIndex == 1) //go to Main game
         {
-            //FadeToBlack();
             StartCoroutine(DelaySwitchScene(sceneIndex, fadeDuration));
         }
     }
@@ -87,7 +85,6 @@ public class MenuNavigation : MonoBehaviour
     {
         blackFade.gameObject.SetActive(true);
         LeanTween.cancel(blackFade.gameObject);
-        //blackFade.color = new Color(0, 0, 0, 0); //0 opacity
         float startingOpacity = blackFade.color.a;
 
         LeanTween.value(startingOpacity, 1, fadeDuration).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
@@ -100,7 +97,6 @@ public class MenuNavigation : MonoBehaviour
         blackFade.color = new Color(0, 0, 0, 1); //100% opacity
 
         LeanTween.value(1, 0, fadeDuration).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
-        //Debug.Log("Should start fading out now");
     }
 
     IEnumerator DelaySwitchScene(int sceneIndex, float waitTime)
@@ -115,17 +111,7 @@ public class MenuNavigation : MonoBehaviour
         if (blackFade != null)
         {
             blackFade.color = new Color(0, 0, 0, alphaChange);
-            //Debug.Log("fading to " + alphaChange + " now");
-            if (alphaChange == 0)
-            {
-                //blackFade.gameObject.SetActive(false);
-            }
         }
-        else
-        {
-            //Debug.LogWarning("backFade doesn't exist or something");
-        }
-
     }
 
     IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)

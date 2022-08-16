@@ -870,7 +870,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
+    m_DisabledColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1694,7 +1694,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
+    m_DisabledColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2391,7 +2391,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
+    m_DisabledColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2670,13 +2670,46 @@ MonoBehaviour:
   optionsFirstButton: {fileID: 196850853}
   optionsClosedButton: {fileID: 1826945322}
   newGameButton: {fileID: 882990740}
-  continueButton: {fileID: 196850853}
+  continueButton: {fileID: 206270748}
   optionsButton: {fileID: 1826945322}
   exitButton: {fileID: 593714362}
   optionsSoundEffectsSlider: {fileID: 196850853}
   optionsMusicSlider: {fileID: 71347382}
   optionsSoundEffectText: {fileID: 361023145}
   optionsMusicText: {fileID: 504839463}
+  menuAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.12983602
+      outSlope: 0.02770532
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.4344624
+    - serializedVersion: 3
+      time: 0.29049295
+      value: 0.54227424
+      inSlope: 1.8473634
+      outSlope: 1.8473634
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.46617723
+      outWeight: 0.23169087
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.012008606
+      outSlope: 0.012008606
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.47531873
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &977261604 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3080331029151180412, guid: 9dbcda00343156847ba9a47e469e7c28, type: 3}
@@ -4788,7 +4821,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
+    m_DisabledColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
