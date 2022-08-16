@@ -178,4 +178,9 @@ public class MainMenu : MonoBehaviour
         optionsMusicText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
     }
 
+    public void SelectThisGameobject(GameObject select)
+    {
+        EventSystem.current.SetSelectedGameObject(select);
+    }
+
 }
