@@ -4599,7 +4599,6 @@ GameObject:
   - component: {fileID: 1748699209}
   - component: {fileID: 1748699208}
   - component: {fileID: 1748699207}
-  - component: {fileID: 1748699210}
   - component: {fileID: 1748699211}
   m_Layer: 0
   m_Name: EventSystem
@@ -4657,25 +4656,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1748699210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748699206}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1f37cc6bd710d479be778f24338faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1748699211
 MonoBehaviour:
   m_ObjectHideFlags: 0
