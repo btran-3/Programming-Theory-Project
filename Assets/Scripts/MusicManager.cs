@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MusicManager : MonoBehaviour
 {
-
-
     //THANKS https://www.youtube.com/watch?v=1VXeyeLthdQ
-
 
     [SerializeField] AudioClip defaultAmbience;
     [SerializeField] AudioClip hostileMusic;
+
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
 
     public AudioClip pub_defaultAmbiance
     {
@@ -42,7 +42,7 @@ public class MusicManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }*/
 
-        if (instance != null) //if an instance exists already, use the new one
+        if (instance != null) //if an instance exists already, use the new one that's being carried over
         {
             Destroy(gameObject);
             return;
@@ -56,8 +56,10 @@ public class MusicManager : MonoBehaviour
     {
         track01 = gameObject.AddComponent<AudioSource>();
         track01.loop = true;
+        track01.outputAudioMixerGroup = musicMixerGroup;
         track02 = gameObject.AddComponent<AudioSource>();
         track02.loop = true;
+        track02.outputAudioMixerGroup = musicMixerGroup;
         isPlayingTrack01 = true;
     }
 
@@ -116,6 +118,11 @@ public class MusicManager : MonoBehaviour
 
                 track02.Stop();
         }
+    }
+
+    public void UpdateMusicMixerVolume(float value)
+    {
+        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(value) * 20);
     }
 
 }
