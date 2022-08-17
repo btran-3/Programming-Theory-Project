@@ -6,6 +6,8 @@ using TMPro;
 
 public class AudioOptions : MonoBehaviour
 {
+    //THANKS https://www.youtube.com/watch?v=LfU5xotjbPw
+
     public static float soundEffectsVolume { get; private set; }
     public static float musicVolume { get; private set; }
 
