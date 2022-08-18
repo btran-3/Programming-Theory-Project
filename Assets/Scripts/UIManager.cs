@@ -21,7 +21,31 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image pauseScreen;
     [SerializeField] private Button menuButton;
 
+    [Space(10)]
+
+    //------------
+
+    [SerializeField] GameObject mainMenu, optionsMenu;
     [SerializeField] GameObject mainMenuFirstButton, optionsFirstButton, optionsClosedButton;
+
+    [SerializeField] GameObject newGameButton, optionsButton, exitButton;
+    [SerializeField] GameObject optionsSoundEffectsSlider, optionsMusicSlider, optionsSoundEffectText, optionsMusicText;
+    GameObject lastSelected;
+
+    private bool isMenuTransitioning;
+    private float menuAnimationOffset = 250f;
+    private float menuAnimationTime = 0.65f;
+    [SerializeField] AnimationCurve menuAnimationCurve;
+
+    private float unselectedUIColorFloat = 0.196f; //323232 divided by 255
+    private float selectedUIColorFloat = 0.96f; //F5F5F5 divided by 255
+
+    private enum MenuState { MAINMENU, OPTIONSMENU };
+    private MenuState menuState;
+
+    //----------------
+
+
     [Space(10)]
     [SerializeField] GameObject heartPrefab;
     [SerializeField] GameObject healthBarUI;
