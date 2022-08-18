@@ -57,26 +57,15 @@ public class MainMenu : MonoBehaviour
         //if hovering on Sound Effects volume text, which covers the slider too
         if (EventSystem.current.currentSelectedGameObject == optionsSoundEffectsSlider && lastSelected != optionsSoundEffectsSlider)
         {
-            lastSelected = optionsSoundEffectsSlider;
-
-            LeanTween.cancel(optionsSoundEffectText);
-            LeanTween.cancel(optionsMusicText);
-
-            LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
-            LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
+            SelectSoundEffectsSlider();
         }
         //if hovering on Music volume Text, which covers the slider too
         else if (EventSystem.current.currentSelectedGameObject == optionsMusicSlider && lastSelected != optionsMusicSlider)
         {
-            lastSelected = optionsMusicSlider;
-
-            LeanTween.cancel(optionsSoundEffectText);
-            LeanTween.cancel(optionsMusicText);
-
-            LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
-            LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
+            SelectMusicSlider();
         }
     }
+
 
     #region buttons disable/reenable
     private void DisableMenuButtons()
@@ -148,6 +137,28 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
         LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
+    }
+
+    private void SelectMusicSlider()
+    {
+        lastSelected = optionsMusicSlider;
+
+        LeanTween.cancel(optionsSoundEffectText);
+        LeanTween.cancel(optionsMusicText);
+
+        LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
+        LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
+    }
+
+    private void SelectSoundEffectsSlider()
+    {
+        lastSelected = optionsSoundEffectsSlider;
+
+        LeanTween.cancel(optionsSoundEffectText);
+        LeanTween.cancel(optionsMusicText);
+
+        LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
+        LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
     }
 
     #region Rewired
