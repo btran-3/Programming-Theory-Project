@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject mainMenu, optionsMenu;
     [SerializeField] GameObject mainMenuFirstButton, optionsFirstButton, optionsClosedButton;
 
-    [SerializeField] GameObject newGameButton, continueButton, optionsButton, exitButton;
+    [SerializeField] GameObject newGameButton, optionsButton, exitButton;
     [SerializeField] GameObject optionsSoundEffectsSlider, optionsMusicSlider, optionsSoundEffectText, optionsMusicText;
     GameObject lastSelected;
 
@@ -20,8 +20,6 @@ public class MainMenu : MonoBehaviour
     private float menuAnimationTime = 0.65f;
     [SerializeField] AnimationCurve menuAnimationCurve;
 
-    //private Color unselectedUIColor = new Color(0.196f, 0.196f, 0.196f, 1); //323232
-    //private Color selectedUIColor = new Color(0.96f, 0.96f, 0.96f, 1); //F5F5F5
     private float unselectedUIColorFloat = 0.196f; //323232 divided by 255
     private float selectedUIColorFloat = 0.96f; //F5F5F5 divided by 255
 
@@ -79,13 +77,24 @@ public class MainMenu : MonoBehaviour
             LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
         }
     }
+
+    #region buttons disable/reenable
     private void DisableMenuButtons()
     {
         newGameButton.GetComponent<Button>().interactable = false;
-        continueButton.GetComponent<Button>().interactable = false;
+        //continueButton.GetComponent<Button>().interactable = false;
         optionsButton.GetComponent<Button>().interactable = false;
         exitButton.GetComponent<Button>().interactable = false;
     }
+    IEnumerator ReenableMainMenuButtons(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        newGameButton.GetComponent<Button>().interactable = true;
+        //continueButton.GetComponent<Button>().interactable = true;
+        optionsButton.GetComponent<Button>().interactable = true;
+        exitButton.GetComponent<Button>().interactable = true;
+    }
+    #endregion
 
     private void InitMenuPanels()
     {
@@ -141,16 +150,7 @@ public class MainMenu : MonoBehaviour
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
     }
 
-
-    #region Rewired coroutines
-    IEnumerator ReenableMainMenuButtons(float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay);
-        newGameButton.GetComponent<Button>().interactable = true;
-        continueButton.GetComponent<Button>().interactable = true;
-        optionsButton.GetComponent<Button>().interactable = true;
-        exitButton.GetComponent<Button>().interactable = true;
-    }
+    #region Rewired
 
     IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)
     {
@@ -160,7 +160,7 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
 
-    #region menu panel animations
+    #region menu fade and color animations for LeanTween SetOnUpdate
     void FadeOutMainMenu(float value)
     {
         mainMenu.GetComponent<CanvasGroup>().alpha = value;
@@ -177,9 +177,6 @@ public class MainMenu : MonoBehaviour
     {
         optionsMenu.GetComponent<CanvasGroup>().alpha = value;
     }
-    #endregion
-
-
     void ColorSoundEffectsText(float value)
     {
         optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
@@ -188,6 +185,8 @@ public class MainMenu : MonoBehaviour
     {
         optionsMusicText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
     }
+
+    #endregion
 
     IEnumerator DisableThisObject(GameObject disableThis, float delay)
     {

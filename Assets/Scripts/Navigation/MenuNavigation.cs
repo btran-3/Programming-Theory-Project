@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Rewired;
+#if UNITY_EDITOR
+using UnityEditor; //namespace only included if compiling in Unity Editor, else discarded
+#endif
+
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
@@ -125,6 +129,15 @@ public class MenuNavigation : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Time.timeScale = timeScale;
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else   
+        Application.Quit();
+#endif
     }
 
 }
