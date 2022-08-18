@@ -41,8 +41,18 @@ public class AudioOptions : MonoBehaviour
         if (!hasSoundBeenInitialized) //set audio defaults once
         {
             hasSoundBeenInitialized = true;
+
             soundEffectsVolume = 1;
             musicVolume = 1;
+
+            if (PlayerPrefs.HasKey("musicVolumePref"))
+            {
+                musicVolume = PlayerPrefs.GetFloat("musicVolumePref");
+            }
+            if (PlayerPrefs.HasKey("soundEffectsVolumePref"))
+            {
+                soundEffectsVolume = PlayerPrefs.GetFloat("soundEffectsVolumePref");
+            }
         }
 
         soundEffectsSlider.value = soundEffectsVolume;
@@ -55,6 +65,7 @@ public class AudioOptions : MonoBehaviour
         Debug.Log("SFX " + value);
 
         //update sound effect mixer volume here
+        PlayerPrefs.SetFloat("soundEffectsVolumePref", value);
     }
 
     public void OnMusicSliderValueChange(float value)
@@ -63,6 +74,8 @@ public class AudioOptions : MonoBehaviour
         Debug.Log("Music " + value);
 
         MusicManager.instance.UpdateMusicMixerVolume(musicVolume);
+
+        PlayerPrefs.SetFloat("musicVolumePref", value);
     }
 
 }
