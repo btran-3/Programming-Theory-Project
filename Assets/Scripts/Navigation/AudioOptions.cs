@@ -62,16 +62,17 @@ public class AudioOptions : MonoBehaviour
     public void OnSoundEffectsSliderValueChange(float value)
     {
         soundEffectsVolume = value;
-        Debug.Log("SFX " + value);
+        //Debug.Log("SFX " + value);
 
         //update sound effect mixer volume here
+
         PlayerPrefs.SetFloat("soundEffectsVolumePref", value);
     }
 
     public void OnMusicSliderValueChange(float value)
     {
         musicVolume = value;
-        Debug.Log("Music " + value);
+        //Debug.Log("Music " + value);
 
         MusicManager.instance.UpdateMusicMixerVolume(musicVolume);
 
