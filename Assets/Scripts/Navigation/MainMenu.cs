@@ -33,24 +33,15 @@ public class MainMenu : MonoBehaviour
     private MenuState menuState;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         menuState = MenuState.MAINMENU;
 
         player = ReInput.players.GetPlayer(playerId);
 
-        optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
+        InitMenuPanels();
 
-        mainMenu.SetActive(true);
-        mainMenu.GetComponent<CanvasGroup>().alpha = 1;
-        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
-        optionsMenu.SetActive(false);
-
-        newGameButton.GetComponent<Button>().interactable = false;
-        continueButton.GetComponent<Button>().interactable = false;
-        optionsButton.GetComponent<Button>().interactable = false;
-        exitButton.GetComponent<Button>().interactable = false;
+        DisableMenuButtons();
 
         StartCoroutine(ReenableMainMenuButtons(menuAnimationTime));
 
@@ -58,39 +49,52 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (player.GetButtonDown("UICancel") && menuState == MenuState.OPTIONSMENU)
         {
             CloseOptionsMenu();
-            Debug.Log("successfully closing menu using Cancel Selection button");
         }
 
-        //Debug.Log(EventSystem.current);
-
+        //if hovering on Sound Effects volume text, which covers the slider too
         if (EventSystem.current.currentSelectedGameObject == optionsSoundEffectsSlider && lastSelected != optionsSoundEffectsSlider)
         {
             lastSelected = optionsSoundEffectsSlider;
-            Debug.Log("options SFX slider has been selected");
 
             LeanTween.cancel(optionsSoundEffectText);
             LeanTween.cancel(optionsMusicText);
+
             LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
             LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
         }
+        //if hovering on Music volume Text, which covers the slider too
         else if (EventSystem.current.currentSelectedGameObject == optionsMusicSlider && lastSelected != optionsMusicSlider)
         {
             lastSelected = optionsMusicSlider;
-            Debug.Log("options music slider has been selected");
 
             LeanTween.cancel(optionsSoundEffectText);
             LeanTween.cancel(optionsMusicText);
-            LeanTween.cancel(optionsSoundEffectText);
-            LeanTween.cancel(optionsMusicText);
+
             LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText);
             LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText);
         }
+    }
+    private void DisableMenuButtons()
+    {
+        newGameButton.GetComponent<Button>().interactable = false;
+        continueButton.GetComponent<Button>().interactable = false;
+        optionsButton.GetComponent<Button>().interactable = false;
+        exitButton.GetComponent<Button>().interactable = false;
+    }
+
+    private void InitMenuPanels()
+    {
+        optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
+
+        mainMenu.SetActive(true);
+        mainMenu.GetComponent<CanvasGroup>().alpha = 1;
+        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
+        optionsMenu.SetActive(false);
     }
 
     public void OpenOptionsMenu()
@@ -102,6 +106,10 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, menuAnimationTime));
         menuState = MenuState.OPTIONSMENU;
 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsFirstButton);
+
+
         StartCoroutine(DisableThisObject(mainMenu, menuAnimationTime));
         LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutMainMenu);
@@ -109,11 +117,6 @@ public class MainMenu : MonoBehaviour
         optionsMenu.SetActive(true);
         LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInOptionsMenu);
-
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(optionsFirstButton);
-
-
     }
 
     private void CloseOptionsMenu()
@@ -128,10 +131,6 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsClosedButton);
 
-        //LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
-        //LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEaseInOutCubic();
-
-
 
         StartCoroutine(DisableThisObject(optionsMenu, menuAnimationTime));
         LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
@@ -140,11 +139,10 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
         LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
         LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
-
-
-        //optionsMenu.SetActive(false);
     }
 
+
+    #region Rewired coroutines
     IEnumerator ReenableMainMenuButtons(float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
@@ -160,13 +158,9 @@ public class MainMenu : MonoBehaviour
 
         player.controllers.maps.SetMapsEnabled(state, categoryName);
     }
+    #endregion
 
-    IEnumerator DisableThisObject(GameObject disableThis, float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay);
-        disableThis.SetActive(false);
-    }
-
+    #region menu panel animations
     void FadeOutMainMenu(float value)
     {
         mainMenu.GetComponent<CanvasGroup>().alpha = value;
@@ -183,6 +177,8 @@ public class MainMenu : MonoBehaviour
     {
         optionsMenu.GetComponent<CanvasGroup>().alpha = value;
     }
+    #endregion
+
 
     void ColorSoundEffectsText(float value)
     {
@@ -193,8 +189,16 @@ public class MainMenu : MonoBehaviour
         optionsMusicText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
     }
 
+    IEnumerator DisableThisObject(GameObject disableThis, float delay)
+    {
+        //disables main or options menu after animating off
+        yield return new WaitForSecondsRealtime(delay);
+        disableThis.SetActive(false);
+    }
+
     public void SelectThisGameobject(GameObject select)
     {
+        //this is used for hovering over non-button text to select their respective sliders
         EventSystem.current.SetSelectedGameObject(select);
     }
 
