@@ -107,15 +107,14 @@ public class UIManager : MonoBehaviour
     {
         if (player.GetButtonDown("Pause") && !pub_isGamePaused)
         {
-            player.controllers.maps.SetMapsEnabled(true, "Menu Category");
-            menuState = MenuState.MAINMENU;
-            pub_isGamePaused = true;
-            pauseScreen.gameObject.SetActive(true);
-            Time.timeScale = 0f;
+            PauseGame();
+        }
+        else if (player.GetButtonDown("PauseMenu") && pub_isGamePaused && menuState == MenuState.MAINMENU)
+        {
+            ResumeGame();
         }
         else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.MAINMENU)
         {
-            menuState = MenuState.MAINMENU;
             ResumeGame();
         }
         else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.OPTIONSMENU)
@@ -124,8 +123,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void PauseGame()
+    {
+        menuState = MenuState.MAINMENU;
+
+        player.controllers.maps.SetMapsEnabled(false, "Default");
+        player.controllers.maps.SetMapsEnabled(true, "Menu Category");
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseMenuFirstButton);
+        
+        pub_isGamePaused = true;
+        pauseScreen.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
     public void ResumeGame()
     {
+        menuState = MenuState.MAINMENU;
+
+        player.controllers.maps.SetMapsEnabled(true, "Default");
         player.controllers.maps.SetMapsEnabled(false, "Menu Category");
         pub_isGamePaused = false;
         pauseScreen.gameObject.SetActive(false);
