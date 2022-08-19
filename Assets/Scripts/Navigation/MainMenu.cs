@@ -110,11 +110,11 @@ public class MainMenu : MonoBehaviour
 
         StartCoroutine(DisableThisObject(mainMenu, menuAnimationTime));
         LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
-        LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutMainMenu);
+        LeanTween.value(1, 0, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeOutMainMenu);
 
         optionsMenu.SetActive(true);
         LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
-        LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInOptionsMenu);
+        LeanTween.value(0, 1, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeInOptionsMenu);
     }
 
     private void CloseOptionsMenu()
@@ -132,11 +132,11 @@ public class MainMenu : MonoBehaviour
 
         StartCoroutine(DisableThisObject(optionsMenu, menuAnimationTime));
         LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
-        LeanTween.value(0, 1, menuAnimationTime).setOnUpdate(FadeInMainMenu);
+        LeanTween.value(0, 1, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeInMainMenu);
 
         mainMenu.SetActive(true);
         LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve);
-        LeanTween.value(1, 0, menuAnimationTime).setOnUpdate(FadeOutOptionsMenu);
+        LeanTween.value(1, 0, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeOutOptionsMenu);
     }
 
     private void SelectMusicSlider()

@@ -19,14 +19,14 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private Image blackFade;
     [SerializeField] private Image pauseScreen;
-    [SerializeField] private Button menuButton;
+    //[SerializeField] private Button menuButton;
 
     [Space(10)]
 
     //------------
 
     [SerializeField] GameObject mainMenu, optionsMenu;
-    [SerializeField] GameObject mainMenuFirstButton, optionsFirstButton, optionsClosedButton;
+    [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton;
 
     [SerializeField] GameObject newGameButton, optionsButton, exitButton;
     [SerializeField] GameObject optionsSoundEffectsSlider, optionsMusicSlider, optionsSoundEffectText, optionsMusicText;
@@ -74,43 +74,65 @@ public class UIManager : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
 
         DrawHearts();
+        SetUIText();
 
-        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
-            playerBehavior.pub_maxPlayerHealth);
-        moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
-        blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
+        menuState = MenuState.MAINMENU;
+
+        optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
+        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
 
         pauseScreen.gameObject.SetActive(false);
-
-        /*
-        blackFade.gameObject.SetActive(true);
-        LeanTween.value(1, 0, 1f).setOnUpdate(UpdateFadeAlpha);
-        StartCoroutine(DisableObject(blackFade.gameObject, 1f));
-        */
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseMenuFirstButton);
     }
 
     // Update is called once per frame
     void Update()
     {
         PauseUnpause();
+
+        //if hovering on Sound Effects volume text, which covers the slider too
+        if (EventSystem.current.currentSelectedGameObject == optionsSoundEffectsSlider && lastSelected != optionsSoundEffectsSlider)
+        {
+            SelectSoundEffectsSlider();
+        }
+        //if hovering on Music volume Text, which covers the slider too
+        else if (EventSystem.current.currentSelectedGameObject == optionsMusicSlider && lastSelected != optionsMusicSlider)
+        {
+            SelectMusicSlider();
+        }
     }
 
     private void PauseUnpause()
     {
         if (player.GetButtonDown("Pause") && !pub_isGamePaused)
         {
+            player.controllers.maps.SetMapsEnabled(true, "Menu Category");
+            menuState = MenuState.MAINMENU;
             pub_isGamePaused = true;
             pauseScreen.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
-        else if (player.GetButtonDown("Pause") && pub_isGamePaused)
+        else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.MAINMENU)
         {
-            pub_isGamePaused = false;
-            pauseScreen.gameObject.SetActive(false);
-            Time.timeScale = 1f;
+            menuState = MenuState.MAINMENU;
+            ResumeGame();
+        }
+        else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.OPTIONSMENU)
+        {
+            CloseOptionsMenu();
         }
     }
 
+    public void ResumeGame()
+    {
+        player.controllers.maps.SetMapsEnabled(false, "Menu Category");
+        pub_isGamePaused = false;
+        pauseScreen.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    #region Hearts
     public void CreateEmptyHeart()
     {
         GameObject newHeart = Instantiate(heartPrefab);
@@ -151,7 +173,16 @@ public class UIManager : MonoBehaviour
         }
         hearts = new List<UIHealthHeart>(); //clear out list, removing the missing gameobjects
     }
+    #endregion
 
+    #region text updates
+    private void SetUIText()
+    {
+        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
+            playerBehavior.pub_maxPlayerHealth);
+        moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
+        blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
+    }
     public void UpdateHealthText()
     {
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
@@ -167,6 +198,126 @@ public class UIManager : MonoBehaviour
     {
         blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
     }
+    #endregion
+
+    public void OpenOptionsMenu()
+    {
+
+        LeanTween.cancel(mainMenu);
+        LeanTween.cancel(optionsMenu);
+
+        player.controllers.maps.SetMapsEnabled(false, "Menu Category");
+        StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, menuAnimationTime));
+        menuState = MenuState.OPTIONSMENU;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsFirstButton);
+
+
+        StartCoroutine(DisableThisObject(mainMenu, menuAnimationTime));
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve).setIgnoreTimeScale(true);
+        LeanTween.value(1, 0, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeOutMainMenu).setIgnoreTimeScale(true);
+
+        optionsMenu.SetActive(true);
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x - menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve).setIgnoreTimeScale(true);
+        LeanTween.value(0, 1, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeInOptionsMenu).setIgnoreTimeScale(true);
+    }
+
+    private void CloseOptionsMenu()
+    {
+        LeanTween.cancel(mainMenu);
+        LeanTween.cancel(optionsMenu);
+
+        player.controllers.maps.SetMapsEnabled(false, "Menu Category");
+        StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, menuAnimationTime));
+        menuState = MenuState.MAINMENU;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsClosedButton);
+
+
+        StartCoroutine(DisableThisObject(optionsMenu, menuAnimationTime));
+        LeanTween.moveX(mainMenu, mainMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve).setIgnoreTimeScale(true);
+        LeanTween.value(0, 1, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeInMainMenu).setIgnoreTimeScale(true);
+
+        mainMenu.SetActive(true);
+        LeanTween.moveX(optionsMenu, optionsMenu.transform.position.x + menuAnimationOffset, menuAnimationTime).setEase(menuAnimationCurve).setIgnoreTimeScale(true);
+        LeanTween.value(1, 0, (menuAnimationTime * 0.75f)).setDelay(menuAnimationTime * 0.15f).setEase(menuAnimationCurve).setOnUpdate(FadeOutOptionsMenu).setIgnoreTimeScale(true);
+    }
+
+    private void SelectMusicSlider()
+    {
+        lastSelected = optionsMusicSlider;
+
+        LeanTween.cancel(optionsSoundEffectText);
+        LeanTween.cancel(optionsMusicText);
+
+        LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText).setIgnoreTimeScale(true);
+        LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText).setIgnoreTimeScale(true);
+    }
+
+    private void SelectSoundEffectsSlider()
+    {
+        lastSelected = optionsSoundEffectsSlider;
+
+        LeanTween.cancel(optionsSoundEffectText);
+        LeanTween.cancel(optionsMusicText);
+
+        LeanTween.value(optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color.r, selectedUIColorFloat, 0.1f).setOnUpdate(ColorSoundEffectsText).setIgnoreTimeScale(true);
+        LeanTween.value(optionsMusicText.GetComponent<TextMeshProUGUI>().color.r, unselectedUIColorFloat, 0.1f).setOnUpdate(ColorMusicText).setIgnoreTimeScale(true);
+    }
+
+    #region Rewired
+
+    IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        player.controllers.maps.SetMapsEnabled(state, categoryName);
+    }
+    #endregion
+
+    #region menu fade and color animations for LeanTween SetOnUpdate
+    void FadeOutMainMenu(float value)
+    {
+        mainMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeInOptionsMenu(float value)
+    {
+        optionsMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeInMainMenu(float value)
+    {
+        mainMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void FadeOutOptionsMenu(float value)
+    {
+        optionsMenu.GetComponent<CanvasGroup>().alpha = value;
+    }
+    void ColorSoundEffectsText(float value)
+    {
+        optionsSoundEffectText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
+    }
+    void ColorMusicText(float value)
+    {
+        optionsMusicText.GetComponent<TextMeshProUGUI>().color = new Color(value, value, value, 1);
+    }
+
+    #endregion
+
+    IEnumerator DisableThisObject(GameObject disableThis, float delay)
+    {
+        //disables main or options menu after animating off
+        yield return new WaitForSecondsRealtime(delay);
+        disableThis.SetActive(false);
+    }
+
+    public void SelectThisGameobject(GameObject select)
+    {
+        //this is used for hovering over non-button text to select their respective sliders
+        EventSystem.current.SetSelectedGameObject(select);
+    }
+
 
     void UpdateFadeAlpha(float alphaChange)
     {
