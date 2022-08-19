@@ -27,21 +27,6 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-
-        //this allows menu buttons to retain references to the original instances in each scene
-        /*
-        if (instance == null) //keep this first instance
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this) //this instance is not the same as existing one, destroy the old one and use new one
-        {
-            Destroy(instance.gameObject);
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }*/
-
         if (instance != null) //if an instance exists already, use the new one that's being carried over
         {
             Destroy(gameObject);
@@ -49,7 +34,6 @@ public class MusicManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-
     }
 
     private void Start()

@@ -23,9 +23,6 @@ public class GlobalOnDestroySounds : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = soundEffectsMixerGroup;
-        GameEvents.instance.upgradeItemPlaySFX += PlayUpgradeItemSound;
-        
-        instance = this;
     }
 
     public void PlayPlayerDeathSound()

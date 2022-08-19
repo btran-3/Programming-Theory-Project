@@ -28,7 +28,7 @@ public class AudioOptions : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this) //this instance is not the same as existing one, destroy the old one and use new one
+        else if (instance != this)
         {
             Destroy(instance.gameObject);
             instance = this;
@@ -57,7 +57,6 @@ public class AudioOptions : MonoBehaviour
 
         soundEffectsSlider.value = soundEffectsVolume;
         musicVolumeSlider.value = musicVolume;
-        Debug.Log(soundEffectsVolume.ToString() + " and " + musicVolume.ToString());
     }
 
     public void OnSoundEffectsSliderValueChange(float value)
@@ -76,7 +75,6 @@ public class AudioOptions : MonoBehaviour
     public void OnMusicSliderValueChange(float value)
     {
         musicVolume = value;
-        //Debug.Log("Music " + value);
 
         MusicManager.instance.UpdateMusicMixerVolume(musicVolume);
 
