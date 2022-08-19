@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GlobalOnDestroySounds : MonoBehaviour
 {
     private AudioSource audioSource;
+    [SerializeField] private AudioMixerGroup soundEffectsMixerGroup;
+
     [SerializeField] private AudioClip[] pickupCollectedSounds;
     [SerializeField] private AudioClip[] playerDeathSounds;
     [SerializeField] private AudioClip[] enemyDeathSounds;
@@ -13,10 +16,16 @@ public class GlobalOnDestroySounds : MonoBehaviour
     //[SerializeField] private AudioClip[] blankPickupSounds;
     [SerializeField] private AudioClip halfHeartPickupSound;
 
+    public static GlobalOnDestroySounds instance;
+
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = soundEffectsMixerGroup;
         GameEvents.instance.upgradeItemPlaySFX += PlayUpgradeItemSound;
+        
+        instance = this;
     }
 
     public void PlayPlayerDeathSound()
@@ -77,6 +86,11 @@ public class GlobalOnDestroySounds : MonoBehaviour
         {
             audioSource.PlayOneShot(pickupCollectedSounds[6]);
         }
+    }
+
+    public void UpdateSoundEffectsMixerVolume(float value)
+    {
+        soundEffectsMixerGroup.audioMixer.SetFloat("Sound Effects Volume", Mathf.Log10(value) * 20);
     }
 
     private void OnDestroy()

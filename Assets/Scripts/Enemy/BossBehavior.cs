@@ -30,7 +30,7 @@ public class BossBehavior : MonoBehaviour
     //Fixed variables
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
-    private float maxBossHealth = 10f;
+    private float maxBossHealth = 30f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
     private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
@@ -73,7 +73,7 @@ public class BossBehavior : MonoBehaviour
         get { return currentBossHealth; }
         private set { currentBossHealth = value;
             healthSlider.value = currentBossHealth;
-            Debug.Log(currentBossHealth);
+            //Debug.Log(currentBossHealth);
             if (currentBossHealth <= (maxBossHealth/2) && !isBossInSecondPhase)
             {
                 isBossInSecondPhase = true;

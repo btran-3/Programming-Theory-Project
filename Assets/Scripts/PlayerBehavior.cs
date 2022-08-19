@@ -7,9 +7,9 @@ using Rewired;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 6;
+    private int playerBaseHealth = 20;
     private int playerBaseBlanks = 3;
-    private int playerBaseMoney = 0;
+    private int playerBaseMoney = 100;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 0.8f;

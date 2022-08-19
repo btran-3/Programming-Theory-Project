@@ -57,6 +57,7 @@ public class AudioOptions : MonoBehaviour
 
         soundEffectsSlider.value = soundEffectsVolume;
         musicVolumeSlider.value = musicVolume;
+        Debug.Log(soundEffectsVolume.ToString() + " and " + musicVolume.ToString());
     }
 
     public void OnSoundEffectsSliderValueChange(float value)
@@ -64,7 +65,10 @@ public class AudioOptions : MonoBehaviour
         soundEffectsVolume = value;
         //Debug.Log("SFX " + value);
 
-        //update sound effect mixer volume here
+        if (GlobalOnDestroySounds.instance != null) //menu scene does not have one of these
+        {
+            GlobalOnDestroySounds.instance.UpdateSoundEffectsMixerVolume(soundEffectsVolume);
+        }
 
         PlayerPrefs.SetFloat("soundEffectsVolumePref", value);
     }
