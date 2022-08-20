@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class RoomFinalBossBehavior : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class RoomFinalBossBehavior : MonoBehaviour
 
     private bool didPlayerWin;
 
+    private int playerId = 0;
+    private Player player;
+
     public Vector3 pub_playerStartPos
     {
         get { return playerStartPos.transform.position; }
@@ -32,6 +36,8 @@ public class RoomFinalBossBehavior : MonoBehaviour
 
     private void Start()
     {
+        player = ReInput.players.GetPlayer(playerId);
+
         doorBottom.SetActive(false);
         colliderA = GetComponent<Collider>();
         playerStartPos.GetComponent<Renderer>().enabled = false;
@@ -54,15 +60,34 @@ public class RoomFinalBossBehavior : MonoBehaviour
     {
         if (bossBehavior.pub_isBossDead && activeEnemiesParent.transform.childCount <= 0 && !didPlayerWin)
         {
-            didPlayerWin = true;
-            Debug.Log("You won!!!!!");
-
-            MusicManager.instance.track01.loop = false;
-            MusicManager.instance.track02.loop = false;
-            MusicManager.instance.SwapTrack(winJingle);
-            StartCoroutine(MusicManager.instance.DelaySwapTrack(hostileMusic, 3f));
-
+            PlayerWon();
         }
+    }
+
+    private void PlayerWon()
+    {
+        didPlayerWin = true;
+        Debug.Log("You won!!!!!");
+
+        StartCoroutine(ChangeRewiredInputStatus("Default", true, 0.5f));
+        LeanTween.value(1, 0, 0.5f).setDelay(0.25f).setEaseInOutSine().setOnUpdate(SlowGameUponWinning);
+
+        MusicManager.instance.track01.loop = false;
+        MusicManager.instance.track02.loop = false;
+        MusicManager.instance.SwapTrack(winJingle);
+        StartCoroutine(MusicManager.instance.DelaySwapTrack(hostileMusic, 3f));
+    }
+
+    private void SlowGameUponWinning(float value)
+    {
+        Time.timeScale = value;
+    }
+
+    IEnumerator ChangeRewiredInputStatus(string categoryName, bool state, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        player.controllers.maps.SetMapsEnabled(state, categoryName);
     }
 
     private void OnTriggerEnter(Collider other)

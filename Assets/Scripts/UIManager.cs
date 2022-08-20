@@ -106,6 +106,7 @@ public class UIManager : MonoBehaviour
             SelectMusicSlider();
         }
 
+        //game timer
         if (Time.timeScale == 1 && playerBehavior.pub_canPlayerMove)
         {
             gameTimer += Time.deltaTime;

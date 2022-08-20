@@ -206,7 +206,8 @@ public class BossBehavior : MonoBehaviour
             case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
-                LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setDelay(0.25f).setEaseInOutCubic().setOnComplete(SetHealthBarInactive);
+                LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setDelay(0.25f)
+                    .setEaseInOutCubic().setOnComplete(SetHealthBarInactive).setIgnoreTimeScale(true);
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");
                 pub_isBossDead = true;
                 gameObject.SetActive(false);
