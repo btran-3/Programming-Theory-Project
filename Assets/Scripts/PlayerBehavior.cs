@@ -176,6 +176,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Make sure to change player damage back to 0.8 or so");
 
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);

@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject mainMenu, optionsMenu;
     [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton;
+    [SerializeField] GameObject winScreen;
 
     [SerializeField] GameObject newGameButton, optionsButton, exitButton;
     [SerializeField] GameObject optionsSoundEffectsSlider, optionsMusicSlider, optionsSoundEffectText, optionsMusicText;
@@ -84,10 +85,13 @@ public class UIManager : MonoBehaviour
 
         optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
         optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
+        winScreen.SetActive(false);
 
         pauseScreen.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseMenuFirstButton);
+
+        GameEvents.instance.playerBeatGame += ShowWinScreen;
     }
 
     // Update is called once per frame
@@ -369,4 +373,13 @@ public class UIManager : MonoBehaviour
         disableThis.SetActive(false);
     }
 
+    void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.playerBeatGame -= ShowWinScreen;
+    }
 }

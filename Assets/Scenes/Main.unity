@@ -4919,6 +4919,7 @@ MonoBehaviour:
   pauseMenuFirstButton: {fileID: 336244295}
   optionsFirstButton: {fileID: 1525987534}
   optionsClosedButton: {fileID: 76484647}
+  winScreen: {fileID: 130802598}
   newGameButton: {fileID: 336244295}
   optionsButton: {fileID: 76484647}
   exitButton: {fileID: 2091480540}

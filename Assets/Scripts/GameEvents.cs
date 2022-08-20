@@ -22,6 +22,8 @@ public class GameEvents : MonoBehaviour
     public event Action upgradeItemPlaySFX; //play SFX when touched
     public event Action<int> useDispenser;
 
+    public event Action playerBeatGame;
+
 
     //UpgradeItemTriggerEnter is called in the UpgradeItemBehavior OnTriggerEnter
     //it has overloads depending on what needs to be passed in
@@ -53,4 +55,9 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public void PlayerBeatGameActions()
+    {
+        //this is the Action that UIManager has subscribed to
+        playerBeatGame();
+    }
 }
