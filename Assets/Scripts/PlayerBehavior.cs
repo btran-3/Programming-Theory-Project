@@ -138,6 +138,11 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    public bool pub_canPlayerMove
+    {
+        get { return canPlayerMove; }
+    }
+
     #endregion
 
     #region References

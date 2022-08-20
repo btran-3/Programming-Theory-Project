@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
     private float unselectedUIColorFloat = 0.196f; //323232 divided by 255
     private float selectedUIColorFloat = 0.96f; //F5F5F5 divided by 255
 
+    private float gameTimer;
+
     private enum MenuState { MAINMENU, OPTIONSMENU };
     private MenuState menuState;
 
@@ -55,6 +57,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI blanksText;
+    [SerializeField] private TextMeshProUGUI timerText;
 
     [Space (10)] //Rewired stuff
     private int playerId = 0;
@@ -75,6 +78,7 @@ public class UIManager : MonoBehaviour
 
         DrawHearts();
         SetUIText();
+        timerText.SetText("0:00");
 
         menuState = MenuState.MAINMENU;
 
@@ -101,6 +105,23 @@ public class UIManager : MonoBehaviour
         {
             SelectMusicSlider();
         }
+
+        if (Time.timeScale == 1 && playerBehavior.pub_canPlayerMove)
+        {
+            gameTimer += Time.deltaTime;
+
+            timerText.SetText(formattedTimer(gameTimer));
+        }
+    }
+
+    string formattedTimer(float time)
+    {
+        int intTime = (int)time;
+        int minutes = intTime / 60;
+        int seconds = intTime % 60;
+        //string timeText = string.Format ("{0:00}:{1:00}", minutes, seconds);
+        string timeText = (minutes.ToString() + ":" + seconds.ToString("00"));
+        return timeText;
     }
 
     private void PauseUnpause()
