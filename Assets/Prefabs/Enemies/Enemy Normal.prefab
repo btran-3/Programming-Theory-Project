@@ -123,7 +123,7 @@ MonoBehaviour:
   roomBehavior: {fileID: 0}
   playerGO: {fileID: 0}
   playerBehavior: {fileID: 0}
-  onDestroySounds: {fileID: 0}
+  globalOnDestroySounds: {fileID: 0}
   hitSound: {fileID: 8300000, guid: 9f676ca4cefbe704d91a41143b4db988, type: 3}
   enemyAcceleration: 15
   enemyStoppingDistance: 1.2
@@ -160,7 +160,7 @@ AudioSource:
   m_GameObject: {fileID: 2835765969923703121}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3233658219356927310, guid: 8b24b87fc90b54d44945c6f98d710c7b, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

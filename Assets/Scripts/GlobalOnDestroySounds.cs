@@ -18,6 +18,10 @@ public class GlobalOnDestroySounds : MonoBehaviour
 
     public static GlobalOnDestroySounds instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -64,6 +68,7 @@ public class GlobalOnDestroySounds : MonoBehaviour
 
     void PlayUpgradeItemSound()
     {
+        Debug.LogWarning("Playing upgrade item sound?");
         audioSource.PlayOneShot(upgradeItemSound);
     }
 

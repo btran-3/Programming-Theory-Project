@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Rewired;
+using UnityEngine.Audio;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -178,14 +179,11 @@ public class PlayerBehavior : MonoBehaviour
         GameEvents.instance.upgradePlayerStats += TakeUpgradeItem;
         GameEvents.instance.useDispenser += UseDispenser;
 
-
         //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
         maxPlayerHealth = playerBaseHealth;
         currentPlayerHealth = playerBaseHealth;
         currentPlayerMoney = playerBaseMoney;
         currentPlayerBlanks = playerBaseBlanks;
-
-
     }
 
     void Update()
@@ -329,21 +327,6 @@ public class PlayerBehavior : MonoBehaviour
             TakeDamageFromEnemy(other);
         }
     }
-
-    /* this behavior is now handled in the MenuNavigation script via Rewired
-     * 
-    private void PlayerEntersStartingRoom(Collider other)
-    {
-        other.GetComponent<Collider>().enabled = false;
-
-        canPlayerMove = false;
-
-        playerRB.velocity = Vector3.zero;
-        playerRB.angularVelocity = Vector3.zero;
-
-        Invoke("AllowPlayerToMove", 0.65f);
-
-    }*/
 
     private void PlayerEntersRoom(Collider other)
     {
@@ -588,7 +571,6 @@ public class PlayerBehavior : MonoBehaviour
         blankRadiusMesh.transform.localScale = Vector3.one * 0.9f;
         canPlayerUseBlanks = true;
     }
-
 
     private void OnDestroy()
     {

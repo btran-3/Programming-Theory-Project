@@ -68,6 +68,10 @@ public class AudioOptions : MonoBehaviour
         {
             GlobalOnDestroySounds.instance.UpdateSoundEffectsMixerVolume(soundEffectsVolume);
         }
+        else
+        {
+            Debug.LogWarning("cannot find instance of GLobalOnDestroySounds");
+        }
 
         PlayerPrefs.SetFloat("soundEffectsVolumePref", value);
     }
@@ -77,6 +81,7 @@ public class AudioOptions : MonoBehaviour
         musicVolume = value;
 
         MusicManager.instance.UpdateMusicMixerVolume(musicVolume);
+        Debug.Log("music manager exists");
 
         PlayerPrefs.SetFloat("musicVolumePref", value);
     }

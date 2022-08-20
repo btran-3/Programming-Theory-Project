@@ -132,12 +132,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyValue: 0
   blankValue: 1
+  healthValue: 0
   pickupType: Blank
   hitGroundSounds:
   - {fileID: 8300000, guid: b9ba659fead028144ba1cacc63825f43, type: 3}
   - {fileID: 8300000, guid: 41293a3f28665504281455ef69da2af2, type: 3}
   - {fileID: 8300000, guid: aeb2a8d6958a84e4a84a78166da793b1, type: 3}
   onDestroySounds: {fileID: 0}
+  globalOnDestroySounds: {fileID: 0}
 --- !u!82 &2470908802583947242
 AudioSource:
   m_ObjectHideFlags: 0
@@ -147,7 +149,7 @@ AudioSource:
   m_GameObject: {fileID: 4517451672116045488}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3233658219356927310, guid: 8b24b87fc90b54d44945c6f98d710c7b, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
