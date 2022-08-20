@@ -27,6 +27,8 @@ public class GlobalOnDestroySounds : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = soundEffectsMixerGroup;
+
+        GameEvents.instance.upgradeItemPlaySFX += PlayUpgradeItemSound;
     }
 
     public void PlayPlayerDeathSound()
@@ -68,7 +70,7 @@ public class GlobalOnDestroySounds : MonoBehaviour
 
     void PlayUpgradeItemSound()
     {
-        Debug.LogWarning("Playing upgrade item sound?");
+        //Debug.LogWarning("Playing upgrade item sound?");
         audioSource.PlayOneShot(upgradeItemSound);
     }
 
