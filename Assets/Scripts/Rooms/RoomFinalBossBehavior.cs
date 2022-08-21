@@ -70,15 +70,18 @@ public class RoomFinalBossBehavior : MonoBehaviour
         Debug.Log("You won!!!!!");
 
         GameEvents.instance.PlayerBeatGameActions();
+        MusicManager.instance.SwapTrack(winJingle);
 
-        StartCoroutine(ChangeRewiredInputStatus("Default", true, 0.5f));
-        Time.timeScale = 0;
-        //LeanTween.value(1, 0, 0.5f).setDelay(0.25f).setEaseInOutSine().setOnUpdate(SlowGameUponWinning);
+        StartCoroutine(ChangeRewiredInputStatus("Default", false, 0.25f));
+        
+        LeanTween.value(1, 0, 2f).setDelay(0.25f).setEaseInOutSine().setOnUpdate(SlowGameUponWinning).setIgnoreTimeScale(true);
 
         MusicManager.instance.track01.loop = false;
         MusicManager.instance.track02.loop = false;
-        MusicManager.instance.SwapTrack(winJingle);
+        
         StartCoroutine(MusicManager.instance.DelaySwapTrack(hostileMusic, 3f));
+
+        Time.timeScale = 0;
     }
 
     private void SlowGameUponWinning(float value)

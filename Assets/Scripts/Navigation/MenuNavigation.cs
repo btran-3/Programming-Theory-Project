@@ -46,7 +46,7 @@ public class MenuNavigation : MonoBehaviour
 
     private void Start()
     {
-        //Time.timeScale = 0f;
+        Time.timeScale = 1f;
 
         blackFade.gameObject.SetActive(true);
         LeanTween.value(1, 0, fadeDuration).setDelay(introDelay).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
@@ -70,6 +70,11 @@ public class MenuNavigation : MonoBehaviour
             StartCoroutine(ChangeRewiredInputStatus("Default", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
 
+    }
+
+    private void Update()
+    {
+        Debug.Log(Time.timeScale);
     }
 
     public void LoadThisScene(int sceneIndex) //used in button
@@ -109,8 +114,8 @@ public class MenuNavigation : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(waitTime);
         FadeFromBlack();
-        SceneManager.LoadScene(sceneIndex);
         Time.timeScale = 1;
+        SceneManager.LoadScene(sceneIndex);
         Debug.Log("The timescale is " + Time.timeScale);
     }
 

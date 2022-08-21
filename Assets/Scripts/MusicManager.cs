@@ -56,7 +56,7 @@ public class MusicManager : MonoBehaviour
 
     public IEnumerator DelaySwapTrack(AudioClip audioClip, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         track01.loop = true;
         track02.loop = true;
         SwapTrack(audioClip);
@@ -81,7 +81,7 @@ public class MusicManager : MonoBehaviour
             {
                 track02.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
                 track01.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
-                timeElapsed += Time.deltaTime;
+                timeElapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
 
@@ -96,7 +96,7 @@ public class MusicManager : MonoBehaviour
             {
                 track01.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
                 track02.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
-                timeElapsed += Time.deltaTime;
+                timeElapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
 
