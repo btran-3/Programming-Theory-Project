@@ -526,6 +526,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerDeath()
     {
+        GameEvents.instance.PlayerLostGameActions();
         Time.timeScale = 0;
         //StartCoroutine(DelayChangeTimeScale(0, 1)); doesn't work since player GO is disabled
 
@@ -536,8 +537,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerBeatGame()
     {
-        didPlayerBeatGame = true;
-        Debug.Log("POG");
+        didPlayerBeatGame = true; //prevent player from taking damage after winning
+        //Debug.Log("POG");
     }
 
     private void PlayerRecoverFromDamage()

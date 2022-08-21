@@ -26,8 +26,8 @@ public class UIManager : MonoBehaviour
     //------------
 
     [SerializeField] GameObject mainMenu, optionsMenu;
-    [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton, winScreenFirstButton;
-    [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton, winScreenFirstButton, gameOverScreenFirstButton;
+    [SerializeField] GameObject winScreen, gameOverScreen;
 
     [SerializeField] GameObject newGameButton, optionsButton, exitButton;
     [SerializeField] GameObject optionsSoundEffectsSlider, optionsMusicSlider, optionsSoundEffectText, optionsMusicText;
@@ -87,12 +87,14 @@ public class UIManager : MonoBehaviour
         optionsMenu.transform.position += new Vector3(menuAnimationOffset, 0, 0);
         optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
         winScreen.SetActive(false);
-
+        gameOverScreen.SetActive(false);
         pauseScreen.gameObject.SetActive(false);
+
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseMenuFirstButton);
 
         GameEvents.instance.playerBeatGame += ShowWinScreen;
+        GameEvents.instance.playerLostGame += ShowGameOverScreen;
     }
 
     // Update is called once per frame
@@ -389,8 +391,20 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(winScreenFirstButton);
     }
 
+    void ShowGameOverScreen()
+    {
+        gameOverScreen.SetActive(true);
+
+        player.controllers.maps.SetMapsEnabled(false, "Default");
+        player.controllers.maps.SetMapsEnabled(true, "Menu Category");
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(gameOverScreenFirstButton);
+    }
+
     private void OnDestroy()
     {
         GameEvents.instance.playerBeatGame -= ShowWinScreen;
+        GameEvents.instance.playerLostGame -= ShowGameOverScreen;
     }
 }

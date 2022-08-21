@@ -23,6 +23,7 @@ public class GameEvents : MonoBehaviour
     public event Action<int> useDispenser;
 
     public event Action playerBeatGame;
+    public event Action playerLostGame;
 
 
     //UpgradeItemTriggerEnter is called in the UpgradeItemBehavior OnTriggerEnter
@@ -59,5 +60,11 @@ public class GameEvents : MonoBehaviour
     {
         //this is the Action that UIManager has subscribed to
         playerBeatGame();
+    }
+
+    public void PlayerLostGameActions()
+    {
+        //this is the Action that UIManager has subscribed to
+        playerLostGame();
     }
 }
