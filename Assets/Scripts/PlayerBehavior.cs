@@ -8,9 +8,9 @@ using UnityEngine.Audio;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 20;
+    private int playerBaseHealth = 6;
     private int playerBaseBlanks = 3;
-    private int playerBaseMoney = 100;
+    private int playerBaseMoney = 10;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 2f; //should be 0.8f in actual game
@@ -524,6 +524,8 @@ public class PlayerBehavior : MonoBehaviour
         globalOnDestroySounds.PlayPlayerDeathSound();
         gameObject.SetActive(false);
         Debug.Log("GAME OVER");
+
+        StartCoroutine(DelayChangeTimeScale(0, 1));
     }
 
     private void PlayerRecoverFromDamage()
@@ -576,6 +578,12 @@ public class PlayerBehavior : MonoBehaviour
         blankRadiusMesh.transform.SetParent(this.gameObject.transform, false);
         blankRadiusMesh.transform.localScale = Vector3.one * 0.9f;
         canPlayerUseBlanks = true;
+    }
+
+    IEnumerator DelayChangeTimeScale(float value, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = value;
     }
 
     private void OnDestroy()
