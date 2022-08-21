@@ -40,9 +40,11 @@ public class MusicManager : MonoBehaviour
     {
         track01 = gameObject.AddComponent<AudioSource>();
         track01.loop = true;
+        track01.volume = 1.0f;
         track01.outputAudioMixerGroup = musicMixerGroup;
         track02 = gameObject.AddComponent<AudioSource>();
         track02.loop = true;
+        track02.volume = 1.0f;
         track02.outputAudioMixerGroup = musicMixerGroup;
         isPlayingTrack01 = true;
     }
@@ -54,6 +56,13 @@ public class MusicManager : MonoBehaviour
         isPlayingTrack01 = !isPlayingTrack01;
     }
 
+    public void SwapTrackIgnoreTimeScale(AudioClip newClip)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeTrackIgnoreTimeScale(newClip));
+        isPlayingTrack01 = !isPlayingTrack01;
+    }
+
     public IEnumerator DelaySwapTrack(AudioClip audioClip, float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
@@ -62,12 +71,59 @@ public class MusicManager : MonoBehaviour
         SwapTrack(audioClip);
     }
 
+    public IEnumerator DelaySwapTrackIgnoreTimeScale(AudioClip audioClip, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        track01.loop = true;
+        track02.loop = true;
+        SwapTrackIgnoreTimeScale(audioClip);
+    }
+
     public void ReturnToDefault()
     {
         //SwapTrack(defaultAmbience);
     }
 
     private IEnumerator FadeTrack(AudioClip newClip)
+    {
+        float timeToFade = 0.5f;
+        float timeElapsed = 0;
+
+        if (isPlayingTrack01)
+        {
+            track02.clip = newClip;
+            track02.Play();
+
+            while (timeElapsed < timeToFade)
+            {
+                track02.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
+                track01.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
+                //timeElapsed += Time.unscaledDeltaTime;
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            track01.Stop();
+        }
+        else
+        {
+            track01.clip = newClip;
+            track01.Play();
+
+            while (timeElapsed < timeToFade)
+            {
+                track01.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
+                track02.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
+                //timeElapsed += Time.unscaledDeltaTime;
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+                track02.Stop();
+        }
+    }
+
+    private IEnumerator FadeTrackIgnoreTimeScale(AudioClip newClip)
     {
         float timeToFade = 0.5f;
         float timeElapsed = 0;
@@ -100,7 +156,7 @@ public class MusicManager : MonoBehaviour
                 yield return null;
             }
 
-                track02.Stop();
+            track02.Stop();
         }
     }
 
