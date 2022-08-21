@@ -29,6 +29,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool doesPlayerHaveIFrames;
     private float canPlayerFire;
     private bool canPlayerUseBlanks = true;
+    private bool didPlayerBeatGame;
 
     //private bool didPlayerEnterRoom;
     private bool canPlayerMove = true;
@@ -184,6 +185,7 @@ public class PlayerBehavior : MonoBehaviour
         //methods can only be subscribed or removed using += or -=
         GameEvents.instance.upgradePlayerStats += TakeUpgradeItem;
         GameEvents.instance.useDispenser += UseDispenser;
+        GameEvents.instance.playerBeatGame += PlayerBeatGame;
 
         //if integrating save data, load all stat/inventory stuff here then return to exit the Start method
         maxPlayerHealth = playerBaseHealth;
@@ -498,13 +500,16 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerTakeDamage(int damage)
     {
-        pub_currentPlayerHealth -= damage;
-        doesPlayerHaveIFrames = true; //give the player i-frames
+        if (!didPlayerBeatGame)
+        {
+            pub_currentPlayerHealth -= damage;
+            doesPlayerHaveIFrames = true; //give the player i-frames
+        }
 
         if (currentPlayerHealth <= 0)
         {
             PlayerDeath();
-            return;
+            return; //skip the flashing color animation
         }
 
         //gameObject.GetComponent<Renderer>().material.color = Color.red;
@@ -526,6 +531,12 @@ public class PlayerBehavior : MonoBehaviour
         Debug.Log("GAME OVER");
 
         StartCoroutine(DelayChangeTimeScale(0, 1));
+    }
+
+    private void PlayerBeatGame()
+    {
+        didPlayerBeatGame = true;
+        Debug.Log("POG");
     }
 
     private void PlayerRecoverFromDamage()
@@ -590,5 +601,6 @@ public class PlayerBehavior : MonoBehaviour
     {
         GameEvents.instance.upgradePlayerStats -= TakeUpgradeItem;
         GameEvents.instance.useDispenser -= UseDispenser;
+        GameEvents.instance.playerBeatGame -= PlayerBeatGame;
     }
 }

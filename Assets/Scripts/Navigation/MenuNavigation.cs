@@ -74,7 +74,7 @@ public class MenuNavigation : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Time.timeScale);
+        //Debug.Log(Time.timeScale);
     }
 
     public void LoadThisScene(int sceneIndex) //used in button
