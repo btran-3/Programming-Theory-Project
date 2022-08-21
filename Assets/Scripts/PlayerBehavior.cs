@@ -526,11 +526,12 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerDeath()
     {
+        Time.timeScale = 0;
+        //StartCoroutine(DelayChangeTimeScale(0, 1)); doesn't work since player GO is disabled
+
         globalOnDestroySounds.PlayPlayerDeathSound();
         gameObject.SetActive(false);
         Debug.Log("GAME OVER");
-
-        StartCoroutine(DelayChangeTimeScale(0, 1));
     }
 
     private void PlayerBeatGame()

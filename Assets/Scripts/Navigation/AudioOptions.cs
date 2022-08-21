@@ -70,7 +70,7 @@ public class AudioOptions : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("cannot find instance of GlobalOnDestroySounds");
+            Debug.LogWarning("There is no instance of GlobalOnDestroySounds; ignore if in Menu scene");
         }
 
         PlayerPrefs.SetFloat("soundEffectsVolumePref", value);
