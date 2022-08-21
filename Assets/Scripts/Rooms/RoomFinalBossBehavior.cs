@@ -72,7 +72,8 @@ public class RoomFinalBossBehavior : MonoBehaviour
         GameEvents.instance.PlayerBeatGameActions();
 
         StartCoroutine(ChangeRewiredInputStatus("Default", true, 0.5f));
-        LeanTween.value(1, 0, 0.5f).setDelay(0.25f).setEaseInOutSine().setOnUpdate(SlowGameUponWinning);
+        Time.timeScale = 0;
+        //LeanTween.value(1, 0, 0.5f).setDelay(0.25f).setEaseInOutSine().setOnUpdate(SlowGameUponWinning);
 
         MusicManager.instance.track01.loop = false;
         MusicManager.instance.track02.loop = false;

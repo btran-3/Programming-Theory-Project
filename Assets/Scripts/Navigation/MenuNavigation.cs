@@ -46,7 +46,7 @@ public class MenuNavigation : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
         blackFade.gameObject.SetActive(true);
         LeanTween.value(1, 0, fadeDuration).setDelay(introDelay).setIgnoreTimeScale(true).setOnUpdate(UpdateBlackFadeAlpha);
@@ -57,13 +57,15 @@ public class MenuNavigation : MonoBehaviour
 
         if (sceneIndex == 0) //menu scene
         {
-            Time.timeScale = 1;
+            //Time.timeScale = 1;
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
             StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
         else if (sceneIndex == 1) //main game
         {
-            StartCoroutine(ChangeTimeScale(1f, 1f)); //change timescale to 1 after 1 second
+            //StartCoroutine(ChangeTimeScale(1f, 1f)); //change timescale to 1 after 1 second
+            //Debug.Log("Timescale should be set to 1 after 1 second");
+            //Debug.Log(Time.timeScale);
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
             StartCoroutine(ChangeRewiredInputStatus("Default", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
@@ -108,6 +110,8 @@ public class MenuNavigation : MonoBehaviour
         yield return new WaitForSecondsRealtime(waitTime);
         FadeFromBlack();
         SceneManager.LoadScene(sceneIndex);
+        Time.timeScale = 1;
+        Debug.Log("The timescale is " + Time.timeScale);
     }
 
     void UpdateBlackFadeAlpha(float alphaChange)
@@ -129,6 +133,7 @@ public class MenuNavigation : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Time.timeScale = timeScale;
+        Debug.Log(Time.timeScale);
     }
 
     public void ExitGame()

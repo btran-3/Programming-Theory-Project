@@ -336,7 +336,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerEntersRoom(Collider other)
     {
-        Debug.Log("entered a room");
+        //Debug.Log("entered a room");
         canPlayerMove = false;
 
         pub_currentRoomIndex++;

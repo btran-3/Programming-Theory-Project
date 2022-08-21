@@ -94,7 +94,10 @@ public class EnemyNormal : EnemyBase
 
     void UpdateEnemySpeed(float value)
     {
-        navMeshAgent.speed = value;
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.speed = value;
+        }
     }
 
     public override void BlankKnockback() //designed for NavMeshAgent

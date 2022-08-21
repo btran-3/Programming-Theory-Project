@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     //------------
 
     [SerializeField] GameObject mainMenu, optionsMenu;
-    [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton;
+    [SerializeField] GameObject pauseMenuFirstButton, optionsFirstButton, optionsClosedButton, winScreenFirstButton;
     [SerializeField] GameObject winScreen;
 
     [SerializeField] GameObject newGameButton, optionsButton, exitButton;
@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
     private Player player;
 
     private bool isGamePaused;
+    private bool didPlayerBeatGame;
 
     public bool pub_isGamePaused
     {
@@ -131,21 +132,24 @@ public class UIManager : MonoBehaviour
 
     private void PauseUnpause()
     {
-        if (player.GetButtonDown("Pause") && !pub_isGamePaused)
+        if (!didPlayerBeatGame)
         {
-            PauseGame();
-        }
-        else if (player.GetButtonDown("PauseMenu") && pub_isGamePaused && menuState == MenuState.MAINMENU)
-        {
-            ResumeGame();
-        }
-        else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.MAINMENU)
-        {
-            ResumeGame();
-        }
-        else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.OPTIONSMENU)
-        {
-            CloseOptionsMenu();
+            if (player.GetButtonDown("Pause") && !pub_isGamePaused)
+            {
+                PauseGame();
+            }
+            else if (player.GetButtonDown("PauseMenu") && pub_isGamePaused && menuState == MenuState.MAINMENU)
+            {
+                ResumeGame();
+            }
+            else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.MAINMENU)
+            {
+                ResumeGame();
+            }
+            else if (player.GetButtonDown("UICancel") && pub_isGamePaused && menuState == MenuState.OPTIONSMENU)
+            {
+                CloseOptionsMenu();
+            }
         }
     }
 
@@ -375,7 +379,14 @@ public class UIManager : MonoBehaviour
 
     void ShowWinScreen()
     {
+        didPlayerBeatGame = true;
         winScreen.SetActive(true);
+
+        player.controllers.maps.SetMapsEnabled(false, "Default");
+        player.controllers.maps.SetMapsEnabled(true, "Menu Category");
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(winScreenFirstButton);
     }
 
     private void OnDestroy()

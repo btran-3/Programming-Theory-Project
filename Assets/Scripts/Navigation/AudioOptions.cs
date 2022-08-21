@@ -81,7 +81,7 @@ public class AudioOptions : MonoBehaviour
         musicVolume = value;
 
         MusicManager.instance.UpdateMusicMixerVolume(musicVolume);
-        Debug.Log("music manager exists");
+        //Debug.Log("music manager exists");
 
         PlayerPrefs.SetFloat("musicVolumePref", value);
     }
