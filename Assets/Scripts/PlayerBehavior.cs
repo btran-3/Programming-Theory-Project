@@ -50,8 +50,8 @@ public class PlayerBehavior : MonoBehaviour
         private set
         {
             maxPlayerHealth = value;
-            Debug.Log(pub_maxPlayerHealth);
-            uiManager.UpdateHealthText();
+            //Debug.Log(pub_maxPlayerHealth);
+            //uiManager.UpdateHealthText();
         }
     }
     public int pub_currentPlayerHealth
@@ -64,7 +64,7 @@ public class PlayerBehavior : MonoBehaviour
             {
                 currentPlayerHealth = 0;
             }
-            uiManager.UpdateHealthText();
+            //uiManager.UpdateHealthText();
             uiManager.DrawHearts();
         }
     }

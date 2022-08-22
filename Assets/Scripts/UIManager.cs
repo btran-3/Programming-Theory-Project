@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
     List<UIHealthHeart> hearts = new List<UIHealthHeart>();
 
     [Space (10)]
-    [SerializeField] private TextMeshProUGUI healthText;
+    //[SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI blanksText;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -187,6 +187,7 @@ public class UIManager : MonoBehaviour
     {
         GameObject newHeart = Instantiate(heartPrefab);
         newHeart.transform.SetParent(healthBarUI.transform); //parent to hearts bar (its transform)
+        newHeart.transform.localScale = Vector3.one;
 
         UIHealthHeart UIHeartComponent = newHeart.GetComponent<UIHealthHeart>();
         UIHeartComponent.SetHeartImage(HeartStatus.Empty); //set instance's script enum status to empty
@@ -228,16 +229,16 @@ public class UIManager : MonoBehaviour
     #region text updates
     private void SetUIText()
     {
-        healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
-            playerBehavior.pub_maxPlayerHealth);
+        //healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" + playerBehavior.pub_maxPlayerHealth);
         moneyText.SetText(playerBehavior.pub_currentPlayerMoney.ToString());
         blanksText.SetText(playerBehavior.pub_currentPlayerBlanks.ToString());
     }
+    /*
     public void UpdateHealthText()
     {
         healthText.SetText("Health: " + playerBehavior.pub_currentPlayerHealth + "/" +
             playerBehavior.pub_maxPlayerHealth);
-    }
+    }*/
 
     public void UpdateMoneyText()
     {
