@@ -186,7 +186,7 @@ public class BossBehavior : MonoBehaviour
                 audioSource.PlayOneShot(bossAngrySound);
 
                 canBossTakeDamage = false;
-                LeanTween.cancelAll();
+                LeanTween.cancel(this.gameObject);
                 LeanTween.moveX(gameObject, 0f, 0.75f).setEaseInOutCubic();
                 LeanTween.rotateAroundLocal(eyebrowLeft, Vector3.forward, -15, 0.75f).setEaseInOutSine().setDelay(0.5f);
                 LeanTween.rotateAroundLocal(eyebrowRight, Vector3.forward, 15, 0.75f).setEaseInOutSine().setDelay(0.5f);

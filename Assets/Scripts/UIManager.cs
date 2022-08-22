@@ -382,6 +382,7 @@ public class UIManager : MonoBehaviour
 
     void ShowWinScreen()
     {
+        LeanTween.cancelAll();
         victoryText.transform.localScale = Vector3.zero;
         LeanTween.scale(victoryText, Vector3.one, 1f).setEaseOutBack().setIgnoreTimeScale(true);
 
@@ -397,13 +398,11 @@ public class UIManager : MonoBehaviour
 
     void ShowGameOverScreen()
     {
-        //gameOverText.transform.position += new Vector3(0, 300f, 0);
+        LeanTween.cancelAll();
         gameOverText.transform.localPosition = new Vector3(9.21f, 390, 0);
         LeanTween.moveLocal(gameOverText, new Vector3(9.21f, 90, 0f), 1f).setEaseOutBounce().setIgnoreTimeScale(true);
 
         gameOverScreen.SetActive(true);
-
-        
 
         player.controllers.maps.SetMapsEnabled(false, "Default");
         player.controllers.maps.SetMapsEnabled(true, "Menu Category");
