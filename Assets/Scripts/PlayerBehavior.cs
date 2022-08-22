@@ -39,7 +39,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private int currentRoomIndex = 0;
 
-    private string currentRoomTypeMusic;
+    private string currentRoomTypeMusic = "Hostile";
 
     #endregion
 
