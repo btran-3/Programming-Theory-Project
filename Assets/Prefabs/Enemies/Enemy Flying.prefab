@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: flying
-  enemyHealth: 3
+  enemyHealth: 2.2
   enemyDamage: 1
   enemySpeed: 30
   audioSource: {fileID: 0}
