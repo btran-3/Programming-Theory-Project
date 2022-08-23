@@ -112,7 +112,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (value < currentPlayerMoney)
             {
-                Debug.Log("Spending money");
+                //Debug.Log("Spending money");
                 audioSource.PlayOneShot(spendMoneySound);
             }
             currentPlayerMoney = value;
@@ -266,23 +266,23 @@ public class PlayerBehavior : MonoBehaviour
         switch (itemTag)
         {
             case "health":
-                Debug.Log(itemTag + " upgraded from " + pub_maxPlayerHealth + " to");
+                //Debug.Log(itemTag + " upgraded from " + pub_maxPlayerHealth + " to");
                 pub_maxPlayerHealth += health;
                 pub_currentPlayerHealth = pub_maxPlayerHealth;
                 pub_currentPlayerMoney -= price;
                 break;
             case "damage":
-                Debug.Log(itemTag + " upgraded from " + pub_playerDamage + " to");
+                //Debug.Log(itemTag + " upgraded from " + pub_playerDamage + " to");
                 pub_playerDamage += damage;
                 pub_currentPlayerMoney -= price;
                 break;
             case "speed":
-                Debug.Log(itemTag + " upgraded from " + pub_playerSpeed + " to");
+                //Debug.Log(itemTag + " upgraded from " + pub_playerSpeed + " to");
                 pub_playerSpeed += speed;
                 pub_currentPlayerMoney -= price;
                 break;
             case "firerate":
-                Debug.Log(itemTag + " upgraded from " + pub_playerFireCooldown + " to");
+                //Debug.Log(itemTag + " upgraded from " + pub_playerFireCooldown + " to");
                 pub_playerFireCooldown += firerate;
                 pub_currentPlayerMoney -= price;
                 break;

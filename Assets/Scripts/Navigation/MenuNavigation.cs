@@ -57,15 +57,11 @@ public class MenuNavigation : MonoBehaviour
 
         if (sceneIndex == 0) //menu scene
         {
-            //Time.timeScale = 1;
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_defaultAmbiance);
             StartCoroutine(ChangeRewiredInputStatus("Menu Category", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
         else if (sceneIndex == 1) //main game
         {
-            //StartCoroutine(ChangeTimeScale(1f, 1f)); //change timescale to 1 after 1 second
-            //Debug.Log("Timescale should be set to 1 after 1 second");
-            //Debug.Log(Time.timeScale);
             MusicManager.instance.SwapTrack(MusicManager.instance.pub_hostileMusic);
             StartCoroutine(ChangeRewiredInputStatus("Default", true, introDelay + fadeDuration)); //prevent running into existing fading animation
         }
@@ -116,7 +112,7 @@ public class MenuNavigation : MonoBehaviour
         FadeFromBlack();
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneIndex);
-        Debug.Log("The timescale is " + Time.timeScale);
+        //Debug.Log("The timescale is " + Time.timeScale);
     }
 
     void UpdateBlackFadeAlpha(float alphaChange)
