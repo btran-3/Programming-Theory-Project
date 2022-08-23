@@ -80,13 +80,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        if (transform.parent.GetComponent<RoomBehavior>() != null)
+        //make sure parent exists
+        if (roomBehavior == null && transform.parent != null && transform.parent.TryGetComponent(out RoomBehavior roomBehaviorScript))
         {
-            roomBehavior = transform.parent.GetComponent<RoomBehavior>();
-        }
-        else
-        {
-            Debug.LogWarning("Instanced enemy could not find a RoomBehavior script in its parent");
+            roomBehavior = roomBehaviorScript;
         }
 
         EnableEnemyMovement();
@@ -141,8 +138,13 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void OnDestroy()
     {
-        globalOnDestroySounds.PlayEnemyDeathSound(enemyType); //remove from room list
-        roomBehavior.spawnedEnemies.Remove(gameObject);
+        globalOnDestroySounds.PlayEnemyDeathSound(enemyType);
+
+        if (roomBehavior != null)
+        {
+            roomBehavior.spawnedEnemies.Remove(gameObject);//remove from room list
+        }
+        
     }
 
 }

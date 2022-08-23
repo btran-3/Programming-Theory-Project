@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: normal
-  enemyHealth: 4
+  enemyHealth: 2.5
   enemyDamage: 1
-  enemySpeed: 5
+  enemySpeed: 4.5
   audioSource: {fileID: 0}
   enemyRenderer: {fileID: 0}
   roomBehavior: {fileID: 0}

@@ -103,9 +103,18 @@ public class PickupBehavior : MonoBehaviour
     public void SpawnPickup()
     {
         gameObject.SetActive(true);
-        transform.rotation = Random.rotation;
-        rb.angularVelocity = new Vector3
+        if (pickupType != "HalfHeart")
+        {
+            transform.rotation = Random.rotation;
+            rb.angularVelocity = new Vector3
             (RNG(-spawnAngVel, spawnAngVel), RNG(-spawnAngVel, spawnAngVel), RNG(-spawnAngVel, spawnAngVel));
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(90, 0, 0);
+        }
+
+        
         LeanTween.scale(this.gameObject, targetScale, 0.5f).setEase(LeanTweenType.easeOutQuart)
             .setDelay(Random.Range(0f, 1f));
     }

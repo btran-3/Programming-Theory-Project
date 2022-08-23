@@ -159,11 +159,10 @@ public class BossBehavior : MonoBehaviour
                 switch (rand)
                 {
                     case 0:
-                    case 1:
                         StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
                         break;
+                    case 1:
                     case 2:
-                        Debug.Log("Insert spawn enemy state here");
                         StartCoroutine(DelayStateSwitch(State.SPAWNENEMY, 1f));
                         break;
                     case 3:
@@ -177,8 +176,9 @@ public class BossBehavior : MonoBehaviour
                 int randInt = Random.Range(minEnemyIndex, maxEnemyIndex);
                 GameObject spawnedEnemy = Instantiate((enemyPool[randInt]), (transform.position + new Vector3(0, 0, -1.5f)), Quaternion.identity);
                 spawnedEnemy.SetActive(true);
-                spawnedEnemy.GetComponent<EnemyBase>().EnableEnemy();
+
                 spawnedEnemy.transform.SetParent(activeEnemiesParent.transform);
+                spawnedEnemy.GetComponent<EnemyBase>().EnableEnemy();
 
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 1.5f));
                 break;
@@ -247,14 +247,14 @@ public class BossBehavior : MonoBehaviour
                 //Switching state conditions
                 timerForSwitchStateEvents += Time.deltaTime;
                 float bottomBoundZPos = transform.position.z - colliderA.bounds.extents.z;
-                if (timerForSwitchStateEvents >= 3f && playerBehavior.transform.position.z >= bottomBoundZPos)
+                if (timerForSwitchStateEvents >= 2f && playerBehavior.transform.position.z >= bottomBoundZPos)
                 {
                     SwitchState(State.ZOOM);
                 }
-                else if (timerForSwitchStateEvents >= 6f)
+                else if (timerForSwitchStateEvents >= 4.5f)
                 {
                     int rand = Random.Range(0, 2);
-                    if (rand == 0)
+                    if (rand == 1)
                     {
                         SwitchState(State.FOLLOW);
                     }

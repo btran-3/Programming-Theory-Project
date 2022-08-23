@@ -8,12 +8,12 @@ using UnityEngine.Audio;
 public class PlayerBehavior : MonoBehaviour
 {
     #region PlayerBaseStats
-    private int playerBaseHealth = 6;
+    private int playerBaseHealth = 8;
     private int playerBaseBlanks = 3;
     private int playerBaseMoney = 10;
     private float playerBaseSpeed = 7.5f;
     private float playerBaseMaxAcceleration = 1000f;
-    private float playerBaseDamage = 2f; //should be 0.8f in actual game
+    private float playerBaseDamage = 0.9f;
     private float playerBaseFireCooldown = 0.35f; //less is faster
     private float playerBaseProjectileSpeed = 12f;
     private float playerBaseProjectileRange = 0.75f;
@@ -177,7 +177,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Make sure to change player damage back to 0.8 or so");
+        //Debug.Log("Make sure to change player damage back to 0.8 or so");
 
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);
