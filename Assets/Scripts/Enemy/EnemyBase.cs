@@ -71,9 +71,24 @@ public abstract class EnemyBase : MonoBehaviour
         playerBlankRadius = playerBehavior.pub_playerBlankRadius;
     }
 
+    private void Start()
+    {
+
+    }
+
     public void EnableEnemy() //executed once, when player enters hostile room
     {
         gameObject.SetActive(true);
+
+        if (transform.parent.GetComponent<RoomBehavior>() != null)
+        {
+            roomBehavior = transform.parent.GetComponent<RoomBehavior>();
+        }
+        else
+        {
+            Debug.LogWarning("Instanced enemy could not find a RoomBehavior script in its parent");
+        }
+
         EnableEnemyMovement();
     }
 

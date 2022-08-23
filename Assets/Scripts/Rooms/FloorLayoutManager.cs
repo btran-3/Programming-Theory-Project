@@ -49,6 +49,7 @@ public class FloorLayoutManager : MonoBehaviour
 
 
     //maybe split the floor into thirds? 1/3 in is an item room, 2/3 is the store?
+    //have free item room around halfway, store right before boss
 
 
     private void SetAllPoolRoomsInactive()

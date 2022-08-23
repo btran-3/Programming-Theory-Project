@@ -142,6 +142,7 @@ public class RoomBehavior : MonoBehaviour
                 int randomEnemyIndex = Random.Range(0, possibleEnemies.Count);
                 GameObject newEnemyInstance = Instantiate(possibleEnemies[randomEnemyIndex], enemySpawnPoints[randSpawnPointIndex].transform.position,
                     possibleEnemies[randomEnemyIndex].transform.localRotation);
+                newEnemyInstance.transform.SetParent(this.transform, true);
                 newEnemyInstance.gameObject.name = newEnemyInstance.gameObject.name + " " + i;
                 spawnedEnemies.Add(newEnemyInstance);
                 enemySpawnPoints.RemoveAt(randSpawnPointIndex);
