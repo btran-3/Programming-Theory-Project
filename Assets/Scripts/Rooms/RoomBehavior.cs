@@ -174,7 +174,7 @@ public class RoomBehavior : MonoBehaviour
                 GameObject newPickupInstance = Instantiate(possiblePickups[randPickupIndex],
                     pickupSpawnPoints[randSpawnPointIndex].transform.position + randomPosOffset,
                     possiblePickups[randPickupIndex].transform.localRotation);
-                //newPickupInstance.GetComponent<EnemyBehaviorA>().enabled = true;
+                newPickupInstance.transform.SetParent(transform, true);
                 spawnedPickups.Add(newPickupInstance);
                 pickupSpawnPoints.RemoveAt(randSpawnPointIndex);
             }

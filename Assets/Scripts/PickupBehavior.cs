@@ -10,7 +10,7 @@ public class PickupBehavior : MonoBehaviour
     [SerializeField] private string pickupType;
 
     [SerializeField] private AudioClip[] hitGroundSounds;
-    [SerializeField] private OnDestroySounds onDestroySounds;
+    //[SerializeField] private OnDestroySounds onDestroySounds;
     [SerializeField] private GlobalOnDestroySounds globalOnDestroySounds;
 
     public int pub_healthValue
