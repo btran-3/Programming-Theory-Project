@@ -142,6 +142,8 @@ public class RoomWithItemsBehavior : MonoBehaviour
             EnableUpgradeItems();
             //waitingForPlayerToPickAnItem = true;
 
+            GameEvents.instance.PlayerEnteredNewRoomActions();
+
             AnimateDoorClosed(doorBottom);
         }
     }

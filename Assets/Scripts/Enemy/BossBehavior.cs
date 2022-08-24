@@ -106,7 +106,6 @@ public class BossBehavior : MonoBehaviour
         healthSlider.maxValue = maxBossHealth;
         healthSlider.value = maxBossHealth;
         bossCubeRenderer.GetComponent<Renderer>().material.color = startingFaceColor;
-        canBossTakeDamage = true;
 
         //the following will all change in phase 2
         roamSpeed = 1f;
@@ -144,10 +143,12 @@ public class BossBehavior : MonoBehaviour
 
         switch (newState)
         {
-            case State.BEGIN: //stay still at beginning
+            case State.BEGIN: //stay still at beginning; cannot take damage
+                canBossTakeDamage = false;
                 StartCoroutine(DelayStateSwitch(State.ROAMING, 0.75f));
                 break;
             case State.ROAMING:
+                canBossTakeDamage = true;
                 LeanTween.value(0f, maxRoamTightness, 2f).setEaseInOutSine().setOnUpdate(IncreaseRoamTightness); //gradually catch up to sine movement target
                 break;
             case State.FOLLOW:

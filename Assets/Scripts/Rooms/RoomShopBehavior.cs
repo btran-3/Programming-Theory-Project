@@ -60,6 +60,8 @@ public class RoomShopBehavior : MonoBehaviour
         {
             colliderA.enabled = false;
             AnimateDoorClosed(doorBottom);
+
+            GameEvents.instance.PlayerEnteredNewRoomActions();
         }
     }
     private void AnimateDoorClosed(GameObject door)

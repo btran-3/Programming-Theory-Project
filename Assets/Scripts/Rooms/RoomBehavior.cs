@@ -110,6 +110,8 @@ public class RoomBehavior : MonoBehaviour
             //will only trigger once, when the player enters the room area
             BeginRoom();
             colliderA.enabled = false;
+            GameEvents.instance.PlayerEnteredNewRoomActions();
+            //Debug.Log("entered new room");
         }
 
     }

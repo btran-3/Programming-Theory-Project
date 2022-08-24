@@ -8,7 +8,7 @@ public class ProjectilePlayer : ProjectileBase
 
     private void Start()
     {
-        
+        GameEvents.instance.playerEnteredNewRoom += DisableProjectile;
     }
 
     public override void ShootProjectile(Vector3 origin, Vector3 shootDirection, float projectileSpeed, float range)
@@ -41,6 +41,11 @@ public class ProjectilePlayer : ProjectileBase
         LeanTween.cancel(gameObject);
         this.gameObject.SetActive(false);
         playerBehavior.projectilePool.Add(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.playerEnteredNewRoom -= DisableProjectile;
     }
 
 }

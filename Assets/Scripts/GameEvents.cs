@@ -22,6 +22,8 @@ public class GameEvents : MonoBehaviour
     public event Action upgradeItemPlaySFX; //play SFX when touched
     public event Action<int> useDispenser;
 
+    public event Action playerEnteredNewRoom;
+
     public event Action playerBeatGame;
     public event Action playerLostGame;
 
@@ -54,6 +56,12 @@ public class GameEvents : MonoBehaviour
             //this is another action that the player has subscribed to
             useDispenser(cost);
         }
+    }
+
+    public void PlayerEnteredNewRoomActions() //this is triggered in RoomBehavior
+    {
+        //this is the Action that PlayerProjectile has subscribed to
+        playerEnteredNewRoom();
     }
 
     public void PlayerBeatGameActions()

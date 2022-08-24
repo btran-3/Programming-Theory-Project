@@ -104,6 +104,8 @@ public class RoomFinalBossBehavior : MonoBehaviour
 
             bossEnemy.GetComponent<BossBehavior>().StartBossRoom();
             AnimateDoorClosed(doorBottom);
+
+            GameEvents.instance.PlayerEnteredNewRoomActions();
         }
     }
 
