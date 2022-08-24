@@ -383,12 +383,17 @@ public class UIManager : MonoBehaviour
 
     void ShowWinScreen()
     {
+        didPlayerBeatGame = true;
+
         LeanTween.cancelAll();
         victoryText.transform.localScale = Vector3.zero;
-        LeanTween.scale(victoryText, Vector3.one, 1f).setEaseOutBack().setIgnoreTimeScale(true);
-
-        didPlayerBeatGame = true;
+        winScreen.GetComponent<CanvasGroup>().alpha = 0;
+        
         winScreen.SetActive(true);
+
+        LeanTween.value(0, 1, 0.75f).setOnUpdate(UpdateWinScreenAlpha).setDelay(0.5f).setEaseInOutSine().setIgnoreTimeScale(true);
+        LeanTween.scale(victoryText, Vector3.one, 1f).setEaseOutBack().setIgnoreTimeScale(true).setDelay(0.75f);
+
 
         player.controllers.maps.SetMapsEnabled(false, "Default");
         player.controllers.maps.SetMapsEnabled(true, "Menu Category");
@@ -397,13 +402,26 @@ public class UIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(winScreenFirstButton);
     }
 
+    void UpdateWinScreenAlpha(float alphaChange)
+    {
+        winScreen.GetComponent<CanvasGroup>().alpha = alphaChange;
+    }
+
+    void UpdateGameOverScreenAlpha(float alphaChange)
+    {
+        gameOverScreen.GetComponent<CanvasGroup>().alpha = alphaChange;
+    }
+
     void ShowGameOverScreen()
     {
         LeanTween.cancelAll();
         gameOverText.transform.localPosition = new Vector3(9.21f, 390, 0);
-        LeanTween.moveLocal(gameOverText, new Vector3(9.21f, 90, 0f), 1f).setEaseOutBounce().setIgnoreTimeScale(true);
+        gameOverScreen.GetComponent<CanvasGroup>().alpha = 0;
 
         gameOverScreen.SetActive(true);
+
+        LeanTween.value(0, 1, 0.75f).setOnUpdate(UpdateGameOverScreenAlpha).setDelay(0.2f).setEaseInOutSine().setIgnoreTimeScale(true);
+        LeanTween.moveLocal(gameOverText, new Vector3(9.21f, 90, 0f), 1f).setEaseOutBounce().setIgnoreTimeScale(true).setDelay(0.4f);
 
         player.controllers.maps.SetMapsEnabled(false, "Default");
         player.controllers.maps.SetMapsEnabled(true, "Menu Category");

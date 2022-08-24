@@ -1341,7 +1341,6 @@ MonoBehaviour:
   pickupSpawnPoints:
   - {fileID: 2549659947987060096}
   - {fileID: 2549659948336482467}
-  - {fileID: 0}
   doorTop: {fileID: 7711899243851396145}
   doorBottom: {fileID: 7711899244225565449}
   playerStartPos: {fileID: 2549659946832028763}

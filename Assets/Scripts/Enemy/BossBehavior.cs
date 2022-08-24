@@ -26,11 +26,12 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] GameObject eyebrowLeft;
     [SerializeField] GameObject eyebrowRight;
     [SerializeField] AudioClip bossAngrySound;
+    [SerializeField] ParticleSystem explosionParticles;
 
     //Fixed variables
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
-    private float maxBossHealth = 30f;
+    private float maxBossHealth = 10f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
     private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;
@@ -206,6 +207,8 @@ public class BossBehavior : MonoBehaviour
             case State.KILLEDPLAYER:
                 break;
             case State.DEATH:
+                Instantiate(explosionParticles, transform.position, Quaternion.identity);
+
                 LeanTween.scale(healthSlider.gameObject, Vector3.zero, 0.7f).setDelay(0.25f)
                     .setEaseInOutCubic().setOnComplete(SetHealthBarInactive).setIgnoreTimeScale(true);
                 globalOnDestroySounds.PlayEnemyDeathSound("boss");

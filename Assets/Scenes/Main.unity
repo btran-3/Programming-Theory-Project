@@ -4447,6 +4447,7 @@ MonoBehaviour:
   eyebrowLeft: {fileID: 2074473861}
   eyebrowRight: {fileID: 1745237984}
   bossAngrySound: {fileID: 8300000, guid: ef01221945c72804fae781e57e179509, type: 3}
+  explosionParticles: {fileID: 2952780592310600097, guid: f812628469ddf4640a0d2d3881e8fc17, type: 3}
 --- !u!65 &636391161
 BoxCollider:
   m_ObjectHideFlags: 0
