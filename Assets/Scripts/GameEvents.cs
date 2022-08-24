@@ -60,19 +60,29 @@ public class GameEvents : MonoBehaviour
 
     public void PlayerEnteredNewRoomActions() //this is triggered in RoomBehavior
     {
-        //this is the Action that PlayerProjectile has subscribed to
-        playerEnteredNewRoom();
+        
+        if (playerEnteredNewRoom != null)
+        {
+            //this is the Action that PlayerProjectile has subscribed to
+            playerEnteredNewRoom();
+        }
     }
 
     public void PlayerBeatGameActions()
     {
-        //this is the Action that UIManager has subscribed to
-        playerBeatGame();
+        if (playerBeatGame != null)
+        {
+            //this is the Action that UIManager has subscribed to
+            playerBeatGame();
+        }
     }
 
     public void PlayerLostGameActions()
     {
-        //this is the Action that UIManager has subscribed to
-        playerLostGame();
+        if (playerLostGame != null)
+        {
+            //this is the Action that UIManager has subscribed to
+            playerLostGame();
+        }
     }
 }
