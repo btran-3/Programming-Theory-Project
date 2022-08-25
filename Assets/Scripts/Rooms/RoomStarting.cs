@@ -11,13 +11,13 @@ public class RoomStarting : MonoBehaviour
     private int playerId = 0;
     private Player rewiredPlayer;
 
-    private enum InputType { KEYBOARD, JOYSTICK};
-    private InputType _inputType;
+    //private enum InputType { KEYBOARD, JOYSTICK};
+    //private InputType _inputType;
 
     private void Start()
     {
         rewiredPlayer = ReInput.players.GetPlayer(playerId);
-        _inputType = InputType.KEYBOARD;
+        //_inputType = InputType.KEYBOARD;
         keyboardControlsPanel.SetActive(true);
 
         GameEvents.instance.playerEnteredNewRoom += DisableStartingRoom;
@@ -32,7 +32,7 @@ public class RoomStarting : MonoBehaviour
             switch (controller.type)
             {
                 case ControllerType.Joystick:
-                    _inputType = InputType.JOYSTICK;
+                    //_inputType = InputType.JOYSTICK;
 
                     joystickControlsPanel.SetActive(true);
                     keyboardControlsPanel.SetActive(false);
@@ -40,7 +40,7 @@ public class RoomStarting : MonoBehaviour
 
                 case ControllerType.Keyboard:
                 default:
-                    _inputType = InputType.KEYBOARD;
+                    //_inputType = InputType.KEYBOARD;
 
                     joystickControlsPanel.SetActive(false);
                     keyboardControlsPanel.SetActive(true);
