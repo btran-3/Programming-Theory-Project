@@ -5,6 +5,9 @@ using Rewired;
 
 public class RoomStarting : MonoBehaviour
 {
+    [SerializeField] GameObject keyboardControlsPanel;
+    [SerializeField] GameObject joystickControlsPanel;
+
     private int playerId = 0;
     private Player rewiredPlayer;
 
@@ -15,6 +18,9 @@ public class RoomStarting : MonoBehaviour
     {
         rewiredPlayer = ReInput.players.GetPlayer(playerId);
         _inputType = InputType.KEYBOARD;
+        keyboardControlsPanel.SetActive(true);
+
+        GameEvents.instance.playerEnteredNewRoom += DisableStartingRoom;
     }
 
     private void Update()
@@ -26,26 +32,38 @@ public class RoomStarting : MonoBehaviour
             switch (controller.type)
             {
                 case ControllerType.Joystick:
-                    Debug.Log("current input is joystick");
                     _inputType = InputType.JOYSTICK;
+
+                    joystickControlsPanel.SetActive(true);
+                    keyboardControlsPanel.SetActive(false);
                     break;
 
                 case ControllerType.Keyboard:
                 default:
-                    Debug.Log("current input is keyboard");
                     _inputType = InputType.KEYBOARD;
+
+                    joystickControlsPanel.SetActive(false);
+                    keyboardControlsPanel.SetActive(true);
                     break;
             }
         }
     }
 
+    void DisableStartingRoom()
+    {
+        StartCoroutine(DisableStartingRoomDelay(2f));
+    }
 
-    IEnumerator DisableStartingRoom(float delay)
+    IEnumerator DisableStartingRoomDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         //this.gameObject.SetActive(false);
         this.enabled = false;
     }
 
+    private void OnDestroy()
+    {
+        GameEvents.instance.playerEnteredNewRoom -= DisableStartingRoom;
+    }
 
 }
