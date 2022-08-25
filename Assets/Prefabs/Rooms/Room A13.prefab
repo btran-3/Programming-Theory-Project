@@ -1170,7 +1170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033854522139429092}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1201,8 +1201,6 @@ MonoBehaviour:
   - {fileID: 0}
   possiblePickups:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   spawnedEnemies: []
   spawnedPickups: []
   enemySpawnPoints:
@@ -1220,7 +1218,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9e7f97cb4bc7c414ca96fbeb99b23117, type: 3}
   - {fileID: 8300000, guid: 5f8245c7d6e294846aba0c41e8369987, type: 3}
   enemiesToSpawnExclInt: {x: 3, y: 4}
-  pickupsToSpawnExclInt: {x: 2, y: 3}
+  pickupsToSpawnExclInt: {x: 2, y: 2}
   colliderA: {fileID: 0}
 --- !u!65 &8033854522139429097
 BoxCollider:
