@@ -1237,7 +1237,6 @@ MonoBehaviour:
   - {fileID: 0}
   possiblePickups:
   - {fileID: 0}
-  - {fileID: 0}
   spawnedEnemies: []
   spawnedPickups: []
   enemySpawnPoints:

@@ -357,6 +357,11 @@ public class PlayerBehavior : MonoBehaviour
             }
         } */
 
+        ChangeRoomMusic(other);
+    }
+
+    private void ChangeRoomMusic(Collider other)
+    {
         if (other.gameObject.GetComponent<RoomBehavior>() != null) //regular hostile room
         {
             if (currentRoomTypeMusic != "Hostile")
@@ -383,6 +388,15 @@ public class PlayerBehavior : MonoBehaviour
                 MusicManager.instance.SwapTrack(musicTracks[1]);
             } //change music
             transform.position = other.gameObject.GetComponent<RoomShopBehavior>().pub_playerStartPos;
+        }
+        else if (other.gameObject.GetComponent<RoomWithDispensersBehavior>() != null) //shop
+        {
+            if (currentRoomTypeMusic != "Friendly")
+            {
+                currentRoomTypeMusic = "Friendly";
+                MusicManager.instance.SwapTrack(musicTracks[1]);
+            } //change music
+            transform.position = other.gameObject.GetComponent<RoomWithDispensersBehavior>().pub_playerStartPos;
         }
         else if (other.gameObject.GetComponent<RoomFinalBossBehavior>() != null) //boss room
         {
