@@ -48,10 +48,9 @@ public class ProjectilePlayer : ProjectileBase
 
     public override void DisableProjectile()
     {
-        GlobalOnDestroySounds.instance.PlayDebugSound();
-        Debug.Log(gameObject.name + " has been disabled");
+        //GlobalOnDestroySounds.instance.PlayDebugSound();
+        //Debug.Log(gameObject.name + " has been disabled");
 
-        //Debug.Log(this.gameObject.name + " has a velocity of " + rb.velocity);
         LeanTween.cancel(gameObject);
 
         rb.velocity = Vector3.zero;

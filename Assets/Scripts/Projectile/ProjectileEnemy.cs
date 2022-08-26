@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileEnemy : ProjectileBase
 {
-    private int enemyProjectileDamage = 0;
+    private int enemyProjectileDamage = 1;
 
     public int pub_enemyProjectileDamage
     {

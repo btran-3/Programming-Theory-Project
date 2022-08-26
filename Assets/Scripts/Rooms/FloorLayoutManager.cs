@@ -16,7 +16,7 @@ public class FloorLayoutManager : MonoBehaviour
 
     [SerializeField] private NavMeshSurface surface;
 
-    private int roomsToSpawn = 6;
+    private int roomsToSpawn = 15;
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
 
@@ -38,7 +38,7 @@ public class FloorLayoutManager : MonoBehaviour
 
     private void Awake()
     {
-        //SetAllPoolRoomsInactive();
+        SetAllPoolRoomsInactive();
     }
 
     private void Start()
@@ -70,9 +70,10 @@ public class FloorLayoutManager : MonoBehaviour
 
     private void SpawnRooms(int roomsToSpawn)
     {
-        Debug.Log("change this to be in thirds");
         int halfwayPoint = Mathf.CeilToInt(roomsToSpawn/2);
-        //Debug.Log(halfwayPoint);
+        int oneThirdPoint = Mathf.CeilToInt(roomsToSpawn / 3);
+        int twoThirdsPoint = oneThirdPoint * 2;
+        //Debug.Log(oneThirdPoint + " and " + twoThirdsPoint);
 
         for (int i = 0; i < roomsToSpawn; i++)
         {
@@ -80,17 +81,18 @@ public class FloorLayoutManager : MonoBehaviour
             {
                 startingRoom.SetActive(true);
                 startingRoom.transform.position = Vector3.zero;
-                //GameObject room = Instantiate(startingRoom, startingRoomSpawnPos, Quaternion.identity);
-                //room.SetActive(true);
             }
-            else if (i == halfwayPoint) //a "kind" room roughly halfway through
+            else if (i == oneThirdPoint) //one of two "kind" rooms - item room
             {
                 float zSpawnDist = i * roomZSpacing;
                 itemRoom.SetActive(true);
                 itemRoom.transform.position = new Vector3(0, 0, zSpawnDist);
-                /* GameObject room = Instantiate(itemRoom,
-                    startingRoomSpawnPos + new Vector3(0, 0, zSpawnDist), Quaternion.identity);
-                room.SetActive(true); */
+            }
+            else if (i == twoThirdsPoint) //two of two "kind" rooms - dispenser room
+            {
+                float zSpawnDist = i * roomZSpacing;
+                dispenserRoom.SetActive(true);
+                dispenserRoom.transform.position = new Vector3(0, 0, zSpawnDist);
             }
             else if (i == roomsToSpawn - 2) //store room right before boss
             {
@@ -103,9 +105,6 @@ public class FloorLayoutManager : MonoBehaviour
                 float zSpawnDist = i * roomZSpacing;
                 bossRoom.SetActive(true);
                 bossRoom.transform.position = new Vector3(0, 0, zSpawnDist);
-                /* GameObject room = Instantiate(endingRoom,
-                    startingRoomSpawnPos + new Vector3(0, 0, zSpawnDist), Quaternion.identity);
-                room.SetActive(true); */
             }
             else //HOSTILE ROOM POOL
             {
@@ -114,12 +113,6 @@ public class FloorLayoutManager : MonoBehaviour
                 possibleHostileRoomsList[randRoomIndex].SetActive(true);
                 possibleHostileRoomsList[randRoomIndex].transform.position = new Vector3(0, 0, zSpawnDist);
                 possibleHostileRoomsList.RemoveAt(randRoomIndex);
-
-                /*
-                GameObject room = Instantiate(possibleHostileRoomsList[randRoomIndex],
-                    startingRoomSpawnPos + new Vector3(0, 0, zSpawnDist), Quaternion.identity);
-                room.SetActive(true);
-                */
             }
         }
     }
