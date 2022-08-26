@@ -39,6 +39,7 @@ public class ProjectilePlayer : ProjectileBase
     }
     public override void DisableProjectile()
     {
+        GlobalOnDestroySounds.instance.PlayDebugSound();
         Debug.Log(gameObject.name + " has been disabled");
 
         //Debug.Log(this.gameObject.name + " has a velocity of " + rb.velocity);

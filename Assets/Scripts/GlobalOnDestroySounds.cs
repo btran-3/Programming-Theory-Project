@@ -16,6 +16,8 @@ public class GlobalOnDestroySounds : MonoBehaviour
     //[SerializeField] private AudioClip[] blankPickupSounds;
     [SerializeField] private AudioClip halfHeartPickupSound;
 
+    public AudioClip debugSound;
+
     public static GlobalOnDestroySounds instance;
 
     private void Awake()
@@ -72,6 +74,11 @@ public class GlobalOnDestroySounds : MonoBehaviour
     {
         //Debug.LogWarning("Playing upgrade item sound?");
         audioSource.PlayOneShot(upgradeItemSound);
+    }
+
+    public void PlayDebugSound()
+    {
+        audioSource.PlayOneShot(debugSound);
     }
 
     public void PlayPickupCollectedSound(string pickUpType)
