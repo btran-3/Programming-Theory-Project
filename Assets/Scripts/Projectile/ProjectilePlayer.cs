@@ -13,6 +13,9 @@ public class ProjectilePlayer : ProjectileBase
 
     public override void ShootProjectile(Vector3 origin, Vector3 shootDirection, float projectileSpeed, float range)
     {
+        LeanTween.cancel(gameObject);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         transform.localScale = startingScale;
         transform.position = origin;
         this.gameObject.SetActive(true);
@@ -36,9 +39,15 @@ public class ProjectilePlayer : ProjectileBase
     }
     public override void DisableProjectile()
     {
+        Debug.Log(gameObject.name + " has been disabled");
+
+        //Debug.Log(this.gameObject.name + " has a velocity of " + rb.velocity);
+        LeanTween.cancel(gameObject);
+
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        LeanTween.cancel(gameObject);
+        
+        transform.localScale = startingScale;
         this.gameObject.SetActive(false);
         playerBehavior.projectilePool.Add(this.gameObject);
     }

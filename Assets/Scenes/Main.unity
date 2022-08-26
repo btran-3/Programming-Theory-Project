@@ -3335,27 +3335,6 @@ MonoBehaviour:
   itemRoom: {fileID: 2438386941148832537}
   dispenserRoom: {fileID: 2363158351999109853}
   storeRoom: {fileID: 7395027521551063724}
-  possibleHostileRooms:
-  - {fileID: 1726551152}
-  - {fileID: 136590635}
-  - {fileID: 2131441811}
-  - {fileID: 393841965}
-  - {fileID: 1560522052103049967}
-  - {fileID: 341132142650783042}
-  - {fileID: 4083650603301095259}
-  - {fileID: 1052168329593581840}
-  - {fileID: 1766979061473167472}
-  - {fileID: 4197608572058230635}
-  - {fileID: 4827787619162022016}
-  - {fileID: 2549659947744045296}
-  - {fileID: 8033854521088395972}
-  - {fileID: 9112086759242572959}
-  - {fileID: 8329989437753531580}
-  - {fileID: 4678203905351056818}
-  - {fileID: 910745741900205700}
-  - {fileID: 6332731462931024042}
-  - {fileID: 5471914024662355877}
-  - {fileID: 8470052431406820251}
   possibleHostileRoomsList:
   - {fileID: 1726551152}
   - {fileID: 136590635}
@@ -3377,8 +3356,6 @@ MonoBehaviour:
   - {fileID: 6332731462931024042}
   - {fileID: 5471914024662355877}
   - {fileID: 8470052431406820251}
-  possibleKindRooms:
-  - {fileID: 2438386941148832537}
   spawnedRooms: []
   surface: {fileID: 1870948587}
 --- !u!4 &666391495
@@ -14082,11 +14059,19 @@ PrefabInstance:
       value: Room A1
       objectReference: {fileID: 0}
     - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: possibleEnemies.Array.data[0]
       value: 
       objectReference: {fileID: 1705133407}
     - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
       propertyPath: possibleEnemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 1562221074}
+    - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}
+      propertyPath: possibleEnemies.Array.data[2]
       value: 
       objectReference: {fileID: 1562221074}
     - target: {fileID: 4056960101444141621, guid: 96658bb8d17a1a84a9983383c965d98b, type: 3}

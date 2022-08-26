@@ -64,6 +64,7 @@ public class GameEvents : MonoBehaviour
         if (playerEnteredNewRoom != null)
         {
             //this is the Action that PlayerProjectile has subscribed to
+            Debug.Log("Entered new room action");
             playerEnteredNewRoom();
         }
     }

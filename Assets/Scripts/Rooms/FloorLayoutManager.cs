@@ -16,7 +16,7 @@ public class FloorLayoutManager : MonoBehaviour
 
     [SerializeField] private NavMeshSurface surface;
 
-    private int roomsToSpawn = 12;
+    private int roomsToSpawn = 6;
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
 

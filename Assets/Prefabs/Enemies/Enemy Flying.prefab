@@ -212,7 +212,7 @@ MonoBehaviour:
   enemyType: flying
   enemyHealth: 2.2
   enemyDamage: 1
-  enemySpeed: 30
+  enemySpeed: 25
   audioSource: {fileID: 0}
   enemyRenderer: {fileID: 0}
   roomBehavior: {fileID: 0}
