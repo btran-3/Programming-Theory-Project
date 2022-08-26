@@ -38,7 +38,7 @@ public class FloorLayoutManager : MonoBehaviour
 
     private void Awake()
     {
-        SetAllPoolRoomsInactive();
+        //SetAllPoolRoomsInactive();
     }
 
     private void Start()

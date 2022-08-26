@@ -8,7 +8,7 @@ public class ProjectilePlayer : ProjectileBase
 
     private void Start()
     {
-        GameEvents.instance.playerEnteredNewRoom += DisableProjectile;
+        GameEvents.instance.playerEnteredNewRoom += DisableProjectileIfActive;
     }
 
     public override void ShootProjectile(Vector3 origin, Vector3 shootDirection, float projectileSpeed, float range)
@@ -37,6 +37,15 @@ public class ProjectilePlayer : ProjectileBase
             globalOnDestroySounds.PlayProjectileHitObstacleSound();
         }
     }
+
+    private void DisableProjectileIfActive()
+    {
+        if (gameObject.activeInHierarchy)
+        {
+            DisableProjectile();
+        }
+    }
+
     public override void DisableProjectile()
     {
         GlobalOnDestroySounds.instance.PlayDebugSound();
