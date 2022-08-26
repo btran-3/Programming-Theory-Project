@@ -10,11 +10,11 @@ public class PlayerBehavior : MonoBehaviour
     #region PlayerBaseStats
     private int playerBaseHealth = 8;
     private int playerBaseBlanks = 3;
-    private int playerBaseMoney = 10;
-    private float playerBaseSpeed = 7.5f;
+    private int playerBaseMoney = 0;
+    private float playerBaseSpeed = 7f;
     private float playerBaseMaxAcceleration = 1000f;
     private float playerBaseDamage = 0.9f;
-    private float playerBaseFireCooldown = 0.35f; //less is faster
+    private float playerBaseFireCooldown = 0.4f; //less is faster
     private float playerBaseProjectileSpeed = 12f;
     private float playerBaseProjectileRange = 0.75f;
     private float playerBlankRadius = 6f;
@@ -79,7 +79,7 @@ public class PlayerBehavior : MonoBehaviour
         get { return playerBaseDamage; }
         private set {
             playerBaseDamage = value;
-            Debug.Log(pub_playerDamage);
+            //Debug.Log(pub_playerDamage);
         }
     }
     public float pub_playerSpeed
@@ -87,7 +87,7 @@ public class PlayerBehavior : MonoBehaviour
         get { return playerBaseSpeed; }
         private set {
             playerBaseSpeed = value;
-            Debug.Log(pub_playerSpeed);
+            //Debug.Log(pub_playerSpeed);
         }
     }
     public float pub_playerFireCooldown
@@ -96,7 +96,7 @@ public class PlayerBehavior : MonoBehaviour
         private set
         {
             playerBaseFireCooldown = value;
-            Debug.Log(pub_playerFireCooldown);
+            //Debug.Log(pub_playerFireCooldown);
         }
     }
 

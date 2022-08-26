@@ -283,13 +283,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461f161c1aa9ff14b8589d38118cd33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomWithItemsBehavior: {fileID: 0}
   isItemFree: 0
   priceTextTMP: {fileID: 1606716643}
-  price: 5
+  price: 3
   itemTag: speed
   healthUpAmt: 0
   damageUpAmt: 0
-  speedUpAmt: 2.5
+  speedUpAmt: 2.25
   firerateUpAmt: 0
   playerBehavior: {fileID: 0}
   ondestroySounds: {fileID: 0}

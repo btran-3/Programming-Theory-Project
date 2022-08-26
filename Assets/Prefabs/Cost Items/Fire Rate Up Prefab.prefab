@@ -642,6 +642,6 @@ MonoBehaviour:
   healthUpAmt: 0
   damageUpAmt: 0
   speedUpAmt: 0
-  firerateUpAmt: -0.075
+  firerateUpAmt: -0.07
   playerBehavior: {fileID: 0}
   ondestroySounds: {fileID: 0}

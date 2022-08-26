@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: shooting
-  enemyHealth: 4
+  enemyHealth: 3.5
   enemyDamage: 1
   enemySpeed: 0
   audioSource: {fileID: 0}

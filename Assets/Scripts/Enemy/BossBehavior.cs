@@ -29,9 +29,10 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] ParticleSystem explosionParticles;
 
     //Fixed variables
+    private float maxBossHealth = 40f;
+
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
-    private float maxBossHealth = 10f;
     private int contactDamage = 2;
     private float projectileRange = 1.5f;
     private Color startingFaceColor = new Color(193, 101, 32, 1) / 255;

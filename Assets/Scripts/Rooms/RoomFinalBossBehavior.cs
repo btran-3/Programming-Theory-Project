@@ -67,7 +67,7 @@ public class RoomFinalBossBehavior : MonoBehaviour
     private void PlayerWon()
     {
         didPlayerWin = true;
-        Debug.Log("You won!!!!!");
+        //Debug.Log("You won!!!!!");
 
         GameEvents.instance.PlayerBeatGameActions();
         MusicManager.instance.SwapTrackIgnoreTimeScale(winJingle);
