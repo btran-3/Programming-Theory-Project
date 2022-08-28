@@ -286,7 +286,7 @@ MonoBehaviour:
   roomWithItemsBehavior: {fileID: 0}
   isItemFree: 0
   priceTextTMP: {fileID: 1606716643}
-  price: 3
+  price: 4
   itemTag: speed
   healthUpAmt: 0
   damageUpAmt: 0

@@ -49,11 +49,6 @@ public class FloorLayoutManager : MonoBehaviour
 
     }
 
-
-    //maybe split the floor into thirds? 1/3 in is an item room, 2/3 is the store?
-    //have free item room around halfway, store right before boss
-
-
     private void SetAllPoolRoomsInactive()
     {
         startingRoom.SetActive(false);
@@ -71,9 +66,8 @@ public class FloorLayoutManager : MonoBehaviour
     private void SpawnRooms(int roomsToSpawn)
     {
         int halfwayPoint = Mathf.CeilToInt(roomsToSpawn/2);
-        int oneThirdPoint = Mathf.CeilToInt(roomsToSpawn / 3);
-        int twoThirdsPoint = oneThirdPoint * 2;
-        //Debug.Log(oneThirdPoint + " and " + twoThirdsPoint);
+        int oneThirdPoint = Mathf.CeilToInt(roomsToSpawn / 3) - 1;
+        int twoThirdsPoint = (oneThirdPoint * 2);
 
         for (int i = 0; i < roomsToSpawn; i++)
         {

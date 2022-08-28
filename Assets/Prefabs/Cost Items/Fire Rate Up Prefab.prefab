@@ -637,11 +637,11 @@ MonoBehaviour:
   roomWithItemsBehavior: {fileID: 0}
   isItemFree: 0
   priceTextTMP: {fileID: 475792405}
-  price: 5
+  price: 8
   itemTag: firerate
   healthUpAmt: 0
   damageUpAmt: 0
   speedUpAmt: 0
-  firerateUpAmt: -0.07
+  firerateUpAmt: -0.05
   playerBehavior: {fileID: 0}
   ondestroySounds: {fileID: 0}

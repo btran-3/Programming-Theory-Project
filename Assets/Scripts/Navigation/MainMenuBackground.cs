@@ -8,7 +8,7 @@ public class MainMenuBackground : MonoBehaviour
     
     void Start()
     {
-        LeanTween.rotateAround(gameObject, Vector3.up, -360, 16f).setLoopClamp();
+        LeanTween.rotateAround(gameObject, Vector3.up, -360, 24f).setLoopClamp();
         LeanTween.value(30f, 40f, 1.5f).setEaseInOutSine().setOnUpdate(SpotlightPulseBrightness).setLoopPingPong();
         LeanTween.value(75f, 110f, 3f).setEaseInOutSine().setOnUpdate(SpotLightOuterAngle).setLoopPingPong();
     }

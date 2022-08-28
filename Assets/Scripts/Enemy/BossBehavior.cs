@@ -29,7 +29,7 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] ParticleSystem explosionParticles;
 
     //Fixed variables
-    private float maxBossHealth = 40f;
+    private float maxBossHealth;
 
     private float xMoveRange = 6f;
     private float maxRoamTightness = 10f;
@@ -50,6 +50,7 @@ public class BossBehavior : MonoBehaviour
     //Dynamic variables
     private float roamTightness;
     private float currentBossHealth;
+    public float halfBossHealth;
     private float timerForSwitchStateEvents;
     private float randomShootingCooldown;
     private float currentShootingCooldown;
@@ -76,7 +77,7 @@ public class BossBehavior : MonoBehaviour
         private set { currentBossHealth = value;
             healthSlider.value = currentBossHealth;
             //Debug.Log(currentBossHealth);
-            if (currentBossHealth <= (maxBossHealth/2) && !isBossInSecondPhase)
+            if (currentBossHealth <= halfBossHealth && !isBossInSecondPhase)
             {
                 isBossInSecondPhase = true;
                 SwitchState(State.NEWPHASE);
@@ -103,9 +104,6 @@ public class BossBehavior : MonoBehaviour
 
     void Start()
     {
-        currentBossHealth = maxBossHealth;
-        healthSlider.maxValue = maxBossHealth;
-        healthSlider.value = maxBossHealth;
         bossCubeRenderer.GetComponent<Renderer>().material.color = startingFaceColor;
 
         //the following will all change in phase 2
@@ -122,7 +120,34 @@ public class BossBehavior : MonoBehaviour
 
     public void StartBossRoom()
     {
+        SetBossHealthBasedOnPlayerDamage();
         SwitchState(State.BEGIN);
+
+        //Debug.LogWarning("Boss should have 50 HP by default");
+    }
+
+    public void SetBossHealthBasedOnPlayerDamage()
+    {
+        if (playerBehavior.pub_playerDamage < 1)
+        {
+            maxBossHealth = 50; //at 0.9 damage
+        }
+        else if (playerBehavior.pub_playerDamage >= 1 && playerBehavior.pub_playerDamage < 1.3f)
+        {
+            maxBossHealth = 62; //at 1.2 damage
+        }
+        else if (playerBehavior.pub_playerDamage >= 1.3)
+        {
+            maxBossHealth = 72; //at 1.5 damage
+        }
+
+        currentBossHealth = maxBossHealth;
+        healthSlider.maxValue = maxBossHealth;
+        healthSlider.value = maxBossHealth;
+
+        halfBossHealth = maxBossHealth / 2;
+        //Debug.Log(maxBossHealth);
+        //Debug.Log(halfBossHealth);
     }
 
 
@@ -162,8 +187,6 @@ public class BossBehavior : MonoBehaviour
                 switch (rand)
                 {
                     case 0:
-                        StartCoroutine(DelayStateSwitch(State.ROAMING, 1f));
-                        break;
                     case 1:
                     case 2:
                         StartCoroutine(DelayStateSwitch(State.SPAWNENEMY, 1f));
@@ -256,7 +279,7 @@ public class BossBehavior : MonoBehaviour
                 {
                     SwitchState(State.ZOOM);
                 }
-                else if (timerForSwitchStateEvents >= 4.5f)
+                else if (timerForSwitchStateEvents >= 3f)
                 {
                     int rand = Random.Range(0, 2);
                     if (rand == 1)
@@ -289,7 +312,6 @@ public class BossBehavior : MonoBehaviour
             case State.DEATH:
                 break;
         }
-        //Debug.Log(timerForEvents);
     }
 
     private void ShootInRandomDirection()

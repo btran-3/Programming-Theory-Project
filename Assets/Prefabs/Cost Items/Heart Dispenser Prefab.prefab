@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupToDispense: {fileID: 2012111752776831975}
   priceTextTMP: {fileID: 1268542048926025746}
-  cost: 2
+  cost: 3
   playerBehavior: {fileID: 0}
 --- !u!1 &1268542048926025744
 GameObject:

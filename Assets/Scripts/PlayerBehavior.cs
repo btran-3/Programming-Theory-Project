@@ -177,7 +177,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
-        //Debug.Log("Make sure to change player damage back to 0.8 or so");
+        //Debug.LogWarning("Make sure player starts with no money");
 
         defaultColor = gameObject.GetComponent<Renderer>().material.color;
         blankRadiusMesh.SetActive(false);
@@ -254,11 +254,12 @@ public class PlayerBehavior : MonoBehaviour
 
     private void TakeDamageFromEnemy(Collider other) //onTriggerEnter - enemy projectile damage
     {
-        audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
-        int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
-        //Debug.Log(dmg);
-        PlayerTakeDamage(dmg);
-        
+        if (!didPlayerBeatGame)
+        {
+            audioSource.PlayOneShot(playerHurtSounds[Random.Range(0, playerHurtSounds.Length)]);
+            int dmg = other.gameObject.GetComponent<ProjectileEnemy>().pub_enemyProjectileDamage;
+            PlayerTakeDamage(dmg);
+        }
     }
 
     private void TakeUpgradeItem(string itemTag, int price, int health, float damage, float speed, float firerate) //GameEvent
@@ -518,6 +519,15 @@ public class PlayerBehavior : MonoBehaviour
         {
             pub_currentPlayerHealth -= damage;
             doesPlayerHaveIFrames = true; //give the player i-frames
+
+            LeanTween.color(this.gameObject, Color.red, 0f);
+            LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.15f);
+            LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.35f), 0f).setDelay(0.3f);
+            LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.45f);
+            LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.60f), 0f).setDelay(0.6f);
+            LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.75f);
+            LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.85f), 0f).setDelay(0.9f);
+            LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(1.05f).setOnComplete(PlayerRecoverFromDamage);
         }
 
         if (currentPlayerHealth <= 0)
@@ -525,17 +535,6 @@ public class PlayerBehavior : MonoBehaviour
             PlayerDeath();
             return; //skip the flashing color animation
         }
-
-        //gameObject.GetComponent<Renderer>().material.color = Color.red;
-        LeanTween.color(this.gameObject, Color.red, 0f);
-        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.15f);
-        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.35f), 0f).setDelay(0.3f);
-        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.45f);
-        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.60f), 0f).setDelay(0.6f);
-        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(0.75f);
-        LeanTween.color(this.gameObject, Color.Lerp(Color.red, defaultColor, 0.85f), 0f).setDelay(0.9f);
-        LeanTween.color(this.gameObject, defaultColor, 0f).setDelay(1.05f).setOnComplete(PlayerRecoverFromDamage);
-        //Invoke("PlayerRecoverFromDamage", 1.05f);
     }
 
     private void PlayerDeath()
