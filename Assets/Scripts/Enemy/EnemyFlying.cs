@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFlying : EnemyBase
+public class EnemyFlying : EnemyBase // INHERITANCE
 {
     Rigidbody rb;
     float noiseAmp = 20f;
@@ -47,13 +47,14 @@ public class EnemyFlying : EnemyBase
         transform.position = new Vector3(rb.position.x, 1, rb.position.z);
     }
 
-    protected override void ProjectileKnockBack(Collider other) //for rigidbody enemy
+    protected override void ProjectileKnockBack(Collider other) // POLYMORPHISM                                                      
     {
+        //for rigidbody enemy
         rb.velocity *= 0f;
     }
 
 
-    protected override void EnableEnemyMovement()
+    protected override void EnableEnemyMovement() // POLYMORPHISM
     {
         Invoke("DelayCanFollowPlayer", enemyMovementDelay);
     }
@@ -72,7 +73,7 @@ public class EnemyFlying : EnemyBase
         //Debug.Log(enemySpeed);
     }
 
-    public override void BlankKnockback()
+    public override void BlankKnockback() // POLYMORPHISM
     {
         enemySpeed = 0f;
         isTrackingPlayer = false;

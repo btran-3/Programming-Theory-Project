@@ -101,7 +101,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PauseUnpause();
+        PauseUnpause(); // ABSTRACTION
 
         //if hovering on Sound Effects volume text, which covers the slider too
         if (EventSystem.current.currentSelectedGameObject == optionsSoundEffectsSlider && lastSelected != optionsSoundEffectsSlider)

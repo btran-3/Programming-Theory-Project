@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 
-public class EnemyNormal : EnemyBase
+public class EnemyNormal : EnemyBase // INHERITANCE
 {
     [SerializeField] private float enemyAcceleration = 15f;
     [SerializeField] private float enemyStoppingDistance = 1.4f;
@@ -69,8 +69,9 @@ public class EnemyNormal : EnemyBase
         
     }
 
-    protected override void ProjectileKnockBack(Collider other) //designed for NavMeshAgent
+    protected override void ProjectileKnockBack(Collider other) // POLYMORPHISM
     {
+        //designed for NavMeshAgent
         //THANKS https://www.youtube.com/watch?v=gFq0lO2E2Sc
         Vector3 knockbackDirection;
         knockbackDirection.x = transform.position.x - other.gameObject.transform.position.x;
@@ -80,8 +81,9 @@ public class EnemyNormal : EnemyBase
     }
 
 
-    protected override void EnableEnemyMovement() //designed for NavMeshAgent
+    protected override void EnableEnemyMovement() // POLYMORPHISM
     {
+        //designed for NavMeshAgent
         navMeshAgent.enabled = true; //place here so the enemies get "bumped up" by NavMesh before they're on screen
         Invoke("DelayFollowPlayerNavMesh", enemyMovementDelay);
     }
@@ -100,8 +102,9 @@ public class EnemyNormal : EnemyBase
         }
     }
 
-    public override void BlankKnockback() //designed for NavMeshAgent
+    public override void BlankKnockback()// POLYMORPHISM                             
     {
+        //designed for NavMeshAgent
         Vector3 knockbackDirection = (transform.position - playerGO.transform.position).normalized;
         knockbackDirection.y = 0;
 

@@ -20,6 +20,7 @@ public class FloorLayoutManager : MonoBehaviour
     private float roomZSpacing = 11f;
     private Vector3 startingRoomSpawnPos = Vector3.zero;
 
+    // ENCAPSULATION
     #region public get variables
     public int pub_roomsToSpawn
     {
@@ -38,12 +39,12 @@ public class FloorLayoutManager : MonoBehaviour
 
     private void Awake()
     {
-        SetAllPoolRoomsInactive();
+        SetAllPoolRoomsInactive(); // ABSTRACTION
     }
 
     private void Start()
     {
-        SpawnRooms(roomsToSpawn);
+        SpawnRooms(roomsToSpawn); // ABSTRACTION
 
         surface.BuildNavMesh();
 

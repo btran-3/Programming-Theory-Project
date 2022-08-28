@@ -37,11 +37,11 @@ public class MainMenu : MonoBehaviour
 
         player = ReInput.players.GetPlayer(playerId);
 
-        InitMenuPanels();
+        InitMenuPanels(); // ABSTRACTION
 
-        DisableMenuButtons();
+        DisableMenuButtons(); // ABSTRACTION
 
-        StartCoroutine(ReenableMainMenuButtons(menuAnimationTime));
+        StartCoroutine(ReenableMainMenuButtons(menuAnimationTime)); // ABSTRACTION
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(mainMenuFirstButton);

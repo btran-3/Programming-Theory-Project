@@ -75,7 +75,7 @@ public class MenuNavigation : MonoBehaviour
 
     public void LoadThisScene(int sceneIndex) //used in button
     {
-        FadeToBlack();
+        FadeToBlack(); // ABSTRACTION
 
         rewiredPlayer.controllers.maps.SetAllMapsEnabled(false);
         if (sceneIndex == 0) //go to main menu

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour // INHERITANCE
 {
     #region stats
     [SerializeField] protected string enemyType;
@@ -86,7 +86,7 @@ public abstract class EnemyBase : MonoBehaviour
             roomBehavior = roomBehaviorScript;
         }
 
-        EnableEnemyMovement();
+        EnableEnemyMovement(); // ABSTRACTION
     }
 
     void Update()
@@ -96,7 +96,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        HitByPlayerProjectile(other);
+        HitByPlayerProjectile(other); // ABSTRACTION
     }
 
     //play sound, take damage, animate hit color, and execute child-specified projectile knockback

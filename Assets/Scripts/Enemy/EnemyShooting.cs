@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooting : EnemyBase
+public class EnemyShooting : EnemyBase // INHERITANCE
 {
     [SerializeField] Renderer[] enemyRenderers;
     [SerializeField] GameObject enemyProjectilePrefab;
@@ -51,7 +51,7 @@ public class EnemyShooting : EnemyBase
         distanceFromPlayer = Vector3.Distance(transform.position, playerGO.transform.position);
     }
 
-    protected override void HitByPlayerProjectile(Collider other)
+    protected override void HitByPlayerProjectile(Collider other) // POLYMORPHISM
     {
         if (other.gameObject.CompareTag("PlayerProjectile"))
         {
@@ -75,13 +75,14 @@ public class EnemyShooting : EnemyBase
         }
     }
 
-    protected override void ProjectileKnockBack(Collider other) 
+    protected override void ProjectileKnockBack(Collider other) // POLYMORPHISM
     {
         //enemy is not knocked physically back at all
     }
 
-    protected override void EnableEnemyMovement() //enemy only rotates head to shoot player
+    protected override void EnableEnemyMovement() // POLYMORPHISM
     {
+        //enemy only rotates head to shoot player
         Invoke("DelayShooting", enemyMovementDelay);
     }
 
@@ -91,9 +92,9 @@ public class EnemyShooting : EnemyBase
     }
 
 
-    public override void BlankKnockback() //designed for 
+    public override void BlankKnockback() // POLYMORPHISM
     {
-
+        //Not impacted by player pulses
     }
 
 }

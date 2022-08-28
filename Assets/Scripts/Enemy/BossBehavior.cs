@@ -60,7 +60,8 @@ public class BossBehavior : MonoBehaviour
 
     private float playerXPos;
 
-    //GET AND SET
+    // ENCAPSULATION
+    #region get and set
     public int pub_contactDamage
     {
         get { return contactDamage; }
@@ -70,7 +71,6 @@ public class BossBehavior : MonoBehaviour
         get { return projectileSpeed; }
         private set { projectileSpeed = value; }
     }
-
     public float pub_currentBossHealth
     {
         get { return currentBossHealth; }
@@ -90,13 +90,12 @@ public class BossBehavior : MonoBehaviour
         
         }
     }
-    
     public bool pub_isBossDead
     {
         get { return isBossDead; }
         private set { isBossDead = value; }
     }
-
+    #endregion
 
     enum State { BEGIN, ROAMING, FOLLOW, ZOOM, SPAWNENEMY, NEWPHASE, KILLEDPLAYER, DEATH }
     State _state; //our current state
@@ -120,10 +119,8 @@ public class BossBehavior : MonoBehaviour
 
     public void StartBossRoom()
     {
-        SetBossHealthBasedOnPlayerDamage();
-        SwitchState(State.BEGIN);
-
-        //Debug.LogWarning("Boss should have 50 HP by default");
+        SetBossHealthBasedOnPlayerDamage(); // ABSTRACTION
+        SwitchState(State.BEGIN); // ABSTRACTION
     }
 
     public void SetBossHealthBasedOnPlayerDamage()

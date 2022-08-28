@@ -43,6 +43,7 @@ public class PlayerBehavior : MonoBehaviour
 
     #endregion
 
+    // ENCAPSULATION
     #region Public Get Stats
     public int pub_maxPlayerHealth
     {
@@ -196,10 +197,10 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
-        RewiredGetPlayerInput();
+        RewiredGetPlayerInput(); // ABSTRACTION
 
-        FireProjectiles();
-        UseBlank();
+        FireProjectiles(); // ABSTRACTION
+        UseBlank(); // ABSTRACTION
     }
 
     private void RewiredGetPlayerInput()
@@ -219,8 +220,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayerRigidbody();
-        RewiredMovePlayerRigidBody();
+        MovePlayerRigidbody(); // ABSTRACTION
+        RewiredMovePlayerRigidBody(); // ABSTRACTION
     }
 
     private void OnCollisionStay(Collision collision)
@@ -324,12 +325,6 @@ public class PlayerBehavior : MonoBehaviour
         {
             PlayerEntersRoom(other);
         }
-        /*
-        else if (other.gameObject.CompareTag("StartingRoom"))
-        {
-            PlayerEntersStartingRoom(other);
-        }
-        */
 
         if (other.gameObject.CompareTag("EnemyProjectile") && !doesPlayerHaveIFrames && this.gameObject.activeInHierarchy)
         {
@@ -339,7 +334,6 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PlayerEntersRoom(Collider other)
     {
-        //Debug.Log("entered a room");
         canPlayerMove = false;
 
         pub_currentRoomIndex++;
@@ -347,16 +341,6 @@ public class PlayerBehavior : MonoBehaviour
         playerRB.angularVelocity = Vector3.zero;
 
         Invoke("AllowPlayerToMove", 0.65f);
-
-        /*
-        if (other.gameObject.CompareTag("StartingRoom"))
-        {
-            if (currentRoomTypeMusic != "Hostile")
-            {
-                currentRoomTypeMusic = "Hostile";
-                MusicManager.instance.SwapTrack(musicTracks[0]);
-            }
-        } */
 
         ChangeRoomMusic(other);
     }
